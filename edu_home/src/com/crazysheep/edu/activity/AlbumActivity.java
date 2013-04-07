@@ -1,5 +1,11 @@
 package com.crazysheep.edu.activity;
 
+import java.io.ByteArrayOutputStream;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -10,6 +16,7 @@ import com.crazysheep.edu.R;
 import com.crazysheep.edu.fragment.AlbumFragment;
 import com.crazysheep.edu.fragment.TopicListFragment;
 import com.edu.lib.adapter.AlbumPagerAdapter;
+import com.edu.lib.util.TakePhotoUtils;
 
 /**
  * 相册
@@ -20,6 +27,7 @@ import com.edu.lib.adapter.AlbumPagerAdapter;
 public class AlbumActivity extends FragmentActivity implements OnClickListener {
 	public ViewPager pager;
 	AlbumPagerAdapter adapter;
+	public final static String EXTRA_ALBUM = "extra_album";
 
 	public static final String DYNAMICACTION = "com.crazysheep.edu";
 
@@ -50,6 +58,7 @@ public class AlbumActivity extends FragmentActivity implements OnClickListener {
 		}
 
 	}
+	
 
 	@Override
 	public void onBackPressed() {

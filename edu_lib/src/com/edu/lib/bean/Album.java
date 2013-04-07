@@ -1,8 +1,11 @@
 package com.edu.lib.bean;
 
+import java.io.Serializable;
+
 import org.json.JSONObject;
 
-public class Album {
+public class Album implements Serializable{
+	private static final long serialVersionUID = 4732880675371229968L;
 	public int isopen;// 是否公开(0:否1:是)
 	public int isreview;// 是否允许评论(0:否1:是)
 	public int photocount;// 照片数

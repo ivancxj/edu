@@ -63,5 +63,4 @@ public class PhotoFragment extends Fragment {
 			mImageView.setImageDrawable(null);
 		}
 	}
-
 }

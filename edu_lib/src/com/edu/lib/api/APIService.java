@@ -1,6 +1,7 @@
 package com.edu.lib.api;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import android.content.Context;
@@ -23,26 +24,14 @@ public class APIService {
 	private final static String GetFriendAlbum = URL_API_HOST
 			+ "GetFriendAlbum";
 	private final static String GetUserAlbum = URL_API_HOST + "GetUserAlbum";
-	private final static String GetUserAlbumPhotoList = URL_API_HOST
-			+ "GetUserAlbumPhotoList";
+	private final static String GetAlbumPhotoList = URL_API_HOST
+			+ "GetAlbumPhotoList";
 	private final static String SendClassAnnouncement = URL_API_HOST
 			+ "SendClassAnnouncement";
 	private final static String UpdateAlbumInfo = URL_API_HOST
 			+ "UpdateAlbumInfo";
-	private final static String UploadClassAlbumPhotos = URL_API_HOST
-			+ "UploadClassAlbumPhotos";
-	private final static String UploadUserAlbumPhotos = URL_API_HOST
-			+ "UploadUserAlbumPhotos";
-
-	// TODO
-	public static void UploadUserAlbumPhotos(String owner, String viewer,
-			String session, AsyncHttpResponseHandler handler) {
-		RequestParams params = new RequestParams();
-		params.put("owner", owner);
-		params.put("viewer", viewer);
-		params.put("session", session);
-		post(UploadUserAlbumPhotos, params, handler);
-	}
+	private final static String UploadAlbumPhotos = URL_API_HOST
+			+ "UploadAlbumPhotos";
 
 	/**
 	 * 上传班级相册照片
@@ -58,7 +47,7 @@ public class APIService {
 	 * @param resume_file
 	 *            图片文件
 	 */
-	public static void UploadClassAlbumPhotos(String albumID, String gid,
+	public static void UploadAlbumPhotos(String albumID, String gid,
 			String classid, String userid, String resume_file,
 			AsyncHttpResponseHandler handler) {
 		RequestParams params = new RequestParams();
@@ -76,7 +65,7 @@ public class APIService {
 				}
 			}
 		}
-		post(UploadClassAlbumPhotos, params, handler);
+		post(UploadAlbumPhotos, params, handler);
 	}
 
 	/**
@@ -105,7 +94,7 @@ public class APIService {
 	}
 
 	/**
-	 * 获取班级相册照片列表
+	 * 获取个人/班级相册照片列表
 	 * 
 	 * @param albumID
 	 *            相册id
@@ -116,14 +105,14 @@ public class APIService {
 	 * @param userid
 	 *            用户id
 	 */
-	public static void GetUserAlbumPhotoList(String albumID, String gid,
+	public static void GetAlbumPhotoList(String albumID, String gid,
 			String classid, String userid, AsyncHttpResponseHandler handler) {
 		RequestParams params = new RequestParams();
 		params.put("albumID", albumID);
 		params.put("gid", gid);
 		params.put("classid", classid);
 		params.put("userid", userid);
-		post(GetUserAlbumPhotoList, params, handler);
+		get(GetAlbumPhotoList, params, handler);
 	}
 
 	/**
@@ -136,8 +125,6 @@ public class APIService {
 			AsyncHttpResponseHandler handler) {
 		RequestParams params = new RequestParams();
 		params.put("owner", owner);
-//		params.put("viewer", "");
-//		params.put("session", "");
 		get(GetUserAlbum, params, handler);
 	}
 
@@ -148,12 +135,18 @@ public class APIService {
 		get(GetFriendAlbum, params, handler);
 	}
 
-	public static void GetClassAnnouncement(String uid, String classid,
-			String gid, AsyncHttpResponseHandler handler) {
+	/**
+	 * 获取班级最新的5条公告信息
+	 * @param gid 园区ID
+	 * @param classid
+	 * @param userid
+	 */
+	public static void GetClassAnnouncement(String gid, String classid,
+			String userid, AsyncHttpResponseHandler handler) {
 		RequestParams params = new RequestParams();
-		params.put("uid", uid);
-		params.put("classid", classid);
 		params.put("gid", gid);
+		params.put("classid", classid);
+		params.put("userid", userid);
 		get(GetClassAnnouncement, params, handler);
 	}
 

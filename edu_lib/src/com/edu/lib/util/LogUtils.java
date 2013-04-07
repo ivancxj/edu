@@ -8,6 +8,7 @@ public class LogUtils {
 	public static final String LOGIN = "login";
 	public static final String ALBUM_CLASS = "class_album";
 	public static final String ALBUM_USER = "user_album";
+	public static final String PhotoList = "PhotoList";
 	public static final String COMMENT = "comment";
 	public static final String NOTIFY = "notify";
 	public static final String CREATE_TOPIC = "create_topic";

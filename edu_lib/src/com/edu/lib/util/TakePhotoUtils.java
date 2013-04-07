@@ -100,6 +100,7 @@ public class TakePhotoUtils {
 			intent.setDataAndType(uri, IMAGE_UNSPECIFIED);
 			if (isExternalStorageWritable()) {
 				intent.putExtra("crop", "true");
+//				intent.putExtra("output", output);// 裁剪后图片
 				intent.putExtra("aspectX", 1);
 				intent.putExtra("aspectY", 1);
 				// intent.putExtra("scale", true);
@@ -125,7 +126,7 @@ public class TakePhotoUtils {
 		// return uri;
 		ContentValues values = new ContentValues(4);
 		values.put(MediaStore.Images.Media.DISPLAY_NAME, getPhotoFileName());
-		values.put(MediaStore.Images.Media.DESCRIPTION, "taotao created");
+		values.put(MediaStore.Images.Media.DESCRIPTION, "edu created");
 		values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
 		values.put(MediaStore.Images.Media.ORIENTATION, 0);
 		return mActivity.getContentResolver().insert(
@@ -134,12 +135,19 @@ public class TakePhotoUtils {
 
 	public String saveBitmap(Bitmap bitmap) {
 		String strImgPath = Environment.getExternalStorageDirectory()
-				.toString() + "/taoatao/";// 存放照片的文件夹
+				.toString() + "/edu/";// 存放照片的文件夹
 		File file = new File(strImgPath);
 		if (!file.exists()) {
 			file.mkdirs();
 		}
 		file = new File(strImgPath, "temp.jpeg");
+		if(!file.exists()){
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		FileOutputStream out;
 		try {
 			out = new FileOutputStream(file);
@@ -154,8 +162,8 @@ public class TakePhotoUtils {
 		}
 		return file.getAbsolutePath();
 	}
-
-	public static String[] getImageArgs(Context ctx, Uri imageUri) {
+	
+	public static String getImageArgs(Context ctx, Uri imageUri) {
 		String[] proj = { MediaStore.Images.Media.DATA,
 				MediaStore.Images.Media.ORIENTATION };
 		// 好像是android多媒体数据库的封装接口，具体的看Android文档
@@ -175,7 +183,7 @@ public class TakePhotoUtils {
 		String orientation = cursor.getString(orientation_index);
 		// 最后根据索引值获取图片路径
 		String filePath = cursor.getString(column_index);
-		return new String[] { filePath, orientation };
+		return filePath;
 	}
 
 	/*public static void setBitmap(ImageView iv, String[] args) {

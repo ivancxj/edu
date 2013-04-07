@@ -85,8 +85,9 @@ public class CreateTopicActivity extends Activity implements OnClickListener {
 					super.onSuccess(response);
 					LogUtils.I(LogUtils.CREATE_TOPIC, response.toString());
 					UIUtils.showToast(CreateTopicActivity.this, "创建成功");
-					create_topic_name.setText(""); 
-					create_topic_introduce.setText("");
+					finish();
+//					create_topic_name.setText(""); 
+//					create_topic_introduce.setText("");
 				}
 			};
 			User user = AppConfig.getAppConfig(this).getUser();

@@ -29,20 +29,20 @@ import com.edu.lib.util.UIUtils;
 import com.edu.lib.widget.ScrollGridView;
 
 /**
- * 相册
+ * 个人，班级 相册列表
  * 
  * @author ivan
  * 
  */
 public class AlbumFragment extends Fragment implements OnItemClickListener {
 
-	private ArrayList<Album> person_topics = new ArrayList<Album>();
-	private ArrayList<Album> class_topics = new ArrayList<Album>();
+	private ArrayList<Album> user_albums = new ArrayList<Album>();
+	private ArrayList<Album> class_albums = new ArrayList<Album>();
 
 	private ScrollGridView mPersonGridView;
 	private ScrollGridView mClassGridView;
 
-	private TopicAdapter person_adapter;
+	private TopicAdapter user_adapter;
 	private TopicAdapter class_adapter;
 
 	@Override
@@ -62,49 +62,17 @@ public class AlbumFragment extends Fragment implements OnItemClickListener {
 		mClassGridView = (ScrollGridView) getView().findViewById(
 				R.id.grid_class);
 		// 个人
-		person_adapter = new TopicAdapter(getActivity(), person_topics);
-		mPersonGridView.setAdapter(person_adapter);
+		user_adapter = new TopicAdapter(getActivity(), user_albums);
+		mPersonGridView.setAdapter(user_adapter);
 		mPersonGridView.setOnItemClickListener(this);
 
 		// 班级
-		class_adapter = new TopicAdapter(getActivity(), class_topics);
+		class_adapter = new TopicAdapter(getActivity(), class_albums);
 		mClassGridView.setAdapter(class_adapter);
 		mClassGridView.setOnItemClickListener(this);
 		
-		getData();
-	}
-	
-	private void getData(){
-		final ProgressDialog progress = UIUtils.newProgressDialog(getActivity(), "请稍候...");
-		JsonHandler handler = new JsonHandler(getActivity()){
-			@Override
-			public void onStart() {
-				super.onStart();
-				UIUtils.safeShow(progress);
-			}
-			
-			@Override
-			public void onFinish() {
-				super.onFinish();
-				UIUtils.safeDismiss(progress);
-			}
-			@Override
-			public void onSuccess(JSONObject response) {
-				super.onSuccess(response);
-				LogUtils.I(LogUtils.ALBUM_CLASS, response.toString());
-				JSONArray array = response.optJSONArray("classalbumlist");
-				int length = array.length();
-				for(int i=0;i<length;i++){
-					Album album = new Album(array.optJSONObject(i));
-					class_topics.add(album);
-				}
-				
-				class_adapter.notifyDataSetInvalidated();
-			}
-		};
-		User user = AppConfig.getAppConfig(getActivity()).getUser();
-		APIService.GetClassAlbum(user.classID, handler);
 		getUserAlbum();
+		getClassAlbum();
 	}
 	
 	private void  getUserAlbum(){
@@ -129,43 +97,77 @@ public class AlbumFragment extends Fragment implements OnItemClickListener {
 				int length = array.length();
 				for(int i=0;i<length;i++){
 					Album album = new Album(array.optJSONObject(i));
-					person_topics.add(album);
+					user_albums.add(album);
 				}
 				
 				Album album = new Album();
+				album.isNew = true;
+				user_albums.add(album);
 				
-				person_adapter.notifyDataSetInvalidated();
+				user_adapter.notifyDataSetInvalidated();
 			}
 		};
 		User user = AppConfig.getAppConfig(getActivity()).getUser();
 		APIService.GetUserAlbum(user.memberid, handler);
 	}
 	
+	private void getClassAlbum(){
+		JsonHandler handler = new JsonHandler(getActivity()){
+			@Override
+			public void onStart() {
+				super.onStart();
+			}
+			
+			@Override
+			public void onFinish() {
+				super.onFinish();
+			}
+			@Override
+			public void onSuccess(JSONObject response) {
+				super.onSuccess(response);
+				LogUtils.I(LogUtils.ALBUM_CLASS, response.toString());
+				JSONArray array = response.optJSONArray("classalbumlist");
+				int length = array.length();
+				for(int i=0;i<length;i++){
+					Album album = new Album(array.optJSONObject(i));
+					class_albums.add(album);
+				}
+				Album album = new Album();
+				album.isNew = true;
+				class_albums.add(album);
+				class_adapter.notifyDataSetInvalidated();
+			}
+		};
+		User user = AppConfig.getAppConfig(getActivity()).getUser();
+		APIService.GetClassAlbum(user.classID, handler);
+	}
+	
 	
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		Album topic = null;
+		Album album = null;
 		String name = "";
 		int state = 0;
 		if (mPersonGridView == view.getParent()) {
-			topic = person_topics.get(position);
-			name = "[个人相册]" + topic.sName;
+			album = user_albums.get(position);
+			name = "[个人相册]" + album.sName;
 			state = 1;
 		} else if (mClassGridView == view.getParent()) {
-			topic = class_topics.get(position);
-			name = "[班级相册]" + topic.sName;
+			album = class_albums.get(position);
+			name = "[班级相册]" + album.sName;
 			state = 2;
 		}
 		
-		if (topic.isNew) {
+		if (album.isNew) {
 			CreateTopicActivity.startActivity(getActivity(), state);
 		} else {
 			AlbumActivity activity = (AlbumActivity) getActivity();
 			activity.pager.setCurrentItem(1);
 			Intent intent = new Intent();
 			intent.setAction(AlbumActivity.DYNAMICACTION);
-			intent.putExtra("msg", name);
+			intent.putExtra(TopicListFragment.EXTRA_MSG, name);
+			intent.putExtra(TopicListFragment.EXTRA_ALBUM, album);
 			activity.sendBroadcast(intent);
 		}
 
