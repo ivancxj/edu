@@ -1,0 +1,11 @@
+*.DS_Store
+
+*.dex
+*.class
+*.apk
+*.ap_
+.settings
+.settings/
+bin/
+gen/
+android-support-v4.jar

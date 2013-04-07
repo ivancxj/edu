@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/common_backgroud" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:text="班级相册"
+            android:textColor="@color/yellow"
+            android:textSize="30sp" />
+
+        <com.crazysheep.senate.widget.ScrollGridView
+            android:id="@+id/grid_class"
+            style="@style/MyGridView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:columnWidth="@dimen/image_thumbnail_goods_grid_width"
+            android:fadingEdge="none"
+            android:gravity="center"
+            android:horizontalSpacing="@dimen/image_horizontal_spacing"
+            android:numColumns="2"
+            android:padding="@dimen/image_padding"
+            android:scrollbars="none"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="@dimen/image_vertical_spacing" />
+
+        <include layout="@layout/bottom"/>
+    </LinearLayout>
+
+</ScrollView>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:layout_marginBottom="10dp"
+    >
+    
+    <TextView
+        android:id="@+id/comment_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="4dp"
+        android:paddingRight="20dp"
+        android:paddingTop="6dp"
+        android:textColor="@color/white_color"
+        android:text="张三" />
+
+    <TextView
+        android:id="@+id/comment_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="4dp"
+        android:layout_alignTop="@id/img"
+        android:layout_toRightOf="@id/comment_name"
+        android:drawablePadding="4dp"
+        android:paddingTop="6dp"
+        android:textColor="@color/white_color"
+        android:text="2012-12-15 12:12:15" />
+    
+      <TextView
+        android:id="@+id/comment_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_below="@+id/comment_name"
+        android:layout_alignLeft="@+id/comment_name"
+        android:textColor="@color/white_color"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="10dp"
+        android:text="en,好图片" />
+</RelativeLayout>
