@@ -16,8 +16,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.crazysheep.edu.R;
-import com.crazysheep.edu.activity.AlbumActivity;
 import com.crazysheep.edu.activity.CreateTopicActivity;
+import com.crazysheep.edu.activity.TopicListActivity;
 import com.crazysheep.edu.adapter.TopicAdapter;
 import com.edu.lib.api.APIService;
 import com.edu.lib.api.JsonHandler;
@@ -162,13 +162,7 @@ public class AlbumFragment extends Fragment implements OnItemClickListener {
 		if (album.isNew) {
 			CreateTopicActivity.startActivity(getActivity(), state);
 		} else {
-			AlbumActivity activity = (AlbumActivity) getActivity();
-			activity.pager.setCurrentItem(1);
-			Intent intent = new Intent();
-			intent.setAction(AlbumActivity.DYNAMICACTION);
-			intent.putExtra(TopicListFragment.EXTRA_MSG, name);
-			intent.putExtra(TopicListFragment.EXTRA_ALBUM, album);
-			activity.sendBroadcast(intent);
+			TopicListActivity.startActivity(getActivity(), name, album);
 		}
 
 	}

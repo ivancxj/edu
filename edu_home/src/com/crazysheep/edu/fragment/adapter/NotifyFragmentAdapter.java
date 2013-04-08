@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.crazysheep.edu.fragment.NotifyFragment;
+import com.crazysheep.edu.fragment.NotifyF;
 
 public class NotifyFragmentAdapter extends FragmentPagerAdapter{
 	protected static final String[] CONTENT = new String[] {
@@ -37,7 +37,7 @@ public class NotifyFragmentAdapter extends FragmentPagerAdapter{
 
 	@Override
 	public Fragment getItem(int position) {
-		return NotifyFragment.newInstance(CONTENT[position % CONTENT.length]);
+		return NotifyF.newInstance(CONTENT[position % CONTENT.length]);
 	}
 
 	@Override

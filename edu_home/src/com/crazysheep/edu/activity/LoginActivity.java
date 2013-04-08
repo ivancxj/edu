@@ -100,7 +100,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 
 				    // go next activity
 					Intent intent = new Intent(LoginActivity.this,
-							TabHostActivity.class);
+							FragmentChangeActivity.class);
 					startActivity(intent);
 					finish();
 				}
