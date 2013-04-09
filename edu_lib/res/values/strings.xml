@@ -2,4 +2,6 @@
 
     <string name="app_name">edu_lib</string>
 
+    <item name="actionbar" type="id"></item>
+
 </resources>

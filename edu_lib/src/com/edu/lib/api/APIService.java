@@ -216,7 +216,7 @@ public class APIService {
 		RequestParams params = new RequestParams();
 		params.put("userid", userid);
 		params.put("sname", sname);
-		params.put("sdes", sdes);
+		params.put("sdesc", sdes);
 		post(AddUserAlbum, params, handler);
 	}
 	
@@ -357,7 +357,7 @@ public class APIService {
 		RequestParams params = new RequestParams();
 		params.put("userid", userid);
 		params.put("sname", sname);
-		params.put("sdes", sdes);
+		params.put("sdesc", sdes);
 		params.put("classid", classid);
 
 		post(AddClassAlbum, params, handler);

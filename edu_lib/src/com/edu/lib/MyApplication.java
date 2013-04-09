@@ -1,4 +1,4 @@
-package com.crazysheep.edu;
+package com.edu.lib;
 
 import java.io.File;
 import java.io.FileInputStream;

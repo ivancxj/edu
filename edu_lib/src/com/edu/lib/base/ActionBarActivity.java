@@ -1,10 +1,10 @@
-package com.crazysheep.edu.activity;
+package com.edu.lib.base;
 
 import android.content.Context;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
-import com.crazysheep.edu.R;
+import com.edu.lib.R;
 import com.markupartist.android.widget.ActionBar;
 import com.markupartist.android.widget.ActionBar.IntentAction;
 

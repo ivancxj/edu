@@ -21,9 +21,11 @@ import com.crazysheep.edu.R;
 import com.crazysheep.edu.fragment.PhotoFragment;
 import com.edu.lib.api.APIService;
 import com.edu.lib.api.JsonHandler;
+import com.edu.lib.base.ActionBarActivity;
 import com.edu.lib.bean.Photo;
 import com.edu.lib.bean.User;
 import com.edu.lib.util.AppConfig;
+import com.edu.lib.util.CommonUtils;
 import com.edu.lib.util.LogUtils;
 import com.edu.lib.util.UIUtils;
 
@@ -34,9 +36,6 @@ import com.edu.lib.util.UIUtils;
  * 
  */
 public class PhotoActivity extends ActionBarActivity implements OnClickListener {
-
-	private EditText edit;
-	// private TextView submit;
 
 	private ImagePagerAdapter mAdapter;
 	private ViewPager mPager;
@@ -66,9 +65,6 @@ public class PhotoActivity extends ActionBarActivity implements OnClickListener 
 		mActionBar.setTitle("家园通");
 		showBackAction();
 
-		edit = (EditText) findViewById(R.id.comment_publisher_edit);
-		// submit = (EditText)findViewById(R.id.comment_publisher_submit);
-
 		albumID = getIntent().getStringExtra(EXTRA_ALBUM_ID);
 		photos = (ArrayList<Photo>) getIntent().getSerializableExtra(
 				EXTRA_PHOTOS);
@@ -77,8 +73,6 @@ public class PhotoActivity extends ActionBarActivity implements OnClickListener 
 				photos.size());
 		mPager = (ViewPager) findViewById(R.id.pager);
 		mPager.setAdapter(mAdapter);
-		// mPager.setPageMargin((int) getResources().getDimension(
-		// R.dimen.image_detail_pager_margin));
 		mPager.setOffscreenPageLimit(2);
 
 		final int extraCurrentItem = getIntent().getIntExtra(
@@ -110,13 +104,13 @@ public class PhotoActivity extends ActionBarActivity implements OnClickListener 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.comment:// 查看评论
-			Intent intent = new Intent(this, CommentActivity.class);
-			startActivity(intent);
-			break;
+//		case R.id.comment_count:// 查看评论
+//			PhotoFragment fragment = (PhotoFragment)mAdapter.getItem( mPager.getCurrentItem());
+//			CommentActivity.startActivity(this, fragment.comments);
+//			break;
 		// 发表评论
 		case R.id.comment_publisher_submit:
-			publisher();
+			sendComment();
 			break;
 		default:
 			break;
@@ -124,7 +118,9 @@ public class PhotoActivity extends ActionBarActivity implements OnClickListener 
 
 	}
 
-	private void publisher() {
+	// 发表评论
+	private void sendComment() {
+		final EditText edit = (EditText) findViewById(R.id.comment_publisher_edit);
 		if (TextUtils.isEmpty(edit.getText().toString())) {
 			UIUtils.showToast(this, "请输入评论");
 			return;
@@ -149,6 +145,11 @@ public class PhotoActivity extends ActionBarActivity implements OnClickListener 
 			public void onSuccess(JSONObject response) {
 				super.onSuccess(response);
 				LogUtils.I(LogUtils.COMMENT, response.toString());
+				
+				edit.setText("");
+				CommonUtils.hideInputKeyboard(PhotoActivity.this, edit.getWindowToken());
+				
+				UIUtils.showToast(PhotoActivity.this, "评论成功");
 			}
 		};
 		User user = AppConfig.getAppConfig(this).getUser();

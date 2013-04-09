@@ -36,7 +36,9 @@ import com.edu.lib.widget.ScrollGridView;
  */
 public class AlbumFragment extends Fragment implements OnItemClickListener {
 
-	private ArrayList<Album> user_albums = new ArrayList<Album>();
+	private final static int REQUESTCODE = 101;
+	
+	private ArrayList<Album> user_albums = null;
 	private ArrayList<Album> class_albums = new ArrayList<Album>();
 
 	private ScrollGridView mPersonGridView;
@@ -62,8 +64,6 @@ public class AlbumFragment extends Fragment implements OnItemClickListener {
 		mClassGridView = (ScrollGridView) getView().findViewById(
 				R.id.grid_class);
 		// 个人
-		user_adapter = new TopicAdapter(getActivity(), user_albums);
-		mPersonGridView.setAdapter(user_adapter);
 		mPersonGridView.setOnItemClickListener(this);
 
 		// 班级
@@ -95,6 +95,7 @@ public class AlbumFragment extends Fragment implements OnItemClickListener {
 				LogUtils.I(LogUtils.ALBUM_USER, response.toString());
 				JSONArray array = response.optJSONArray("useralbumlist");
 				int length = array.length();
+				user_albums = new ArrayList<Album>();
 				for(int i=0;i<length;i++){
 					Album album = new Album(array.optJSONObject(i));
 					user_albums.add(album);
@@ -104,23 +105,31 @@ public class AlbumFragment extends Fragment implements OnItemClickListener {
 				album.isNew = true;
 				user_albums.add(album);
 				
+				user_adapter = new TopicAdapter(getActivity(), user_albums);
+				mPersonGridView.setAdapter(user_adapter);
 				user_adapter.notifyDataSetInvalidated();
 				
 				array = response.optJSONArray("classalbumlist");
 				length = array.length();
+				class_albums.clear();
 				for(int i=0;i<length;i++){
 					album = new Album(array.optJSONObject(i));
 					class_albums.add(album);
 				}
-				album = new Album();
-				album.isNew = true;
-				class_albums.add(album);
 				class_adapter.notifyDataSetInvalidated();
 			}
 		};
 		User user = AppConfig.getAppConfig(getActivity()).getUser();
 		if(user != null)
 			APIService.GetUserAlbum(user.memberid,user.classID, handler);
+	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if(requestCode == REQUESTCODE && resultCode == getActivity().RESULT_OK){
+			getUserAlbum();
+		}
 	}
 	
 	@Override
@@ -140,7 +149,7 @@ public class AlbumFragment extends Fragment implements OnItemClickListener {
 		}
 		
 		if (album.isNew) {
-			CreateTopicActivity.startActivity(getActivity(), state);
+			CreateTopicActivity.startActivity(getActivity(), state,REQUESTCODE);
 		} else {
 			TopicListActivity.startActivity(getActivity(), name, album);
 		}

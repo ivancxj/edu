@@ -1,5 +1,8 @@
 package com.crazysheep.edu.fragment;
 
+import java.util.ArrayList;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.ProgressDialog;
@@ -16,6 +19,7 @@ import com.crazysheep.edu.activity.FragmentChangeActivity;
 import com.crazysheep.edu.fragment.adapter.NotifyFragmentAdapter;
 import com.edu.lib.api.APIService;
 import com.edu.lib.api.JsonHandler;
+import com.edu.lib.bean.Announcement;
 import com.edu.lib.bean.User;
 import com.edu.lib.util.AppConfig;
 import com.edu.lib.util.LogUtils;
@@ -30,6 +34,8 @@ import com.viewpagerindicator.CirclePageIndicator;
  */
 public class NotifyFragment extends Fragment {
 
+	ArrayList<Announcement> announcements = new ArrayList<Announcement>();
+	
 	NotifyFragmentAdapter mAdapter;
 	ViewPager mPager;
 	CirclePageIndicator mIndicator;
@@ -50,7 +56,6 @@ public class NotifyFragment extends Fragment {
 		super.onActivityCreated(savedInstanceState);
 
 		mAdapter = new NotifyFragmentAdapter(getChildFragmentManager());
-
 		mPager = (ViewPager) getView().findViewById(R.id.pager);
 		mPager.setAdapter(mAdapter);
 
@@ -113,6 +118,18 @@ public class NotifyFragment extends Fragment {
 			public void onSuccess(JSONObject response) {
 				super.onSuccess(response);
 				LogUtils.I(LogUtils.NOTIFY, response.toString());
+				JSONArray array = response.optJSONArray("announcements");
+				if(array == null)
+					return;
+				int length = array.length();
+				for(int i=0;i<length;i++){
+					Announcement announcement = new Announcement(array.optJSONObject(i));
+					announcements.add(announcement);
+				}
+				
+				mAdapter.announcements = announcements;
+				mAdapter.notifyDataSetChanged();
+				
 			}
 		};
 		User user = AppConfig.getAppConfig(getActivity()).getUser();

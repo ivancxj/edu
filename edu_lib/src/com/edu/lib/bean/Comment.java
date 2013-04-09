@@ -1,8 +1,11 @@
 package com.edu.lib.bean;
 
+import java.io.Serializable;
+
 import org.json.JSONObject;
 
-public class Comment {
+public class Comment implements Serializable{
+	private static final long serialVersionUID = 7280298803539125460L;
 	public String id;//评价id
 	public String userid;//相册所有者
 	public String albumid;//相册id
@@ -10,13 +13,7 @@ public class Comment {
 	public String cont;//内容
 	public String expression;//标题
 	public String intime;//评价时间
-	
-	// tmp
-	public String name;
-
-	public Comment() {
-	}
-	
+	//photoalbumforums
 	public Comment(JSONObject response) {
 		this.id = response.optString("id");
 		this.userid = response.optString("userid");
@@ -26,11 +23,4 @@ public class Comment {
 		this.expression = response.optString("expression");
 		this.intime = response.optString("intime");
 	}
-	// photoalbumforums
-	public Comment(String name, String time, String cont) {
-		this.name = name;
-		this.intime = time;
-		this.cont = cont;
-	}
-
 }

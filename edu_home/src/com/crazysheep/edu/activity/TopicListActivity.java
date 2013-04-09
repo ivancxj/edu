@@ -21,6 +21,7 @@ import com.crazysheep.edu.R;
 import com.crazysheep.edu.adapter.PhotoAdapter;
 import com.edu.lib.api.APIService;
 import com.edu.lib.api.JsonHandler;
+import com.edu.lib.base.ActionBarActivity;
 import com.edu.lib.bean.Album;
 import com.edu.lib.bean.Photo;
 import com.edu.lib.bean.User;
@@ -145,6 +146,8 @@ public class TopicListActivity extends ActionBarActivity implements OnItemClickL
 				LogUtils.I(LogUtils.UPLOAD_PHOTO, response.toString());
 				Toast.makeText(TopicListActivity.this, "上传成功", Toast.LENGTH_SHORT).show();
 				findViewById(R.id.photo).setVisibility(View.GONE);
+				//TODO
+				// 添加新的图片？ updateAlbumPhotoLis()
 			}
 		};
 		User user = AppConfig.getAppConfig(this).getUser();
