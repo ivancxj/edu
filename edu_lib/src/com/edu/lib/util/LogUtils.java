@@ -11,6 +11,8 @@ public class LogUtils {
 	public static final String PhotoList = "PhotoList";
 	public static final String COMMENT = "comment";
 	public static final String NOTIFY = "notify";
+	public static final String StudentRecord = "student_record";
+	public static final String CREATE_NOTIFY = "create_notify";
 	public static final String CREATE_TOPIC = "create_topic";
 	public static final String UPLOAD_PHOTO = "upload_photo";
 	

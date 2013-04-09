@@ -38,7 +38,7 @@
                 android:src="@drawable/icon_logr" />
 
             <EditText
-                android:id="@+id/name"
+                android:id="@+id/login_name"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_toLeftOf="@+id/image2"
@@ -73,10 +73,12 @@
                 android:src="@drawable/icon_logs" />
 
             <EditText
-                android:id="@+id/password"
+                android:id="@+id/login_password"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@null"
+                android:inputType="textPassword"
+                android:text="sRYVHy>m6Tgx"
                 android:hint="请输入密码" />
         </LinearLayout>
     </LinearLayout>
@@ -87,7 +89,7 @@
         android:layout_margin="10dp">
 
         <CheckBox
-            android:id="@+id/rember"
+            android:id="@+id/login_rember"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="50dp"
@@ -95,7 +97,7 @@
         </CheckBox>
 
         <CheckBox
-            android:id="@+id/autologin"
+            android:id="@+id/login_autologin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="自动登陆" >
@@ -103,7 +105,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/login"
+        android:id="@+id/login_btn"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginLeft="8dp"

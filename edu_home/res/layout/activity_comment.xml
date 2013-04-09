@@ -4,14 +4,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
+    <com.markupartist.android.widget.ActionBar
+        android:id="@+id/actionbar"
+        style="@style/ActionBar" />
+
+    <!--
+          TextView
         style="@style/ActionBar"
         android:gravity="center"
         android:text="@string/app_name"
         android:textColor="@color/title_color"
-        android:textSize="@dimen/title_size" />
+        android:textSize="@dimen/title_size" /
+    -->
 
-    <RelativeLayout
+
+    <!--
+    RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@color/darkgrey" >
@@ -37,17 +45,17 @@
             android:textColor="@color/white_color"
             android:text="评论"
             android:textSize="20sp" />
-    </RelativeLayout>
+    </RelativeLayout
+    -->
 
     <ListView
         android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingLeft="12dp"
+        android:background="@color/add_state_color_waiting"
         android:cacheColorHint="@null"
-        android:background="@color/add_state_color_waiting" >
-
+        android:paddingLeft="12dp" >
     </ListView>
 
     <include

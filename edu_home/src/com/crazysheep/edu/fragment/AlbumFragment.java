@@ -72,7 +72,7 @@ public class AlbumFragment extends Fragment implements OnItemClickListener {
 		mClassGridView.setOnItemClickListener(this);
 		
 		getUserAlbum();
-		getClassAlbum();
+//		getClassAlbum();
 	}
 	
 	private void  getUserAlbum(){
@@ -93,7 +93,7 @@ public class AlbumFragment extends Fragment implements OnItemClickListener {
 			public void onSuccess(JSONObject response) {
 				super.onSuccess(response);
 				LogUtils.I(LogUtils.ALBUM_USER, response.toString());
-				JSONArray array = response.optJSONArray("classalbumlist");
+				JSONArray array = response.optJSONArray("useralbumlist");
 				int length = array.length();
 				for(int i=0;i<length;i++){
 					Album album = new Album(array.optJSONObject(i));
@@ -105,43 +105,23 @@ public class AlbumFragment extends Fragment implements OnItemClickListener {
 				user_albums.add(album);
 				
 				user_adapter.notifyDataSetInvalidated();
-			}
-		};
-		User user = AppConfig.getAppConfig(getActivity()).getUser();
-		APIService.GetUserAlbum(user.memberid, handler);
-	}
-	
-	private void getClassAlbum(){
-		JsonHandler handler = new JsonHandler(getActivity()){
-			@Override
-			public void onStart() {
-				super.onStart();
-			}
-			
-			@Override
-			public void onFinish() {
-				super.onFinish();
-			}
-			@Override
-			public void onSuccess(JSONObject response) {
-				super.onSuccess(response);
-				LogUtils.I(LogUtils.ALBUM_CLASS, response.toString());
-				JSONArray array = response.optJSONArray("classalbumlist");
-				int length = array.length();
+				
+				array = response.optJSONArray("classalbumlist");
+				length = array.length();
 				for(int i=0;i<length;i++){
-					Album album = new Album(array.optJSONObject(i));
+					album = new Album(array.optJSONObject(i));
 					class_albums.add(album);
 				}
-				Album album = new Album();
+				album = new Album();
 				album.isNew = true;
 				class_albums.add(album);
 				class_adapter.notifyDataSetInvalidated();
 			}
 		};
 		User user = AppConfig.getAppConfig(getActivity()).getUser();
-		APIService.GetClassAlbum(user.classID, handler);
+		if(user != null)
+			APIService.GetUserAlbum(user.memberid,user.classID, handler);
 	}
-	
 	
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,

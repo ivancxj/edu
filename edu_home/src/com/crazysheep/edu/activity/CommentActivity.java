@@ -12,7 +12,7 @@ import com.crazysheep.edu.R;
 import com.crazysheep.edu.adapter.CommentAdapter;
 import com.edu.lib.bean.Comment;
 
-public class CommentActivity extends Activity implements OnClickListener{
+public class CommentActivity extends ActionBarActivity implements OnClickListener{
 
 	ListView listview;
 	CommentAdapter adapter;
@@ -22,6 +22,9 @@ public class CommentActivity extends Activity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_comment);
+		bindActionBar();
+		mActionBar.setTitle("评论");
+		showBackAction();
 		testData();
 		
 		listview = (ListView)findViewById(R.id.listview);
@@ -48,9 +51,6 @@ public class CommentActivity extends Activity implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.back:
-			finish();
-			break;
 
 		default:
 			break;

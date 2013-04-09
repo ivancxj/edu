@@ -61,8 +61,8 @@ public class PhotoAdapter extends BaseAdapter {
 
 		Photo topic = photos.get(position);
 		
-		if (!TextUtils.isEmpty(topic.imgUrl)) {
-			ImageLoader.getInstance().displayImage(topic.imgUrl,
+		if (!TextUtils.isEmpty(topic.FullName)) {
+			ImageLoader.getInstance().displayImage(topic.FullName,
 					holder.img, options);
 		}
 

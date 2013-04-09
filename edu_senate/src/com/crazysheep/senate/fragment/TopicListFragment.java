@@ -83,11 +83,10 @@ public class TopicListFragment extends Fragment implements OnItemClickListener{
 	}
 	
 	private void testData(){
-		Photo photo = new Photo("http://d01.res.meilishuo.net/pic/r/15/02/e3f9f9d4a85872b11342c4bd419e_445_650.jpeg");
-		photos.add(photo);
-		photo = new Photo("http://imgtest-lx.meilishuo.net/pic/r/2d/2d/1b2fa1092814bbc621c13785b3f0_319_479.jpg");
-		photos.add(photo);
-	
+//		Photo photo = new Photo("http://d01.res.meilishuo.net/pic/r/15/02/e3f9f9d4a85872b11342c4bd419e_445_650.jpeg");
+//		photos.add(photo);
+//		photo = new Photo("http://imgtest-lx.meilishuo.net/pic/r/2d/2d/1b2fa1092814bbc621c13785b3f0_319_479.jpg");
+//		photos.add(photo);
 
 	}
 

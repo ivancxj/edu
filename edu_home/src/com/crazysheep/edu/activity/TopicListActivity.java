@@ -2,6 +2,7 @@ package com.crazysheep.edu.activity;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -14,7 +15,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.crazysheep.edu.R;
 import com.crazysheep.edu.adapter.PhotoAdapter;
@@ -28,6 +29,7 @@ import com.edu.lib.util.LogUtils;
 import com.edu.lib.util.TakePhotoUtils;
 import com.edu.lib.util.UIUtils;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
+import com.markupartist.android.widget.ActionBar.IntentAction;
 
 /**
  * 主题列表 相册照片列表
@@ -35,21 +37,20 @@ import com.handmark.pulltorefresh.library.PullToRefreshGridView;
  * @author ivan
  * 
  */
-public class TopicListActivity extends Activity implements OnItemClickListener,
+public class TopicListActivity extends ActionBarActivity implements OnItemClickListener,
 		OnClickListener {
 
 	private ArrayList<Photo> photos = new ArrayList<Photo>();
 	private PullToRefreshGridView gridView;
 	private PhotoAdapter adapter;
 
-	private TextView name;
 	public final static String EXTRA_FILENAME = "extra_filename";
 	public final static String EXTRA_MSG = "extra_msg";
 	public final static String EXTRA_ALBUM = "extra_album";
 	private Album album;
 
 	private TakePhotoUtils takePhoto;
-
+	
 	public static void startActivity(Context context, String msg, Album album) {
 		Intent intent = new Intent(context, TopicListActivity.class);
 		intent.putExtra(EXTRA_MSG, msg);
@@ -61,22 +62,29 @@ public class TopicListActivity extends Activity implements OnItemClickListener,
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_topic_list);
+		String msg = getIntent().getStringExtra(EXTRA_MSG);
+//		name.setText(msg);
+		
+		bindActionBar();
+		mActionBar.setTitle(msg);
+		mActionBar.addAction(new IntentAction(this,"上传",null){
+		     @Override
+	            public void performAction(View view) {
+	                super.performAction(view);
+	                findViewById(R.id.photo).setVisibility(View.VISIBLE);
+	            }
+		});
+		
+		album = (Album) getIntent().getSerializableExtra(EXTRA_ALBUM);
 
 		takePhoto = new TakePhotoUtils(this);
-
-		name = (TextView) findViewById(R.id.name);
 
 		gridView = (PullToRefreshGridView) findViewById(R.id.grid_view);
 		adapter = new PhotoAdapter(this, photos);
 		gridView.setAdapter(adapter);
 		gridView.setOnItemClickListener(this);
-		adapter.notifyDataSetInvalidated();
 
-		String msg = getIntent().getStringExtra(EXTRA_MSG);
-		name.setText(msg);
-		album = (Album) getIntent().getSerializableExtra(EXTRA_ALBUM);
 		updateAlbumPhotoLis();
-		testData();
 	};
 
 	@Override
@@ -135,6 +143,8 @@ public class TopicListActivity extends Activity implements OnItemClickListener,
 			public void onSuccess(JSONObject response) {
 				super.onSuccess(response);
 				LogUtils.I(LogUtils.UPLOAD_PHOTO, response.toString());
+				Toast.makeText(TopicListActivity.this, "上传成功", Toast.LENGTH_SHORT).show();
+				findViewById(R.id.photo).setVisibility(View.GONE);
 			}
 		};
 		User user = AppConfig.getAppConfig(this).getUser();
@@ -152,21 +162,35 @@ public class TopicListActivity extends Activity implements OnItemClickListener,
 	}
 
 	private void updateAlbumPhotoLis() {
+		final ProgressDialog progress = UIUtils.newProgressDialog(this,
+				"请稍等..");
 		JsonHandler handler = new JsonHandler(this) {
 			@Override
 			public void onStart() {
 				super.onStart();
+				UIUtils.safeShow(progress);
 			}
 
 			@Override
 			public void onFinish() {
 				super.onFinish();
+				UIUtils.safeDismiss(progress);
 			}
 
 			@Override
 			public void onSuccess(JSONObject response) {
 				super.onSuccess(response);
 				LogUtils.I(LogUtils.PhotoList, response.toString());
+				JSONArray array = response.optJSONArray("photofileinfos");
+				if(array != null){
+					int length = array.length();
+					for(int i=0;i<length;i++){
+						Photo photo = new Photo(array.optJSONObject(i));
+						photos.add(photo);
+					}
+					
+					adapter.notifyDataSetInvalidated();
+				}
 			}
 		};
 		User user = AppConfig.getAppConfig(this).getUser();
@@ -177,14 +201,6 @@ public class TopicListActivity extends Activity implements OnItemClickListener,
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.back:
-			finish();
-			break;
-
-		case R.id.upload:
-			findViewById(R.id.photo).setVisibility(View.VISIBLE);
-			break;
-
 		case R.id.tabhost_take:// 拍照
 			takePhoto.doTakePhoto();
 			break;
@@ -199,20 +215,10 @@ public class TopicListActivity extends Activity implements OnItemClickListener,
 
 	}
 
-	private void testData() {
-		Photo photo = new Photo(
-				"http://d01.res.meilishuo.net/pic/r/15/02/e3f9f9d4a85872b11342c4bd419e_445_650.jpeg");
-		photos.add(photo);
-		photo = new Photo(
-				"http://imgtest-lx.meilishuo.net/pic/r/2d/2d/1b2fa1092814bbc621c13785b3f0_319_479.jpg");
-		photos.add(photo);
-
-	}
-
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		Intent intent = new Intent(this, PhotoActivity.class);
-		startActivity(intent);
+		
+		PhotoActivity.startActivity(this, album.albumID, position, photos);
 	}
 }

@@ -94,8 +94,9 @@ public class AppConfig {
 			.commit();
 	}
 	public User getUser(){
-		if(get("user.memberid") == null)
+		if(get("user.memberid") == null){
 			return null;
+		}
 		User user = new User();
 		user.memberid = get("user.memberid");
 		user.gradeType = get("user.gradeType");

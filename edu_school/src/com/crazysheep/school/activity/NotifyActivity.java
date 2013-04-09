@@ -1,5 +1,8 @@
 package com.crazysheep.school.activity;
 
+import org.json.JSONObject;
+
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,6 +13,12 @@ import android.view.View.OnClickListener;
 
 import com.crazysheep.school.R;
 import com.crazysheep.school.fragment.adapter.NotifyFragmentAdapter;
+import com.edu.lib.api.APIService;
+import com.edu.lib.api.JsonHandler;
+import com.edu.lib.bean.User;
+import com.edu.lib.util.AppConfig;
+import com.edu.lib.util.LogUtils;
+import com.edu.lib.util.UIUtils;
 import com.viewpagerindicator.CirclePageIndicator;
 
 /**
@@ -41,6 +50,8 @@ public class NotifyActivity extends FragmentActivity implements OnClickListener 
 		mIndicator.setRadius(4 * density);
 		mIndicator.setPageColor(0xFFFFFFFF);
 		mIndicator.setFillColor(Color.rgb(11,12,0));
+		
+		create();
 	}
 
 	@Override
@@ -55,5 +66,31 @@ public class NotifyActivity extends FragmentActivity implements OnClickListener 
 			break;
 		}
 		
+	}
+	
+	private void create() {
+		final ProgressDialog progress = UIUtils
+				.newProgressDialog(this, "请稍等..");
+		JsonHandler handler = new JsonHandler(this) {
+			@Override
+			public void onStart() {
+				super.onStart();
+				UIUtils.safeShow(progress);
+			}
+
+			@Override
+			public void onFinish() {
+				super.onFinish();
+				UIUtils.safeDismiss(progress);
+			}
+
+			@Override
+			public void onSuccess(JSONObject response) {
+				super.onSuccess(response);
+				LogUtils.I(LogUtils.StudentRecord, response.toString());
+			}
+		};
+		User user = AppConfig.getAppConfig(this).getUser();
+		APIService.GetGardenAnnouncement(user.gardenID, handler);
 	}
 }
