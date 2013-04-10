@@ -2,28 +2,33 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/common_backgroud"
-     >
+    android:background="@drawable/common_backgroud" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <TextView
+        <!--
+              TextView
             style="@style/ActionBar"
             android:gravity="center"
             android:text="@string/app_name"
             android:textColor="@color/title_color"
-            android:textSize="@dimen/title_size" />
+            android:textSize="@dimen/title_size" /
+        -->
+
+        <com.markupartist.android.widget.ActionBar
+            android:id="@id/actionbar"
+            style="@style/ActionBar" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_gravity="center"
+            android:background="@color/white_color"
             android:gravity="center"
             android:paddingLeft="10dp"
-            android:background="@color/white_color"
             android:paddingRight="10dp" >
 
             <TextView
@@ -32,7 +37,8 @@
                 android:layout_centerVertical="true"
                 android:text="收件人: 全班同学" />
 
-            <Button
+            <!--
+                  Button
                 android:id="@+id/cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -40,14 +46,9 @@
                 android:layout_centerVertical="true"
                 android:onClick="onClick"
                 style="@style/btn"
-                android:text="取消" />
+                android:text="取消" /
+            -->
         </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="65dp" 
-            android:layout_marginBottom="8dp"
-            />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -58,14 +59,40 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_weight="3"
+                    android:gravity="right"
+                    android:text="主题名:" />
+
+                <EditText
+                    android:id="@+id/create_notify_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="8" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2.5" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
                 <EditText
-                    android:id="@+id/introduce_edit"
+                    android:id="@+id/create_notify_content"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="4"
                     android:layout_marginLeft="10dp"
+                    android:layout_weight="4"
+                    android:gravity="top"
                     android:lines="5" />
 
                 <LinearLayout
@@ -73,27 +100,26 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                    >
+                    android:paddingTop="10dp" >
 
                     <TextView
-                        android:id="@+id/count"
+                        android:id="@+id/create_notify_count"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:text="20/70" />
+                        android:maxLength="70"
+                        android:text="70/70" />
 
                     <Button
                         android:id="@+id/ok"
+                        style="@style/btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
                         android:layout_weight="0"
                         android:onClick="onClick"
-                        style="@style/btn"
-                        android:layout_gravity="center_horizontal"
                         android:text="确定" />
-                    
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

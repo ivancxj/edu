@@ -54,7 +54,7 @@ public class CommentAdapter extends BaseAdapter {
 		}
 		
 		Comment comment = comments.get(position);
-//		holder.name.setText(comment.)
+		holder.name.setText(comment.UserName);
 		holder.time.setText(comment.intime);
 		holder.content.setText(comment.cont);
 		

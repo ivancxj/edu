@@ -146,8 +146,10 @@ public class TopicListActivity extends ActionBarActivity implements OnItemClickL
 				LogUtils.I(LogUtils.UPLOAD_PHOTO, response.toString());
 				Toast.makeText(TopicListActivity.this, "上传成功", Toast.LENGTH_SHORT).show();
 				findViewById(R.id.photo).setVisibility(View.GONE);
-				//TODO
-				// 添加新的图片？ updateAlbumPhotoLis()
+				response = response.optJSONObject("photofileinfo");
+				Photo photo = new Photo(response);
+				photos.add(photo);
+				adapter.notifyDataSetInvalidated();
 			}
 		};
 		User user = AppConfig.getAppConfig(this).getUser();

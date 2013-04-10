@@ -5,14 +5,21 @@
     android:background="@drawable/common_backgroud"
     android:orientation="vertical" >
 
-    <TextView
+    <!--
+          TextView
         style="@style/ActionBar"
         android:gravity="center"
         android:text="@string/app_name"
         android:textColor="@color/title_color"
-        android:textSize="@dimen/title_size" />
+        android:textSize="@dimen/title_size" /
+    -->
 
-    <RelativeLayout
+    <com.markupartist.android.widget.ActionBar
+        android:id="@id/actionbar"
+        style="@style/ActionBar" />
+
+    <!--
+    RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@color/darkgrey" >
@@ -38,7 +45,8 @@
             android:text="园所出勤"
             android:textColor="@color/white_color"
             android:textSize="20sp" />
-    </RelativeLayout>
+    </RelativeLayout
+    -->
 
     <ScrollView
         android:layout_width="match_parent"
@@ -59,7 +67,7 @@
                 android:layout_marginBottom="10dp"
                 android:drawableLeft="@drawable/yz_1"
                 android:drawablePadding="6dp"
-                android:text="老师缺勤名单" />
+                android:text="幼儿缺勤名单" />
 
             <View
                 android:layout_width="match_parent"
@@ -67,40 +75,32 @@
                 android:background="@color/red" />
 
             <LinearLayout
+                android:id="@+id/attendance_detail_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:gravity="center" >
+                android:orientation="vertical" >
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <!--  LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="大一班" />
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center" >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:text="王小帅" />
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/attendance_detail_grade"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="大一班" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:gravity="center" >
+                    <TextView
+                        android:id="@+id/attendance_detail_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:text="王小帅" />
+                </LinearLayout-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="小一班" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:text="林小业" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

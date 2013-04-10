@@ -60,6 +60,9 @@ public class APIService {
 	// 获取学生出勤列表
 	private final static String GetStudentCardRecords = URL_API_HOST
 			+ "GetStudentCardRecords";
+	// 修改学生出勤状态
+	private final static String UpdateStudentCardRecord = URL_API_HOST
+			+ "UpdateStudentCardRecord";
 
 	/*****************************************
 	 * 园长通（园长用）
@@ -82,7 +85,7 @@ public class APIService {
 	// 获取老师列表
 	private final static String GetTeacherList = URL_API_HOST
 			+ "GetTeacherList";
-	
+
 	/*****************************************
 	 * 暂时用不到接口
 	 ****************************************/
@@ -92,7 +95,7 @@ public class APIService {
 		params.put("classid", classid);
 		get(GetFriendAlbum, params, handler);
 	}
-	
+
 	/**
 	 * 修改相册信息
 	 * 
@@ -111,9 +114,9 @@ public class APIService {
 		params.put("sdes", sdes);
 		post(UpdateAlbumInfo, params, handler);
 	}
-	
+
 	/*****************************************
-	 * 公共接口 
+	 * 公共接口
 	 ****************************************/
 	/**
 	 * @param uname
@@ -126,7 +129,7 @@ public class APIService {
 		params.put("pass", pass);
 		post(CheckLogin, params, handler);
 	}
-	
+
 	/**
 	 * ok 获取个人/班级相册照片列表
 	 * 
@@ -148,7 +151,7 @@ public class APIService {
 		params.put("userid", userid);
 		get(GetAlbumPhotoList, params, handler);
 	}
-	
+
 	/**
 	 * ok 上传相册照片
 	 * 
@@ -183,7 +186,7 @@ public class APIService {
 		}
 		post(UploadAlbumPhotos, params, handler);
 	}
-	
+
 	/*****************************************
 	 * 家务通（家长用的） TODO
 	 ****************************************/
@@ -200,7 +203,7 @@ public class APIService {
 		params.put("classid", classid);
 		get(GetUserAlbum, params, handler);
 	}
-	
+
 	/**
 	 * 添加个人相册信息
 	 * 
@@ -219,8 +222,7 @@ public class APIService {
 		params.put("sdesc", sdes);
 		post(AddUserAlbum, params, handler);
 	}
-	
-	
+
 	/*****************************************
 	 * 教务通（老师用的）TODO
 	 ****************************************/
@@ -243,8 +245,8 @@ public class APIService {
 		RequestParams params = new RequestParams();
 		params.put("albumID", albumID);
 		params.put("photoname", photoname);
-		params.put("title", "");
 		params.put("formuserid", formuserid);
+		params.put("title", "");
 		params.put("Content", Content);
 		post(SendPhotoAlbumForum, params, handler);
 	}
@@ -262,8 +264,6 @@ public class APIService {
 		params.put("photoname", photoname);
 		post(GetPhotoAlbumForum, params, handler);
 	}
-
-
 
 	/**
 	 * 获取班级最新的5条公告信息
@@ -325,6 +325,15 @@ public class APIService {
 		params.put("classid", classid);
 		params.put("userid", userid);
 		post(GetStudentCardRecords, params, handler);
+	}
+	/**
+	 * 修改学生出勤状态
+	 * @param Id 考勤id
+	 */
+	public static void UpdateStudentCardRecord(String Id, AsyncHttpResponseHandler handler) {
+		RequestParams params = new RequestParams();
+		params.put("Id", Id);
+		post(UpdateStudentCardRecord, params, handler);
 	}
 
 	/**

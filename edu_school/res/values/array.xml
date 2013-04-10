@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="menu_names">
+        <item>园所出勤</item>
+        <item>园所通知</item>
+        <item>园内信息</item>
+    </string-array>
+
+    <string-array name="menu_imgs">
+        <item>@drawable/ic_album</item>
+        <item>@drawable/ic_notif</item>
+        <item>@drawable/ic_album</item>
+    </string-array>
+
+</resources>

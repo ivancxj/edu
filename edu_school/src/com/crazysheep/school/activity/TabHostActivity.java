@@ -43,11 +43,11 @@ public class TabHostActivity extends TabActivity implements
 
 	private void setupIntent() {
 		this.mHost = getTabHost();
-		this.mHost.addTab(buildTabSpec("attendance", "attendance",
-				AttendanceActivity.class));
-		this.mHost
-				.addTab(buildTabSpec("notify", "notify", NotifyActivity.class));
-		this.mHost.addTab(buildTabSpec("info", "info", InfoActivity.class));
+//		this.mHost.addTab(buildTabSpec("attendance", "attendance",
+//				AttendanceActivity.class));
+//		this.mHost
+//				.addTab(buildTabSpec("notify", "notify", NotifyActivity.class));
+//		this.mHost.addTab(buildTabSpec("info", "info", InfoActivity.class));
 		this.mHost.addTab(buildTabSpec("setting", "setting",
 				SettingActivity.class));
 

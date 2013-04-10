@@ -1,5 +1,11 @@
 package com.crazysheep.senate.fragment;
 
+import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -9,23 +15,33 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.crazysheep.senate.R;
+import com.edu.lib.api.APIService;
+import com.edu.lib.api.JsonHandler;
+import com.edu.lib.bean.Comment;
+import com.edu.lib.bean.Photo;
+import com.edu.lib.util.LogUtils;
+import com.edu.lib.util.UIUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class PhotoFragment extends Fragment {
+// 相册详情
+public class PhotoFragment extends Fragment{
 
-	private static final String IMAGE_DATA_EXTRA = "extra_image_data";
-	private String mImageUrl;
+	private final static String EXTRA_ALBUM_ID = "extra_album_id";
+	private static final String EXTRA_PHOTO_DATA = "extra_photo_data";
+	private String albumID;
+	private Photo photo;
 	private ImageView mImageView;
 
 	private DisplayImageOptions options = new DisplayImageOptions.Builder()
 			.cacheInMemory().cacheOnDisc().build();
 
-	public static PhotoFragment newInstance(String imageUrl) {
+	public static PhotoFragment newInstance(String albumID, Photo photo) {
 		final PhotoFragment f = new PhotoFragment();
 
 		final Bundle args = new Bundle();
-		args.putString(IMAGE_DATA_EXTRA, imageUrl);
+		args.putString(EXTRA_ALBUM_ID, albumID);
+		args.putSerializable(EXTRA_PHOTO_DATA, photo);
 		f.setArguments(args);
 
 		return f;
@@ -34,8 +50,10 @@ public class PhotoFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		mImageUrl = getArguments() != null ? getArguments().getString(
-				IMAGE_DATA_EXTRA) : null;
+		if (getArguments() != null) {
+			albumID = getArguments().getString(EXTRA_ALBUM_ID);
+			photo = (Photo) getArguments().getSerializable(EXTRA_PHOTO_DATA);
+		}
 	}
 
 	@Override
@@ -50,8 +68,8 @@ public class PhotoFragment extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		if (!TextUtils.isEmpty(mImageUrl)) {
-			ImageLoader.getInstance().displayImage(mImageUrl, mImageView,
+		if (!TextUtils.isEmpty(photo.FullName)) {
+			ImageLoader.getInstance().displayImage(photo.FullName, mImageView,
 					options);
 		}
 	}
@@ -63,5 +81,4 @@ public class PhotoFragment extends Fragment {
 			mImageView.setImageDrawable(null);
 		}
 	}
-
 }

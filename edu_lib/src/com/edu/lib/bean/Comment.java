@@ -13,6 +13,8 @@ public class Comment implements Serializable{
 	public String cont;//内容
 	public String expression;//标题
 	public String intime;//评价时间
+	public String photoname;
+	public String UserName;
 	//photoalbumforums
 	public Comment(JSONObject response) {
 		this.id = response.optString("id");
@@ -22,5 +24,7 @@ public class Comment implements Serializable{
 		this.cont = response.optString("cont");
 		this.expression = response.optString("expression");
 		this.intime = response.optString("intime");
+		this.photoname = response.optString("photoname");
+		this.UserName = response.optString("UserName");
 	}
 }

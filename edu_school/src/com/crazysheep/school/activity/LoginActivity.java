@@ -99,9 +99,9 @@ public class LoginActivity extends Activity implements OnClickListener {
 							loginAutologin.isChecked());
 
 				    // go next activity
-//					Intent intent = new Intent(LoginActivity.this,
-//							FragmentChangeActivity.class);
-					Intent intent = new Intent(LoginActivity.this,TabHostActivity.class);
+					Intent intent = new Intent(LoginActivity.this,
+							FragmentChangeActivity.class);
+//					Intent intent = new Intent(LoginActivity.this,TabHostActivity.class);
 					startActivity(intent);
 					finish();
 				}

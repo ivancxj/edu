@@ -53,6 +53,7 @@
                 android:background="@color/red" />
 
             <TableLayout
+                android:id="@+id/info_tablelayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
@@ -60,7 +61,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal" >
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -75,27 +75,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="联系方式" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="张三" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="副园长" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="13000000000" />
                 </TableRow>
             </TableLayout>
         </LinearLayout>

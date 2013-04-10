@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.crazysheep.senate.R;
@@ -47,21 +48,32 @@ public class NamedAdapter extends BaseAdapter {
 		if (convertView == null) {
 			convertView = mInflater.inflate(R.layout.item_named, null);
 			holder = new ViewHolder();
-			holder.name = (TextView) convertView.findViewById(R.id.name);
-			holder.signup_time = (TextView) convertView
-					.findViewById(R.id.signup_time);
+			holder.t = (ImageView) convertView.findViewById(R.id.img);
+			holder.num = (TextView) convertView.findViewById(R.id.named_num);
+			holder.name = (TextView) convertView.findViewById(R.id.named_name);
+			holder.intime = (TextView) convertView
+					.findViewById(R.id.named_intime);
 
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
+		
+		Named named = nameds.get(position);
+		holder.num.setText(named.SNum);
+		holder.name.setText(named.Sname);
+		holder.intime.setText(named.InTime);
+		if(!named.IsCome)
+			holder.t.setImageDrawable(null);
 
 		return convertView;
 	}
 
 	public final class ViewHolder {
+		ImageView t;
+		TextView num;
 		TextView name;
-		TextView signup_time;
+		TextView intime;
 	}
 
 }

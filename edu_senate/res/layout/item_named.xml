@@ -12,35 +12,37 @@
         android:layout_height="wrap_content"
         android:src="@drawable/tc_09"
         />
+    
+         <TextView
+             android:id="@+id/named_num"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignParentRight="true"
+             android:layout_toRightOf="@id/img"
+             android:gravity="right"
+             android:text="0025" />
 
     <TextView
-        android:id="@+id/tt"
+        android:id="@+id/named_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/img"
+        android:layout_below="@id/named_num"
+        android:layout_alignRight="@id/named_num"
         android:layout_alignParentRight="true"
         android:gravity="right"
         android:text="小花" />
     
       <TextView
-        android:id="@+id/name"
+        android:id="@+id/named_intime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tt"
-        android:layout_alignRight="@id/tt"
+        android:layout_below="@id/named_name"
+        android:layout_alignRight="@id/named_name"
         android:layout_alignParentRight="true"
         android:gravity="right"
         android:text="08:30" />
       
-        <TextView
-        android:id="@+id/signup_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/name"
-        android:layout_alignRight="@id/tt"
-        android:layout_alignParentRight="true"
-        android:gravity="right"
-        android:text="00:25" />
+   
     
 
 </RelativeLayout>

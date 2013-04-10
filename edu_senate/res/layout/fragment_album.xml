@@ -33,7 +33,6 @@
             android:stretchMode="columnWidth"
             android:verticalSpacing="@dimen/image_vertical_spacing" />
 
-        <include layout="@layout/bottom"/>
     </LinearLayout>
 
 </ScrollView>

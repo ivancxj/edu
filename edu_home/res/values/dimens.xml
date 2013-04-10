@@ -17,9 +17,5 @@
 -->
 
 <resources>
-    <dimen name="title_size">26dp</dimen>
-
-    <dimen name="slidingmenu_offset">120dp</dimen>
-    <dimen name="shadow_width">15dp</dimen>
 
 </resources>
