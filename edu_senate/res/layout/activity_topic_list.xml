@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@drawable/common_backgroud">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" >
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
         <com.markupartist.android.widget.ActionBar
-            android:id="@id/actionbar"
-            style="@style/ActionBar" />
+                android:id="@id/actionbar"
+                style="@style/ActionBar"/>
 
         <!--  RelativeLayout
             android:layout_width="match_parent"
@@ -55,63 +56,63 @@
         </RelativeLayout-->
 
         <com.handmark.pulltorefresh.library.PullToRefreshGridView
-            android:id="@+id/grid_view"
-            style="@style/MyGridView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:columnWidth="@dimen/image_thumbnail_goods_grid_width"
-            android:fadingEdge="none"
-            android:gravity="center"
-            android:horizontalSpacing="@dimen/image_horizontal_spacing"
-            android:numColumns="2"
-            android:padding="@dimen/image_padding"
-            android:scrollbars="none"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="@dimen/image_vertical_spacing" />
+                android:id="@+id/grid_view"
+                style="@style/MyGridView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:columnWidth="@dimen/image_thumbnail_goods_grid_width"
+                android:fadingEdge="none"
+                android:gravity="center"
+                android:horizontalSpacing="@dimen/image_horizontal_spacing"
+                android:numColumns="2"
+                android:padding="@dimen/image_padding"
+                android:scrollbars="none"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="@dimen/image_vertical_spacing"/>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/photo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@color/sns_word_color"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:paddingLeft="50dp"
-        android:paddingRight="50dp"
-        android:visibility="gone" >
+            android:id="@+id/photo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/sns_word_color"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
+            android:visibility="gone">
 
         <Button
-            android:id="@+id/tabhost_take"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/photo_btn"
-            android:onClick="onClick"
-            android:text="拍照"
-            android:textColor="@color/white_color" />
+                android:id="@+id/tabhost_take"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/btn_bottom"
+                android:onClick="onClick"
+                android:text="拍照"
+                android:textColor="@color/white_color"/>
 
         <Button
-            android:id="@+id/tabhost_pick"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/photo_btn"
-            android:onClick="onClick"
-            android:text="手机相册"
-            android:textColor="@color/white_color" />
+                android:id="@+id/tabhost_pick"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/btn_bottom"
+                android:onClick="onClick"
+                android:text="手机相册"
+                android:textColor="@color/white_color"/>
 
         <Button
-            android:id="@+id/tabhost_cancel"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/photo_btn"
-            android:onClick="onClick"
-            android:text="取消"
-            android:textColor="@color/white_color" />
+                android:id="@+id/tabhost_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/btn_bottom"
+                android:onClick="onClick"
+                android:text="取消"
+                android:textColor="@color/white_color"/>
     </LinearLayout>
 
 </FrameLayout>
