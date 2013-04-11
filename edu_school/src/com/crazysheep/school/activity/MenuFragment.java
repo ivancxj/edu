@@ -47,7 +47,7 @@ public class MenuFragment extends ListFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mAdapter = new ItemListBaseAdapter(getActivity(), menus);
+        mAdapter = new ItemListBaseAdapter(getActivity(), menus, 0);
         setListAdapter(mAdapter);
     }
 
@@ -59,16 +59,16 @@ public class MenuFragment extends ListFragment {
         Fragment newContent = null;
         switch (position) {
             case 0:// 园所出勤
-            	newContent = new AttendanceFragment();
-                v.setBackgroundResource(R.drawable.menu_item_selected1);
+                newContent = new AttendanceFragment();
+                v.setBackgroundResource(R.drawable.menu_item_selected3);
                 break;
             case 1:// 园所通知
                 newContent = new NotifyFragment();
-                v.setBackgroundResource(R.drawable.menu_item_selected1);
+                v.setBackgroundResource(R.drawable.menu_item_selected3);
                 break;
             case 2:// 园内信息
-            	newContent = new InfoFragment();
-                v.setBackgroundResource(R.drawable.menu_item_selected1);
+                newContent = new InfoFragment();
+                v.setBackgroundResource(R.drawable.menu_item_selected3);
                 break;
         }
         if (newContent != null) {
@@ -89,10 +89,12 @@ public class MenuFragment extends ListFragment {
 
         private Menu[] menus;
         private LayoutInflater mInflater;
+        private int dft = 1;
 
-        public ItemListBaseAdapter(Context context, Menu[] menus) {
+        public ItemListBaseAdapter(Context context, Menu[] menus, int dft) {
             this.menus = menus;
             mInflater = LayoutInflater.from(context);
+            this.dft = dft;
         }
 
         @Override
@@ -126,6 +128,11 @@ public class MenuFragment extends ListFragment {
             }
             holder.title.setText(menus[position].title);
             holder.icon.setImageResource(menus[position].icon);
+            if (position == dft) {
+                convertView.setBackgroundResource(R.drawable.menu_item_selected3);
+            } else {
+                convertView.setBackgroundResource(R.drawable.menu_item_normal);
+            }
             return convertView;
         }
 

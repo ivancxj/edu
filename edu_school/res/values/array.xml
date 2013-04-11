@@ -10,7 +10,7 @@
     <string-array name="menu_imgs">
         <item>@drawable/ic_album</item>
         <item>@drawable/ic_notif</item>
-        <item>@drawable/ic_album</item>
+        <item>@drawable/ic_info</item>
     </string-array>
 
 </resources>

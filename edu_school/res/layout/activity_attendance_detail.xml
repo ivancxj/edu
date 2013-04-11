@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/common_backgroud"
-    android:orientation="vertical" >
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/common_backgroud"
+              android:orientation="vertical">
 
     <!--
           TextView
@@ -15,8 +15,8 @@
     -->
 
     <com.markupartist.android.widget.ActionBar
-        android:id="@id/actionbar"
-        style="@style/ActionBar" />
+            android:id="@id/actionbar"
+            style="@style/ActionBar"/>
 
     <!--
     RelativeLayout
@@ -48,37 +48,41 @@
     </RelativeLayout
     -->
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp" >
 
-        <LinearLayout
+    <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@drawable/tc1_05"
             android:gravity="center_horizontal"
+            android:layout_margin="8dp"
             android:orientation="vertical"
-            android:padding="10dp" >
+            android:padding="10dp">
 
-            <TextView
+        <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:drawableLeft="@drawable/yz_1"
                 android:drawablePadding="6dp"
-                android:text="幼儿缺勤名单" />
+                android:textColor="@color/white_color"
+                android:text="幼儿缺勤名单"/>
 
-            <View
+        <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/red" />
+                android:background="@color/red"/>
+
+        <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                android:scrollbars="none">
 
             <LinearLayout
-                android:id="@+id/attendance_detail_ll"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                    android:id="@+id/attendance_detail_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                 <!--  LinearLayout
                     android:layout_width="match_parent"
@@ -102,7 +106,8 @@
                 </LinearLayout-->
 
             </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+        </ScrollView>
+    </LinearLayout>
+
 
 </LinearLayout>

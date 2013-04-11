@@ -59,15 +59,15 @@ public class MenuFragment extends ListFragment {
         switch (position) {
             case 0:// 相册
                 newContent = new AlbumFragment();
-                v.setBackgroundResource(R.drawable.menu_item_selected1);
+                v.setBackgroundResource(R.drawable.menu_item_selected2);
                 break;
             case 1:// 园所通知
                 newContent = new NotifyFragment();
-                v.setBackgroundResource(R.drawable.menu_item_selected1);
+                v.setBackgroundResource(R.drawable.menu_item_selected2);
                 break;
             case 2:// 出勤点名
                 newContent = new NamedFragment();
-                v.setBackgroundResource(R.drawable.menu_item_selected1);
+                v.setBackgroundResource(R.drawable.menu_item_selected2);
                 break;
         }
         if (newContent != null) {
@@ -128,7 +128,7 @@ public class MenuFragment extends ListFragment {
             holder.title.setText(menus[position].title);
             holder.icon.setImageResource(menus[position].icon);
             if (position == dft) {
-                convertView.setBackgroundResource(R.drawable.menu_item_selected1);
+                convertView.setBackgroundResource(R.drawable.menu_item_selected2);
             } else {
                 convertView.setBackgroundResource(R.drawable.menu_item_normal);
             }

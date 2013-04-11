@@ -330,9 +330,10 @@ public class APIService {
 	 * 修改学生出勤状态
 	 * @param Id 考勤id
 	 */
-	public static void UpdateStudentCardRecord(String Id, AsyncHttpResponseHandler handler) {
+	public static void UpdateStudentCardRecord(String gid,String Userid, AsyncHttpResponseHandler handler) {
 		RequestParams params = new RequestParams();
-		params.put("Id", Id);
+		params.put("gid", gid);
+		params.put("Userid", Userid);
 		post(UpdateStudentCardRecord, params, handler);
 	}
 
