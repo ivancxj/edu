@@ -1,5 +1,7 @@
 package com.crazysheep.senate.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -89,5 +91,24 @@ public class FragmentChangeActivity extends SlidingFragmentActivity implements
                 getSlidingMenu().showMenu();
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("确定要退出吗？");
+        builder.setCancelable(true);
+        builder.setPositiveButton("确定",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        System.exit(1);
+
+                    }
+                });
+        builder.setNegativeButton("取消", null);
+        builder.show();
+
     }
 }
