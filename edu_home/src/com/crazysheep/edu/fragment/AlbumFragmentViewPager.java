@@ -59,7 +59,7 @@ public class AlbumFragmentViewPager extends Fragment implements ViewPager.OnPage
         super.onActivityCreated(savedInstanceState);
 
         mPager = (NonSwipeableViewPager) getView().findViewById(R.id.pager);
-        mPager.setOnPageChangeListener(this);
+//        mPager.setOnPageChangeListener(this);
 		cart_tabhost_todo_order = (TextView) getView().findViewById(R.id.cart_tabhost_todo_order);
 		cart_tabhost_todo_order.setOnClickListener(this);
 		cart_tabhost_order = (TextView) getView().findViewById(R.id.cart_tabhost_order);

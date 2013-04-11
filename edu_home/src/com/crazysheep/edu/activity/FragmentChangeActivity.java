@@ -3,6 +3,7 @@ package com.crazysheep.edu.activity;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.ExifInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
@@ -101,6 +102,7 @@ public class FragmentChangeActivity extends SlidingFragmentActivity implements
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
+                        System.exit(1);
 
                     }
                 });
