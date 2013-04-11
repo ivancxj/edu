@@ -2,6 +2,8 @@
 <resources>
     
     <color name="title_color">#FFFFFF</color>
+    <color name="dark_gray">#ff202020</color>
+
 
     <color name="window_background">#ffe7e7e9</color>
     <color name="list_divider">#ffd0d5e0</color>

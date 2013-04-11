@@ -3,17 +3,19 @@ package com.edu.lib.bean;
 import org.json.JSONObject;
 
 public class Named {
+	public String ID;
 	public String InTime;
-	public boolean IsRecord;
 	public String SNum;
-	public String SName;
-	public String Memberid;
+	public boolean IsCome;
+	public boolean change;// 是否可更改
+	public String Sname;
 	public Named(JSONObject response) {
-		this.Memberid = response.optString("Memberid");
+		this.ID = response.optString("ID");
 		this.InTime = response.optString("InTime");
 		this.SNum = response.optString("SNum");
-		this.IsRecord = response.optBoolean("IsRecord");
-		this.SName = response.optString("SName");
+		this.IsCome = response.optBoolean("IsCome");
+		this.change = this.IsCome;
+		this.Sname = response.optString("SName");
 	}
 
 }

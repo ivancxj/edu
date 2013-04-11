@@ -12,7 +12,7 @@
         android:paddingLeft="4dp"
         android:paddingRight="20dp"
         android:paddingTop="6dp"
-        android:textColor="@color/white_color"
+        android:textColor="@drawable/text_color_primary"
         android:text="张三" />
 
     <TextView
@@ -24,7 +24,7 @@
         android:layout_toRightOf="@id/comment_name"
         android:drawablePadding="4dp"
         android:paddingTop="6dp"
-        android:textColor="@color/white_color"
+        android:textColor="@drawable/text_color_primary"
         android:text="2012-12-15 12:12:15" />
     
       <TextView
@@ -34,7 +34,7 @@
         android:textSize="20sp"
         android:layout_below="@+id/comment_name"
         android:layout_alignLeft="@+id/comment_name"
-        android:textColor="@color/white_color"
+        android:textColor="@drawable/text_color_primary"
         android:layout_marginLeft="4dp"
         android:layout_marginTop="10dp"
         android:text="en,好图片" />

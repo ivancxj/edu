@@ -1,10 +1,5 @@
 package com.crazysheep.edu.activity;
 
-import java.util.ArrayList;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -15,8 +10,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
 import android.widget.Toast;
-
 import com.crazysheep.edu.R;
 import com.crazysheep.edu.adapter.PhotoAdapter;
 import com.edu.lib.api.APIService;
@@ -29,8 +24,11 @@ import com.edu.lib.util.AppConfig;
 import com.edu.lib.util.LogUtils;
 import com.edu.lib.util.TakePhotoUtils;
 import com.edu.lib.util.UIUtils;
-import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.markupartist.android.widget.ActionBar.IntentAction;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * 主题列表 相册照片列表
@@ -42,7 +40,7 @@ public class TopicListActivity extends ActionBarActivity implements OnItemClickL
 		OnClickListener {
 
 	private ArrayList<Photo> photos = new ArrayList<Photo>();
-	private PullToRefreshGridView gridView;
+	private GridView gridView;
 	private PhotoAdapter adapter;
 
 	public final static String EXTRA_FILENAME = "extra_filename";
@@ -80,7 +78,7 @@ public class TopicListActivity extends ActionBarActivity implements OnItemClickL
 
 		takePhoto = new TakePhotoUtils(this);
 
-		gridView = (PullToRefreshGridView) findViewById(R.id.grid_view);
+		gridView = (GridView) findViewById(R.id.grid_view);
 		adapter = new PhotoAdapter(this, photos);
 		gridView.setAdapter(adapter);
 		gridView.setOnItemClickListener(this);
@@ -126,7 +124,7 @@ public class TopicListActivity extends ActionBarActivity implements OnItemClickL
 
 	private void UploadAlbumPhotos(String resume_file) {
 		final ProgressDialog progress = UIUtils.newProgressDialog(this,
-				"请稍候...");
+				"上传中...");
 		JsonHandler handler = new JsonHandler(this) {
 			@Override
 			public void onStart() {

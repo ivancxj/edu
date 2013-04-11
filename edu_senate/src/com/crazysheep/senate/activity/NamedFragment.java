@@ -6,8 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.ProgressDialog;
-import android.app.AlertDialog.Builder;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -91,7 +89,7 @@ public class NamedFragment extends Fragment implements OnItemClickListener{
 				user.memberid, handler);
 	}
 	
-	private void updateStudentCardRecord(Named name,final int position) {
+	private void updateStudentCardRecord(Named name) {
 		final ProgressDialog progress = UIUtils.newProgressDialog(
 				getActivity(), "请稍等..");
 		JsonHandler handler = new JsonHandler(getActivity()) {
@@ -112,33 +110,17 @@ public class NamedFragment extends Fragment implements OnItemClickListener{
 				super.onSuccess(response);
 				LogUtils.I(LogUtils.StudentRecord, response.toString());
 				UIUtils.showToast(getActivity(), "更新成功");
-				Named named = namdeds.get(position);
-				response = response.optJSONObject("cardrecord");
-				named.IsRecord = response.optBoolean("IsRecord");
-				adapter.notifyDataSetChanged();
+				// TODO
 			}
 		};
-		User user = AppConfig.getAppConfig(getActivity()).getUser();
-		APIService.UpdateStudentCardRecord(user.gardenID,name.Memberid, handler);
+		APIService.UpdateStudentCardRecord(name.ID, handler);
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, final int position, long arg3) {
-		final Named name = namdeds.get(position);
-		if(!name.IsRecord){
-			Builder builder = new Builder(getActivity());
-			builder.setTitle("确定要修改吗？");
-			builder.setCancelable(true);
-			builder.setPositiveButton("确定",
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							updateStudentCardRecord(name,position);
-						}
-					});
-			builder.setNegativeButton("取消", null);
-			builder.show();
-		}
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		Named name = namdeds.get(arg2);
+		if(!name.change)
+			updateStudentCardRecord(name);
 	}
 
 }

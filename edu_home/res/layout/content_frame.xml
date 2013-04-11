@@ -12,15 +12,14 @@
             android:background="@drawable/top_bg">
 
         <ImageView
-                android:background="@drawable/ic_arrow_lt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:layout_marginLeft="8dp"/>
+                android:id="@+id/arrow"
+                android:background="@drawable/ic_menu_back_default"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_weight="0"/>
 
         <ImageView
                 android:id="@+id/logo"
-                android:layout_marginLeft="8dp"
                 android:layout_width="24dp"
                 android:layout_weight="0"
                 android:layout_height="24dp"/>
@@ -41,6 +40,7 @@
                 android:layout_weight="0"
                 android:layout_height="24dp"
                 android:layout_marginRight="8dp"
+                android:visibility="gone"
                 android:src="@drawable/ic_settings"/>
 
     </LinearLayout>
