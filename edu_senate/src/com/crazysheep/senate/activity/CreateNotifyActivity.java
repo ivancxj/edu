@@ -39,7 +39,7 @@ public class CreateNotifyActivity extends ActionBarActivity implements OnClickLi
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_notify);
 		bindActionBar();
-		mActionBar.setTitle("教务通");
+		mActionBar.setTitle("新建通知");
 		showBackAction();
 		title = (TextView)findViewById(R.id.create_notify_title);
 		content = (TextView)findViewById(R.id.create_notify_content);

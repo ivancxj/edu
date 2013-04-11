@@ -46,7 +46,7 @@ public class MenuFragment extends ListFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mAdapter = new ItemListBaseAdapter(getActivity(), menus);
+        mAdapter = new ItemListBaseAdapter(getActivity(), menus, 1);
         setListAdapter(mAdapter);
     }
 
@@ -58,7 +58,7 @@ public class MenuFragment extends ListFragment {
         Fragment newContent = null;
         switch (position) {
             case 0:// 相册
-            	newContent = new AlbumFragment();
+                newContent = new AlbumFragment();
                 v.setBackgroundResource(R.drawable.menu_item_selected1);
                 break;
             case 1:// 园所通知
@@ -66,7 +66,7 @@ public class MenuFragment extends ListFragment {
                 v.setBackgroundResource(R.drawable.menu_item_selected1);
                 break;
             case 2:// 出勤点名
-            	newContent = new NamedFragment();
+                newContent = new NamedFragment();
                 v.setBackgroundResource(R.drawable.menu_item_selected1);
                 break;
         }
@@ -88,10 +88,12 @@ public class MenuFragment extends ListFragment {
 
         private Menu[] menus;
         private LayoutInflater mInflater;
+        private int dft = 1;
 
-        public ItemListBaseAdapter(Context context, Menu[] menus) {
+        public ItemListBaseAdapter(Context context, Menu[] menus, int dft) {
             this.menus = menus;
             mInflater = LayoutInflater.from(context);
+            this.dft = dft;
         }
 
         @Override
@@ -125,6 +127,11 @@ public class MenuFragment extends ListFragment {
             }
             holder.title.setText(menus[position].title);
             holder.icon.setImageResource(menus[position].icon);
+            if (position == dft) {
+                convertView.setBackgroundResource(R.drawable.menu_item_selected1);
+            } else {
+                convertView.setBackgroundResource(R.drawable.menu_item_normal);
+            }
             return convertView;
         }
 

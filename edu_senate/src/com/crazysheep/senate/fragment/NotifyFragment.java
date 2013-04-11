@@ -2,6 +2,7 @@ package com.crazysheep.senate.fragment;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -32,127 +33,131 @@ import com.viewpagerindicator.CirclePageIndicator;
 
 /**
  * 通知
- * 
+ *
  * @author ivan
  */
-public class NotifyFragment extends Fragment implements OnClickListener{
+public class NotifyFragment extends Fragment implements OnClickListener, ViewPager.OnPageChangeListener {
 
-	ArrayList<Announcement> announcements = new ArrayList<Announcement>();
-	
-	NotifyFragmentAdapter mAdapter;
-	ViewPager mPager;
-	CirclePageIndicator mIndicator;
+    ArrayList<Announcement> announcements = new ArrayList<Announcement>();
 
-	// public static NotifyFragment newInstance(){
-	// NotifyFragment fragment = new NotifyFragment();
-	// return fragment;
-	// }
+    NotifyFragmentAdapter mAdapter;
+    ViewPager mPager;
+    CirclePageIndicator mIndicator;
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.activity_notify, null);
-	}
+    // public static NotifyFragment newInstance(){
+    // NotifyFragment fragment = new NotifyFragment();
+    // return fragment;
+    // }
 
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		
-		getView().findViewById(R.id.create).setOnClickListener(this);
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mAdapter = new NotifyFragmentAdapter(getChildFragmentManager());
+    }
 
-		mAdapter = new NotifyFragmentAdapter(getChildFragmentManager());
-		mPager = (ViewPager) getView().findViewById(R.id.pager);
-		mPager.setAdapter(mAdapter);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.activity_notify, null);
+    }
 
-		mIndicator = (CirclePageIndicator) getView().findViewById(
-				R.id.indicator);
-		mIndicator.setViewPager(mPager);
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
-		mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-			@Override
-			public void onPageScrollStateChanged(int arg0) {
-			}
+        getView().findViewById(R.id.create).setOnClickListener(this);
 
-			@Override
-			public void onPageScrolled(int arg0, float arg1, int arg2) {
-			}
+        mPager = (ViewPager) getView().findViewById(R.id.pager);
+        mPager.setAdapter(mAdapter);
+        mPager.setOnPageChangeListener(this);
 
-			@Override
-			public void onPageSelected(int position) {
-				switch (position) {
-				case 0:
-					((FragmentChangeActivity) getActivity())
-							.getSlidingMenu()
-							.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-					break;
-				default:
-					((FragmentChangeActivity) getActivity()).getSlidingMenu()
-							.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
-					break;
-				}
-			}
+        mIndicator = (CirclePageIndicator) getView().findViewById(
+                R.id.indicator);
+        mIndicator.setViewPager(mPager);
+        mIndicator.setOnPageChangeListener(this);
 
-		});
+        float density = getResources().getDisplayMetrics().density;
+        mIndicator.setRadius(4 * density);
+        mIndicator.setPageColor(0xFFFFFFFF);
+        mIndicator.setFillColor(Color.rgb(11, 12, 0));
 
-		float density = getResources().getDisplayMetrics().density;
-		mIndicator.setRadius(4 * density);
-		mIndicator.setPageColor(0xFFFFFFFF);
-		mIndicator.setFillColor(Color.rgb(11, 12, 0));
-		
-		getData();
+        getData();
 
-	}
+    }
 
-	private void getData() {
-		final ProgressDialog progress = UIUtils.newProgressDialog(
-				getActivity(), "请稍候...");
-		JsonHandler handler = new JsonHandler(getActivity()) {
-			@Override
-			public void onStart() {
-				super.onStart();
-				UIUtils.safeShow(progress);
-			}
+    private void getData() {
+        JsonHandler handler = new JsonHandler(getActivity()) {
+            @Override
+            public void onStart() {
+                super.onStart();
+                getView().findViewById(R.id.loading).setVisibility(View.VISIBLE);
+            }
 
-			@Override
-			public void onFinish() {
-				super.onFinish();
-				UIUtils.safeDismiss(progress);
-			}
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                if (isVisible()) {
+                    getView().findViewById(R.id.loading).setVisibility(View.GONE);
+                }
+            }
 
-			@Override
-			public void onSuccess(JSONObject response) {
-				super.onSuccess(response);
-				LogUtils.I(LogUtils.NOTIFY, response.toString());
-				JSONArray array = response.optJSONArray("announcements");
-				if(array == null)
-					return;
-				int length = array.length();
-				for(int i=0;i<length;i++){
-					Announcement announcement = new Announcement(array.optJSONObject(i));
-					announcements.add(announcement);
-				}
-				
-				mAdapter.announcements = announcements;
-				mAdapter.notifyDataSetChanged();
-				
-			}
-		};
-		User user = AppConfig.getAppConfig(getActivity()).getUser();
-		APIService.GetClassAnnouncement(user.gardenID, user.classID,
-				user.memberid, handler);
-	}
+            @Override
+            public void onSuccess(JSONObject response) {
+                super.onSuccess(response);
+                LogUtils.I(LogUtils.NOTIFY, response.toString());
+                JSONArray array = response.optJSONArray("announcements");
+                if (array == null)
+                    return;
+                int length = array.length();
+                for (int i = 0; i < length; i++) {
+                    Announcement announcement = new Announcement(array.optJSONObject(i));
+                    announcements.add(announcement);
+                }
 
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.create:
-			Intent intent = new Intent(getActivity(),CreateNotifyActivity.class);
-			startActivity(intent);
-			break;
+                mAdapter.announcements = announcements;
+                mAdapter.notifyDataSetChanged();
 
-		default:
-			break;
-		}
-		
-	}
+            }
+        };
+        User user = AppConfig.getAppConfig(getActivity()).getUser();
+        APIService.GetClassAnnouncement(user.gardenID, user.classID,
+                user.memberid, handler);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.create:
+                Intent intent = new Intent(getActivity(), CreateNotifyActivity.class);
+                startActivity(intent);
+                break;
+
+            default:
+                break;
+        }
+
+    }
+
+    @Override
+    public void onPageScrolled(int i, float v, int i2) {
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        switch (position) {
+            case 0:
+                ((FragmentChangeActivity) getActivity())
+                        .getSlidingMenu()
+                        .setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+                break;
+            default:
+                ((FragmentChangeActivity) getActivity()).getSlidingMenu()
+                        .setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+                break;
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int i) {
+    }
 }

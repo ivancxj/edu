@@ -62,7 +62,7 @@ public class PhotoActivity extends ActionBarActivity implements OnClickListener 
 		super.onCreate(arg0);
 		setContentView(R.layout.activity_photo);
 		bindActionBar();
-		mActionBar.setTitle("家园通");
+		mActionBar.setTitle("详情");
 		showBackAction();
 
 		albumID = getIntent().getStringExtra(EXTRA_ALBUM_ID);
