@@ -5,7 +5,6 @@ import org.json.JSONObject;
 public class Named {
 	public String InTime;
 	public boolean IsRecord;
-	public boolean change;// 是否可更改
 	public String SNum;
 	public String SName;
 	public String Memberid;
@@ -14,7 +13,6 @@ public class Named {
 		this.InTime = response.optString("InTime");
 		this.SNum = response.optString("SNum");
 		this.IsRecord = response.optBoolean("IsRecord");
-		this.change = this.IsRecord;
 		this.SName = response.optString("SName");
 	}
 

@@ -125,7 +125,7 @@ public class NamedFragment extends Fragment implements OnItemClickListener{
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, final int position, long arg3) {
 		final Named name = namdeds.get(position);
-		if(!name.change){
+		if(!name.IsRecord){
 			Builder builder = new Builder(getActivity());
 			builder.setTitle("确定要修改吗？");
 			builder.setCancelable(true);
