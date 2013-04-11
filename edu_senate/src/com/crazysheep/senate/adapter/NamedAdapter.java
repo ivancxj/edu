@@ -61,10 +61,13 @@ public class NamedAdapter extends BaseAdapter {
 		
 		Named named = nameds.get(position);
 		holder.num.setText(named.SNum);
-		holder.name.setText(named.Sname);
+		holder.name.setText(named.SName);
 		holder.intime.setText(named.InTime);
-		if(!named.IsCome)
+		if(named.IsRecord){
+			holder.t.setImageResource(R.drawable.tc_09);
+		}else{
 			holder.t.setImageDrawable(null);
+		}
 
 		return convertView;
 	}
