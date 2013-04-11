@@ -141,18 +141,18 @@ class AsyncHttpRequest implements Runnable {
                 return;
             } catch (UnknownHostException e) {
 		        if(responseHandler != null) {
-		            responseHandler.sendFailureMessage(e, "can't resolve host");
+		            responseHandler.sendFailureMessage(e, "无法连接主机");
 		        }
 	        	return;
             }catch (SocketException e){
                 // Added to detect host unreachable
                 if(responseHandler != null) {
-                    responseHandler.sendFailureMessage(e, "can't resolve host");
+                    responseHandler.sendFailureMessage(e, "无法连接主机");
                 }
                 return;
             }catch (SocketTimeoutException e){
                 if(responseHandler != null) {
-                    responseHandler.sendFailureMessage(e, "socket time out");
+                    responseHandler.sendFailureMessage(e, "连接超时");
                 }
                 return;
             } catch (IOException e) {

@@ -14,7 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.crazysheep.edu.R;
-import com.crazysheep.edu.fragment.AlbumFragment;
+import com.crazysheep.edu.fragment.AlbumFragmentViewPager;
 import com.crazysheep.edu.fragment.NotifyFragment;
 
 public class MenuFragment extends ListFragment {
@@ -58,7 +58,7 @@ public class MenuFragment extends ListFragment {
         Fragment newContent = null;
         switch (position) {
             case 0:
-                newContent = new AlbumFragment();
+                newContent = new AlbumFragmentViewPager();
                 v.setBackgroundResource(R.drawable.menu_item_selected1);
                 break;
             case 1:

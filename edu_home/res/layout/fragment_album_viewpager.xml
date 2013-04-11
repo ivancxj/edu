@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/common_backgroud" >
+
+    <LinearLayout
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <ProgressBar
+            android:layout_width="25dp"
+            android:layout_height="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="加载中..."
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:id="@+id/top"
+            android:layout_width="fill_parent"
+            android:layout_height="42dp"
+            android:baselineAligned="false" >
+
+            <TextView
+                android:id="@+id/cart_tabhost_todo_order"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:background="@drawable/tab_hot_btn_select"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:shadowColor="@color/black"
+                android:shadowDx="0"
+                android:shadowDy="1"
+                android:text="个人相册"
+                android:textColor="@color/yellow"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/cart_tabhost_order"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:background="@drawable/tab_hot_btn_select"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:shadowColor="@color/black"
+                android:shadowDx="0"
+                android:shadowDy="1"
+                android:text="班级相册"
+                android:textColor="@color/dark_gray"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <com.edu.lib.widget.NonSwipeableViewPager
+            android:id="@+id/pager"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/top" />
+    </RelativeLayout>
+
+</FrameLayout>
