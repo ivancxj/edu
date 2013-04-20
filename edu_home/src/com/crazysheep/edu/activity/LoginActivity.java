@@ -41,6 +41,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 		if (AppConfig.getAppConfig(this).isRemberPass()) {
 			loginRember.setChecked(true);
 			loginName.setText(AppConfig.getAppConfig(this).getLoginName());
+			// sRYVHy>m6Tgx
 			loginPassword.setText(AppConfig.getAppConfig(this).getLoginPass());
 		}
 		// 自动登陆

@@ -66,11 +66,10 @@
 
             <EditText
                     android:id="@+id/login_password"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
                     android:inputType="textPassword"
-                    android:text="sRYVHy>m6Tgx"
                     android:singleLine="true"
                     android:hint="请输入密码"/>
         </LinearLayout>

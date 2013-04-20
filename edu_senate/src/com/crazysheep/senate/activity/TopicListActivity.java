@@ -131,6 +131,7 @@ public class TopicListActivity extends ActionBarActivity implements OnItemClickL
 			@Override
 			public void onStart() {
 				super.onStart();
+				findViewById(R.id.photo).setVisibility(View.GONE);
 				UIUtils.safeShow(progress);
 			}
 
@@ -145,7 +146,6 @@ public class TopicListActivity extends ActionBarActivity implements OnItemClickL
 				super.onSuccess(response);
 				LogUtils.I(LogUtils.UPLOAD_PHOTO, response.toString());
 				Toast.makeText(TopicListActivity.this, "上传成功", Toast.LENGTH_SHORT).show();
-				findViewById(R.id.photo).setVisibility(View.GONE);
 				response = response.optJSONObject("photofileinfo");
 				Photo photo = new Photo(response);
 				photos.add(photo);
