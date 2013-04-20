@@ -109,13 +109,17 @@ public class CreateNotifyActivity extends ActionBarActivity implements
                 super.onSuccess(response);
                 LogUtils.I(LogUtils.CREATE_NOTIFY, response.toString());
                 UIUtils.showToast(CreateNotifyActivity.this, "发送通知成功");
+                setResult(RESULT_OK);
                 finish();
             }
         };
         User user = AppConfig.getAppConfig(this).getUser();
+        // TODO 园务通发送公告可选发给老师或者学生。选择了发送老师isteacher为true，家长isstu为true
+        boolean isteacher = true;
+        boolean isstu = true;
         APIService.SendGardenAnnouncement(user.gardenID, user.classID,
                 user.memberid, title.getText().toString(), content.getText()
-                .toString(), handler);
+                .toString(),isteacher,isstu, handler);
     }
 
 }

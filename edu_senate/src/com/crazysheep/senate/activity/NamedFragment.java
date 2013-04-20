@@ -119,7 +119,9 @@ public class NamedFragment extends Fragment implements OnItemClickListener{
 			}
 		};
 		User user = AppConfig.getAppConfig(getActivity()).getUser();
-		APIService.UpdateStudentCardRecord(user.gardenID,name.Memberid, handler);
+		// TODO  remark
+		String remark = "";
+		APIService.UpdateStudentCardRecord(user.gardenID,name.Memberid,remark, handler);
 	}
 
 	@Override

@@ -75,7 +75,7 @@ public class AppConfig {
 	}
 	
 	public void cleanLoginInfo() {
-		removeProperty("user.memberid", "user.gradeType", "user.gardenum", "user.gardeID",
+		removeProperty("user.userid","user.memberid", "user.gradeType", "user.gardenum", "user.gardeID",
 				"user.gardenID", "user.cname", "user.className", "user.classID");
 	}
 	
@@ -83,6 +83,7 @@ public class AppConfig {
 		if(user == null)
 			return;
 		mPreference.edit()
+			.putString("user.userid", user.userid)
 			.putString("user.memberid", user.memberid)
 			.putString("user.gradeType", user.gradeType)
 			.putString("user.gardenum", user.gardenum)
@@ -98,6 +99,7 @@ public class AppConfig {
 			return null;
 		}
 		User user = new User();
+		user.userid = get("user.userid");
 		user.memberid = get("user.memberid");
 		user.gradeType = get("user.gradeType");
 		user.gardenum = get("user.gardenum");

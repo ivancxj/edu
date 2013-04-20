@@ -5,15 +5,16 @@
               android:background="@drawable/common_backgroud"
               android:orientation="vertical">
 
-    <TextView
+  <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="30dp"
+            android:layout_gravity="left"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="70dp"
             android:text="@string/app_name"
             android:textColor="@color/yellow"
-            android:textSize="40sp"/>
+            android:textStyle="bold"
+            android:textSize="30sp"/>
 
     <LinearLayout
             android:layout_width="match_parent"

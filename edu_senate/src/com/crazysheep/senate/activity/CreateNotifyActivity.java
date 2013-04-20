@@ -108,6 +108,7 @@ public class CreateNotifyActivity extends ActionBarActivity implements OnClickLi
 				super.onSuccess(response);
 				LogUtils.I(LogUtils.CREATE_NOTIFY, response.toString());
 				UIUtils.showToast(CreateNotifyActivity.this, "发通知成功");
+				setResult(RESULT_OK);
 				finish();
 			}
 		};

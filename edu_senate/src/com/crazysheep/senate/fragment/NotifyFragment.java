@@ -38,6 +38,8 @@ import com.viewpagerindicator.CirclePageIndicator;
  */
 public class NotifyFragment extends Fragment implements OnClickListener, ViewPager.OnPageChangeListener {
 
+	final static int REQUEST_CREATE = 10001;
+	
     ArrayList<Announcement> announcements = new ArrayList<Announcement>();
 
     NotifyFragmentAdapter mAdapter;
@@ -109,6 +111,7 @@ public class NotifyFragment extends Fragment implements OnClickListener, ViewPag
                 if (array == null)
                     return;
                 int length = array.length();
+                announcements.clear();
                 for (int i = 0; i < length; i++) {
                     Announcement announcement = new Announcement(array.optJSONObject(i));
                     announcements.add(announcement);
@@ -123,13 +126,21 @@ public class NotifyFragment extends Fragment implements OnClickListener, ViewPag
         APIService.GetClassAnnouncement(user.gardenID, user.classID,
                 user.memberid, handler);
     }
+    
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	super.onActivityResult(requestCode, resultCode, data);
+    	if(requestCode == REQUEST_CREATE && resultCode == getActivity().RESULT_OK){
+    		getData();
+    	}
+    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.create:
                 Intent intent = new Intent(getActivity(), CreateNotifyActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_CREATE);
                 break;
 
             default:

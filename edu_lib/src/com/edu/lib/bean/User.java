@@ -3,6 +3,7 @@ package com.edu.lib.bean;
 import org.json.JSONObject;
 
 public class User {
+	public String userid;// 
 	public String memberid;// 用户GUID
 	public String gradeType;// 年级属性
 	public String gardenum;//  年级编码
@@ -16,6 +17,7 @@ public class User {
 	public User(JSONObject response){
 		if(response.has("LoginInfo")){
 			response = response.optJSONObject("LoginInfo");
+			this.userid = response.optString("userid");
 			this.memberid = response.optString("memberid");
 			this.gradeType = response.optString("gradetype");
 			this.gardenum = response.optString("gardenum");

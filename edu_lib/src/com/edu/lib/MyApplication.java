@@ -68,6 +68,9 @@ public class MyApplication extends Application {
 				.build();
 		// Initialize ImageLoader with configuration.
 		ImageLoader.getInstance().init(config);
+		
+		Thread.setDefaultUncaughtExceptionHandler(new AppException(
+				getApplicationContext()));
 	}
 
 	/**

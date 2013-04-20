@@ -31,6 +31,13 @@ public class APIService {
 	private final static String UploadAlbumPhotos = URL_API_HOST
 			+ "UploadAlbumPhotos";
 
+	// 发送消息
+	private final static String SendMsg = URL_API_HOST + "SendMsg";
+	// 获取消息列表
+	private final static String GetPms = URL_API_HOST + "GetPms";
+	// 删除消息
+	private final static String DelPms = URL_API_HOST + "DelPms";
+
 	/*****************************************
 	 * 家务通（家长用的）
 	 ****************************************/
@@ -64,6 +71,10 @@ public class APIService {
 	private final static String UpdateStudentCardRecord = URL_API_HOST
 			+ "UpdateStudentCardRecord";
 
+	// 获取班级学生列表
+	private final static String GetStudentList = URL_API_HOST
+			+ "GetStudentList";
+
 	/*****************************************
 	 * 园长通（园长用）
 	 ****************************************/
@@ -85,6 +96,11 @@ public class APIService {
 	// 获取老师列表
 	private final static String GetTeacherList = URL_API_HOST
 			+ "GetTeacherList";
+	
+	// 修改实体
+	// MobileItemTeacher
+	private final static String MobileItemTeacher = URL_API_HOST
+	+ "MobileItemTeacher";
 
 	/*****************************************
 	 * 暂时用不到接口
@@ -186,6 +202,51 @@ public class APIService {
 		}
 		post(UploadAlbumPhotos, params, handler);
 	}
+	
+	/**
+	 * 发送消息
+	 * @param sender 发送人id
+	 * @param sname 发送人名称
+	 * @param receivers 接收人id集合（,隔开
+	 * @param title 标题
+	 * @param content 内容
+	 */
+	public static void SendMsg(String sender, String sname,
+			String receivers, String title, String content,
+			AsyncHttpResponseHandler handler) {
+		RequestParams params = new RequestParams();
+		params.put("sender", sender);
+		params.put("sname", sname);
+		params.put("receivers", receivers);
+		params.put("title", title);
+		params.put("content", content);
+		get(SendMsg, params, handler);
+	}
+	
+	/**
+	 * 获取消息列表
+	 * @param userid 用户id
+	 * @param pageindex 页数
+	 */
+	public static void GetPms(String userid, String pageindex,
+			AsyncHttpResponseHandler handler) {
+		RequestParams params = new RequestParams();
+		params.put("userid", userid);
+		params.put("pageindex", pageindex);
+		get(GetPms, params, handler);
+	}
+	
+	/**
+	 * 删除消息
+	 * @param pid 消息id
+	 */
+	public static void DelPms(String pid,
+			AsyncHttpResponseHandler handler) {
+		RequestParams params = new RequestParams();
+		params.put("pid", pid);
+		get(DelPms, params, handler);
+	}
+	
 
 	/*****************************************
 	 * 家务通（家长用的） TODO
@@ -326,15 +387,32 @@ public class APIService {
 		params.put("userid", userid);
 		post(GetStudentCardRecords, params, handler);
 	}
+
 	/**
 	 * 修改学生出勤状态
-	 * @param Id 考勤id
+	 * 
+	 * @param Id
+	 *            考勤id
 	 */
-	public static void UpdateStudentCardRecord(String gid,String Userid, AsyncHttpResponseHandler handler) {
+	public static void UpdateStudentCardRecord(String gid, String Userid,
+			String remark, AsyncHttpResponseHandler handler) {
 		RequestParams params = new RequestParams();
 		params.put("gid", gid);
 		params.put("Userid", Userid);
+		params.put("remark", remark);
 		post(UpdateStudentCardRecord, params, handler);
+	}
+
+	/**
+	 * 获取班级学生列表
+	 * 
+	 * @param classid
+	 */
+	public static void GetStudentList(String classid,
+			AsyncHttpResponseHandler handler) {
+		RequestParams params = new RequestParams();
+		params.put("classid", classid);
+		post(GetStudentList, params, handler);
 	}
 
 	/**
@@ -435,14 +513,17 @@ public class APIService {
 	 *            (非必填) 公告内容
 	 */
 	public static void SendGardenAnnouncement(String gid, String classid,
-			String userid, String title, String contents,
-			AsyncHttpResponseHandler handler) {
+			String userid, String title, String contents, boolean isteacher,
+			boolean isstu, AsyncHttpResponseHandler handler) {
 		RequestParams params = new RequestParams();
 		params.put("gid", gid);
 		params.put("classid", classid);
 		params.put("userid", userid);
 		params.put("title", title);
 		params.put("contents", contents);
+		params.put("isteacher", String.valueOf(isteacher));
+		// isstu
+		params.put("isstu", String.valueOf(isstu));
 
 		post(SendGardenAnnouncement, params, handler);
 	}
