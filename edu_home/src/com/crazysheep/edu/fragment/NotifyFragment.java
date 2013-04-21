@@ -22,6 +22,7 @@ import com.viewpagerindicator.CirclePageIndicator;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 /**
@@ -47,6 +48,22 @@ public class NotifyFragment extends Fragment implements ViewPager.OnPageChangeLi
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mAdapter = new NotifyFragmentAdapter(getChildFragmentManager());
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        try {
+            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+            childFragmentManager.setAccessible(true);
+            childFragmentManager.set(this, null);
+
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -90,7 +107,7 @@ public class NotifyFragment extends Fragment implements ViewPager.OnPageChangeLi
             @Override
             public void onFinish() {
                 super.onFinish();
-                if(isVisible()){
+                if (isVisible()) {
                     getView().findViewById(R.id.loading).setVisibility(View.GONE);
                 }
             }

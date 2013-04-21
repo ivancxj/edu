@@ -1,31 +1,31 @@
 package com.crazysheep.edu.activity;
 
-import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.crazysheep.edu.R;
 import com.crazysheep.edu.fragment.AlbumFragmentViewPager;
 import com.crazysheep.edu.fragment.NotifyFragment;
 
-public class MenuFragment extends ListFragment {
+public class MenuFragment extends Fragment implements View.OnClickListener {
 
-    private ItemListBaseAdapter mAdapter;
     private Menu[] menus;
+    private int defaultIndex;
+    private Fragment[] fragments;
+
+    public MenuFragment(int defaultIndex, Fragment... fragments) {
+        this.defaultIndex = defaultIndex;
+        this.fragments = fragments;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         String[] names = getResources().getStringArray(R.array.menu_names);
         TypedArray imgs = getResources().obtainTypedArray(R.array.menu_imgs);
         menus = new Menu[names.length];
@@ -36,6 +36,7 @@ public class MenuFragment extends ListFragment {
             menu.icon = resId;
             menus[i] = menu;
         }
+
     }
 
     @Override
@@ -46,28 +47,15 @@ public class MenuFragment extends ListFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mAdapter = new ItemListBaseAdapter(getActivity(), menus, 1);
-        setListAdapter(mAdapter);
-    }
-
-    @Override
-    public void onListItemClick(ListView lv, View v, int position, long id) {
-        for (int i = 0; i < lv.getCount(); i++) {
-            lv.getChildAt(i).setBackgroundResource(R.drawable.menu_item_normal);
-        }
-        Fragment newContent = null;
-        switch (position) {
-            case 0:
-                newContent = new AlbumFragmentViewPager();
-                v.setBackgroundResource(R.drawable.menu_item_selected1);
-                break;
-            case 1:
-                newContent = new NotifyFragment();
-                v.setBackgroundResource(R.drawable.menu_item_selected1);
-                break;
-        }
-        if (newContent != null) {
-            switchFragment(newContent, (Menu) mAdapter.getItem(position));
+        for (int i = 0; i < menus.length; i++) {
+            TextView view = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.menu_item, null);
+            view.setText(menus[i].title);
+            view.setTag(i);
+            view.setOnClickListener(this);
+            view.setCompoundDrawablesWithIntrinsicBounds(menus[i].icon, 0, 0, 0);
+            ((LinearLayout) getView().findViewById(android.R.id.list)).addView(view);
+            if (i == defaultIndex)
+                view.setSelected(true);
         }
     }
 
@@ -80,67 +68,26 @@ public class MenuFragment extends ListFragment {
         }
     }
 
-    public class ItemListBaseAdapter extends BaseAdapter {
-
-        private Menu[] menus;
-        private LayoutInflater mInflater;
-        private int dft = 1;
-
-        public ItemListBaseAdapter(Context context, Menu[] menus, int dft) {
-            this.menus = menus;
-            mInflater = LayoutInflater.from(context);
-            this.dft = dft;
-        }
-
-        @Override
-        public int getCount() {
-            if (menus == null)
-                return 0;
-            return menus.length;
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return menus[position];
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder;
-            if (convertView == null) {
-                convertView = mInflater.inflate(R.layout.menu_item, null);
-                holder = new ViewHolder();
-                holder.title = (TextView) convertView.findViewById(R.id.title);
-                holder.icon = (ImageView) convertView.findViewById(R.id.icon);
-                convertView.setTag(holder);
-            } else {
-                holder = (ViewHolder) convertView.getTag();
-            }
-            holder.title.setText(menus[position].title);
-            holder.icon.setImageResource(menus[position].icon);
-            if (position == dft) {
-                convertView.setBackgroundResource(R.drawable.menu_item_selected1);
-            } else {
-                convertView.setBackgroundResource(R.drawable.menu_item_normal);
-            }
-            return convertView;
-        }
-
+    @Override
+    public void onPause() {
+        super.onResume();
     }
 
-    public static class ViewHolder {
-        TextView title;
-        ImageView icon;
+    @Override
+    public void onClick(View v) {
+        for (int i = 0; i < ((LinearLayout) getView().findViewById(android.R.id.list)).getChildCount(); i++) {
+            ((LinearLayout) getView().findViewById(android.R.id.list)).getChildAt(i).setSelected(false);
+        }
+        v.setSelected(true);
+        Fragment newContent = fragments[(Integer) v.getTag()];
+        if (newContent != null) {
+            switchFragment(newContent, menus[(Integer) v.getTag()]);
+        }
     }
 
     public class Menu {
         public String title;
-        public Integer icon;
+        public int icon;
     }
 
 
