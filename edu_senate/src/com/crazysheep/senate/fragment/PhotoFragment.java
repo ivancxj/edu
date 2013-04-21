@@ -1,11 +1,5 @@
 package com.crazysheep.senate.fragment;
 
-import java.util.ArrayList;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -15,13 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.crazysheep.senate.R;
-import com.edu.lib.api.APIService;
-import com.edu.lib.api.JsonHandler;
-import com.edu.lib.bean.Comment;
+import com.edu.lib.MyApplication;
 import com.edu.lib.bean.Photo;
-import com.edu.lib.util.LogUtils;
-import com.edu.lib.util.UIUtils;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 // 相册详情
@@ -33,8 +22,8 @@ public class PhotoFragment extends Fragment{
 	private Photo photo;
 	private ImageView mImageView;
 
-	private DisplayImageOptions options = new DisplayImageOptions.Builder()
-			.cacheInMemory().cacheOnDisc().build();
+//	private DisplayImageOptions options = new DisplayImageOptions.Builder()
+//			.cacheInMemory().cacheOnDisc().build();
 
 	public static PhotoFragment newInstance(String albumID, Photo photo) {
 		final PhotoFragment f = new PhotoFragment();
@@ -70,7 +59,7 @@ public class PhotoFragment extends Fragment{
 
 		if (!TextUtils.isEmpty(photo.FullName)) {
 			ImageLoader.getInstance().displayImage(photo.FullName, mImageView,
-					options);
+					MyApplication.options);
 		}
 	}
 

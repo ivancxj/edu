@@ -11,16 +11,16 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.crazysheep.senate.R;
+import com.edu.lib.MyApplication;
 import com.edu.lib.bean.Photo;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class PhotoAdapter extends BaseAdapter {
 
 	ArrayList<Photo> photos;
 	private LayoutInflater mInflater;
-	private DisplayImageOptions options = new DisplayImageOptions.Builder()
-			.cacheInMemory().cacheOnDisc().build();
+//	private DisplayImageOptions options = new DisplayImageOptions.Builder()
+//			.cacheInMemory().cacheOnDisc().build();
 
 	public PhotoAdapter(Context context, ArrayList<Photo> topics) {
 		this.mInflater = LayoutInflater.from(context);
@@ -63,7 +63,7 @@ public class PhotoAdapter extends BaseAdapter {
 		
 		if (!TextUtils.isEmpty(topic.FullName)) {
 			ImageLoader.getInstance().displayImage(topic.FullName,
-					holder.img, options);
+					holder.img, MyApplication.options);
 		}
 
 		return convertView;

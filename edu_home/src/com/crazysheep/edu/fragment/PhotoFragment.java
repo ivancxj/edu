@@ -1,5 +1,10 @@
 package com.crazysheep.edu.fragment;
 
+import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -9,19 +14,16 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.crazysheep.edu.R;
 import com.crazysheep.edu.activity.CommentActivity;
+import com.edu.lib.MyApplication;
 import com.edu.lib.api.APIService;
 import com.edu.lib.api.JsonHandler;
 import com.edu.lib.bean.Comment;
 import com.edu.lib.bean.Photo;
 import com.edu.lib.util.LogUtils;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 // 相册详情
 public class PhotoFragment extends Fragment implements OnClickListener {
@@ -34,7 +36,7 @@ public class PhotoFragment extends Fragment implements OnClickListener {
 
     private ArrayList<Comment> comments = new ArrayList<Comment>();
 
-    private DisplayImageOptions options;
+//    private DisplayImageOptions options;
 
     public static PhotoFragment newInstance(String albumID, Photo photo) {
         PhotoFragment f = new PhotoFragment();
@@ -48,8 +50,8 @@ public class PhotoFragment extends Fragment implements OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        options = new DisplayImageOptions.Builder()
-                .cacheInMemory().cacheOnDisc().build();
+//        options = new DisplayImageOptions.Builder()
+//                .cacheInMemory().cacheOnDisc().build();
     }
 
     @Override
@@ -68,7 +70,7 @@ public class PhotoFragment extends Fragment implements OnClickListener {
         }
         if (!TextUtils.isEmpty(photo.FullName)) {
             ImageLoader.getInstance().displayImage(photo.FullName, (ImageView) getView().findViewById(R.id.imageView),
-                    options);
+            		MyApplication.options);
         }
         count = (TextView) getView().findViewById(R.id.comment_count);
         count.setOnClickListener(this);

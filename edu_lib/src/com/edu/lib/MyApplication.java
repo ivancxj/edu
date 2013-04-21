@@ -15,6 +15,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
@@ -29,8 +30,10 @@ import com.edu.lib.util.AppConfig;
 import com.edu.lib.util.FileUtil;
 import com.edu.lib.util.StringUtils;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 public class MyApplication extends Application {
@@ -42,6 +45,9 @@ public class MyApplication extends Application {
 	public static final int NETTYPE_CMNET = 0x03;
 
 	private static final String INVALID_ANDROIDID = "9774d56d682e549c";
+	public static final DisplayImageOptions options = new DisplayImageOptions.Builder()
+			.cacheOnDisc().cacheInMemory().bitmapConfig(Bitmap.Config.RGB_565)
+			.imageScaleType(ImageScaleType.IN_SAMPLE_INT).build();
 
 	@Override
 	public void onCreate() {
@@ -59,8 +65,9 @@ public class MyApplication extends Application {
 		}
 
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
-				this).threadPriority(Thread.NORM_PRIORITY - 2)
-				.memoryCacheSize(memoryCacheSize)
+				this)
+				.threadPriority(Thread.NORM_PRIORITY - 2)
+				 .memoryCacheSize(memoryCacheSize)
 				.denyCacheImageMultipleSizesInMemory()
 				.discCacheFileNameGenerator(new Md5FileNameGenerator())
 				.tasksProcessingOrder(QueueProcessingType.LIFO)
@@ -68,7 +75,7 @@ public class MyApplication extends Application {
 				.build();
 		// Initialize ImageLoader with configuration.
 		ImageLoader.getInstance().init(config);
-		
+
 		Thread.setDefaultUncaughtExceptionHandler(new AppException(
 				getApplicationContext()));
 	}
@@ -120,6 +127,7 @@ public class MyApplication extends Application {
 		INVALID_IMEIs.add("00000000000000");
 		INVALID_IMEIs.add("000000000000000");
 	}
+
 	public boolean isValidImei(String imei) {
 		if (TextUtils.isEmpty(imei))
 			return false;
@@ -134,7 +142,7 @@ public class MyApplication extends Application {
 			.getExternalStorageDirectory().getPath() + "/data/.taoatao_udid";
 
 	private String getSavedUuid() {
-		
+
 		String udid = AppConfig.getAppConfig(this).getUdid();
 		if (null != udid)
 			return udid;
