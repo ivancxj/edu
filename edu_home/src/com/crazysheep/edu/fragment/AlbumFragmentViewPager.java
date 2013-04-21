@@ -1,5 +1,6 @@
 package com.crazysheep.edu.fragment;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -28,7 +29,6 @@ import com.edu.lib.widget.NonSwipeableViewPager;
 import com.slidingmenu.lib.SlidingMenu;
 
 /**
- *
  * @author ivan
  */
 public class AlbumFragmentViewPager extends Fragment implements ViewPager.OnPageChangeListener, OnClickListener {
@@ -36,16 +36,32 @@ public class AlbumFragmentViewPager extends Fragment implements ViewPager.OnPage
     AlbumFragmentAdapter mAdapter;
     NonSwipeableViewPager mPager;
 
-	private ArrayList<Album> user_albums = null;
-	private ArrayList<Album> class_albums = new ArrayList<Album>();
-	
-	private TextView cart_tabhost_todo_order;
-	private TextView cart_tabhost_order;
+    private ArrayList<Album> user_albums = null;
+    private ArrayList<Album> class_albums = new ArrayList<Album>();
+
+    private TextView cart_tabhost_todo_order;
+    private TextView cart_tabhost_order;
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mAdapter = new AlbumFragmentAdapter(getChildFragmentManager());
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        try {
+            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+            childFragmentManager.setAccessible(true);
+            childFragmentManager.set(this, null);
+
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -60,60 +76,61 @@ public class AlbumFragmentViewPager extends Fragment implements ViewPager.OnPage
 
         mPager = (NonSwipeableViewPager) getView().findViewById(R.id.pager);
 //        mPager.setOnPageChangeListener(this);
-		cart_tabhost_todo_order = (TextView) getView().findViewById(R.id.cart_tabhost_todo_order);
-		cart_tabhost_todo_order.setOnClickListener(this);
-		cart_tabhost_order = (TextView) getView().findViewById(R.id.cart_tabhost_order);
-		cart_tabhost_order.setOnClickListener(this);
-		
-        getUserAlbum(); 
+        cart_tabhost_todo_order = (TextView) getView().findViewById(R.id.cart_tabhost_todo_order);
+        cart_tabhost_todo_order.setOnClickListener(this);
+        cart_tabhost_order = (TextView) getView().findViewById(R.id.cart_tabhost_order);
+        cart_tabhost_order.setOnClickListener(this);
+
+        getUserAlbum();
     }
-    
-	private void  getUserAlbum(){
-		JsonHandler handler = new JsonHandler(getActivity()){
-			@Override
-			public void onStart() {
-				super.onStart();
-				getView().findViewById(R.id.loading).setVisibility(View.VISIBLE);
-			}
-			
-			@Override
-			public void onFinish() {
-				super.onFinish();
-				getView().findViewById(R.id.loading).setVisibility(View.GONE);
-			}
-			@Override
-			public void onSuccess(JSONObject response) {
-				super.onSuccess(response);
-				LogUtils.I(LogUtils.ALBUM_USER, response.toString());
-				JSONArray array = response.optJSONArray("useralbumlist");
-				int length = array.length();
-				user_albums = new ArrayList<Album>();
-				for(int i=0;i<length;i++){
-					Album album = new Album(array.optJSONObject(i));
-					user_albums.add(album);
-				}
-				
-				Album album = new Album();
-				album.isNew = true;
-				user_albums.add(album);
-				mAdapter.user_albums = user_albums;
-				
-				array = response.optJSONArray("classalbumlist");
-				length = array.length();
-				class_albums.clear();
-				for(int i=0;i<length;i++){
-					album = new Album(array.optJSONObject(i));
-					class_albums.add(album);
-				}
-				
-				mAdapter.class_albums = class_albums;
-				mPager.setAdapter(mAdapter);
-			}
-		};
-		User user = AppConfig.getAppConfig(getActivity()).getUser();
-		if(user != null)
-			APIService.GetUserAlbum(user.memberid,user.classID, handler);
-	}
+
+    private void getUserAlbum() {
+        JsonHandler handler = new JsonHandler(getActivity()) {
+            @Override
+            public void onStart() {
+                super.onStart();
+                getView().findViewById(R.id.loading).setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                getView().findViewById(R.id.loading).setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onSuccess(JSONObject response) {
+                super.onSuccess(response);
+                LogUtils.I(LogUtils.ALBUM_USER, response.toString());
+                JSONArray array = response.optJSONArray("useralbumlist");
+                int length = array.length();
+                user_albums = new ArrayList<Album>();
+                for (int i = 0; i < length; i++) {
+                    Album album = new Album(array.optJSONObject(i));
+                    user_albums.add(album);
+                }
+
+                Album album = new Album();
+                album.isNew = true;
+                user_albums.add(album);
+                mAdapter.user_albums = user_albums;
+
+                array = response.optJSONArray("classalbumlist");
+                length = array.length();
+                class_albums.clear();
+                for (int i = 0; i < length; i++) {
+                    album = new Album(array.optJSONObject(i));
+                    class_albums.add(album);
+                }
+
+                mAdapter.class_albums = class_albums;
+                mPager.setAdapter(mAdapter);
+            }
+        };
+        User user = AppConfig.getAppConfig(getActivity()).getUser();
+        if (user != null)
+            APIService.GetUserAlbum(user.memberid, user.classID, handler);
+    }
 
     @Override
     public void onPageScrolled(int i, float v, int i2) {
@@ -139,27 +156,27 @@ public class AlbumFragmentViewPager extends Fragment implements ViewPager.OnPage
 
     }
 
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.cart_tabhost_todo_order:// 
-			mPager.setCurrentItem(0);
-			cart_tabhost_todo_order.setTextColor(getResources().getColor(
-					R.color.yellow));
-			cart_tabhost_order.setTextColor(getResources().getColor(
-					R.color.dark_gray));
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.cart_tabhost_todo_order://
+                mPager.setCurrentItem(0);
+                cart_tabhost_todo_order.setTextColor(getResources().getColor(
+                        R.color.yellow));
+                cart_tabhost_order.setTextColor(getResources().getColor(
+                        R.color.dark_gray));
 
-			break;
-		case R.id.cart_tabhost_order:// 
-			mPager.setCurrentItem(1);
-			cart_tabhost_todo_order.setTextColor(getResources().getColor(
-					R.color.dark_gray));
-			cart_tabhost_order.setTextColor(getResources().getColor(
-					R.color.yellow));
-			break;
+                break;
+            case R.id.cart_tabhost_order://
+                mPager.setCurrentItem(1);
+                cart_tabhost_todo_order.setTextColor(getResources().getColor(
+                        R.color.dark_gray));
+                cart_tabhost_order.setTextColor(getResources().getColor(
+                        R.color.yellow));
+                break;
 
-		default:
-			break;
-		}
-	}
+            default:
+                break;
+        }
+    }
 }
