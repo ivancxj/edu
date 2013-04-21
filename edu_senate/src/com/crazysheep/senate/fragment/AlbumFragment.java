@@ -128,7 +128,7 @@ public class AlbumFragment extends Fragment implements OnItemClickListener {
 		if (album.isNew) {
 			CreateTopicActivity.startActivity(getActivity(), state,REQUESTCODE);
 		} else {
-			TopicListActivity.startActivity(getActivity(), name, album);
+			TopicListActivity.startActivity(getActivity(), name, album,REQUESTCODE);
 		}
 
 	}
