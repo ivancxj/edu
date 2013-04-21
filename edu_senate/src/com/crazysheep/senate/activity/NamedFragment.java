@@ -140,6 +140,8 @@ public class NamedFragment extends Fragment implements OnItemClickListener{
 					});
 			builder.setNegativeButton("取消", null);
 			builder.show();
+		}else{
+			UIUtils.showToast(getActivity(), "已点名，不可修改");
 		}
 	}
 

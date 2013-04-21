@@ -51,7 +51,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	}
 
 	@Override
-	public void onClick(View v) {
+	public void onClick(final View v) {
 		switch (v.getId()) {
 		case R.id.login_btn:
 			// check data
@@ -64,7 +64,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 				UIUtils.showErrToast(this, "请输入密码");
 				return;
 			}
-
+			v.setEnabled(false);
 			final ProgressDialog progress = UIUtils.newProgressDialog(this,
 					"请稍等..");
 			JsonHandler handler = new JsonHandler(this) {
@@ -78,6 +78,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 				public void onFinish() {
 					super.onFinish();
 					UIUtils.safeDismiss(progress);
+					v.setEnabled(true);
 				}
 
 				@Override
