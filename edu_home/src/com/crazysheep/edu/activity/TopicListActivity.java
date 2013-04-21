@@ -57,12 +57,22 @@ public class TopicListActivity extends ActionBarActivity implements
 	private Album album;
 
 	private TakePhotoUtils takePhoto;
+	
+	boolean refresh = true;
 
-	public static void startActivity(Context context, String msg, Album album) {
+	public static void startActivity(Activity context, String msg, Album album,int requestCode) {
 		Intent intent = new Intent(context, TopicListActivity.class);
 		intent.putExtra(EXTRA_MSG, msg);
 		intent.putExtra(EXTRA_ALBUM, album);
-		context.startActivity(intent);
+		context.startActivityForResult(intent, requestCode);
+//		context.startActivity(intent);
+	}
+	
+	@Override
+	public void finish() {
+		if(refresh)
+			setResult(RESULT_OK);
+		super.finish();
 	}
 
 	@Override
@@ -169,6 +179,7 @@ public class TopicListActivity extends ActionBarActivity implements
 				Photo photo = new Photo(response);
 				photos.add(photo);
 				adapter.notifyDataSetInvalidated();
+				refresh = true;
 			}
 		};
 		User user = AppConfig.getAppConfig(this).getUser();

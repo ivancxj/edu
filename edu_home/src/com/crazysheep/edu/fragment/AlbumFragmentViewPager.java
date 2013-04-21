@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -63,6 +64,15 @@ public class AlbumFragmentViewPager extends Fragment implements ViewPager.OnPage
             throw new RuntimeException(e);
         }
     }
+    
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == 101 && resultCode == getActivity().RESULT_OK) {
+//			 getUserAlbum();
+			System.err.println("222");
+		}
+	}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

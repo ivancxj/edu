@@ -71,7 +71,8 @@ public class AlbumFragment extends Fragment implements OnItemClickListener {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == REQUESTCODE && resultCode == getActivity().RESULT_OK) {
-			// getUserAlbum();
+//			 getUserAlbum();
+			System.err.println("111");
 		}
 	}
 
@@ -94,7 +95,7 @@ public class AlbumFragment extends Fragment implements OnItemClickListener {
 			CreateTopicActivity
 					.startActivity(getActivity(), state, REQUESTCODE);
 		} else {
-			TopicListActivity.startActivity(getActivity(), name, album);
+			TopicListActivity.startActivity(getActivity(), name, album,REQUESTCODE);
 		}
 	}
 

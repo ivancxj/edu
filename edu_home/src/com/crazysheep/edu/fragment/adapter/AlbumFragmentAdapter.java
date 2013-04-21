@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.crazysheep.edu.fragment.AlbumFragment;
 import com.edu.lib.bean.Album;
 
-public class AlbumFragmentAdapter extends FragmentPagerAdapter{
+public class AlbumFragmentAdapter extends FragmentStatePagerAdapter{
 	
 	public ArrayList<Album> user_albums = null;
 	public ArrayList<Album> class_albums = null;
