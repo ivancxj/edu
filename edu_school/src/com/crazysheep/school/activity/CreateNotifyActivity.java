@@ -1,6 +1,8 @@
 package com.crazysheep.school.activity;
 
 import android.app.ProgressDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -108,9 +110,10 @@ public class CreateNotifyActivity extends ActionBarActivity implements
             public void onSuccess(JSONObject response) {
                 super.onSuccess(response);
                 LogUtils.I(LogUtils.CREATE_NOTIFY, response.toString());
-                UIUtils.showToast(CreateNotifyActivity.this, "发送通知成功");
-                setResult(RESULT_OK);
-                finish();
+//                UIUtils.showToast(CreateNotifyActivity.this, "发送通知成功");
+//                setResult(RESULT_OK);
+//                finish();
+                sure();
             }
         };
         User user = AppConfig.getAppConfig(this).getUser();
@@ -121,5 +124,23 @@ public class CreateNotifyActivity extends ActionBarActivity implements
                 user.memberid, title.getText().toString(), content.getText()
                 .toString(),isteacher,isstu, handler);
     }
+    
+	private void sure() {
+		Builder builder = new Builder(this);
+		builder.setTitle("发通知成功");
+		builder.setCancelable(false);
+		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// finish();
+				// System.exit(1);
+				setResult(RESULT_OK);
+				finish();
+
+			}
+		});
+		// builder.setNegativeButton("取消", null);
+		builder.show();
+	}
 
 }
