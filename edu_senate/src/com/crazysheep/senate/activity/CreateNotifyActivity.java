@@ -4,6 +4,8 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -27,13 +29,14 @@ import com.edu.lib.util.UIUtils;
  * @author ivan
  * 
  */
-public class CreateNotifyActivity extends ActionBarActivity implements OnClickListener {
+public class CreateNotifyActivity extends ActionBarActivity implements
+		OnClickListener {
 
 	private final static int MAX = 70;
 	TextView create_topic_count;
 	TextView title;
 	TextView content;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,10 +44,10 @@ public class CreateNotifyActivity extends ActionBarActivity implements OnClickLi
 		bindActionBar();
 		mActionBar.setTitle("新建通知");
 		showBackAction();
-		title = (TextView)findViewById(R.id.create_notify_title);
-		content = (TextView)findViewById(R.id.create_notify_content);
-		create_topic_count = (TextView)findViewById(R.id.create_notify_count);
-		create_topic_count.setText(MAX+"/"+MAX);
+		title = (TextView) findViewById(R.id.create_notify_title);
+		content = (TextView) findViewById(R.id.create_notify_content);
+		create_topic_count = (TextView) findViewById(R.id.create_notify_count);
+		create_topic_count.setText(MAX + "/" + MAX);
 		TextWatcher watcher = new TextWatcher() {
 			@Override
 			public void afterTextChanged(Editable s) {
@@ -58,8 +61,10 @@ public class CreateNotifyActivity extends ActionBarActivity implements OnClickLi
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before,
 					int count) {
-				create_topic_count.setText((MAX-content.getText().toString().length())+"/"+MAX);
-				
+				create_topic_count.setText((MAX - content.getText().toString()
+						.length())
+						+ "/" + MAX);
+
 			}
 		};
 		content.addTextChangedListener(watcher);
@@ -83,7 +88,7 @@ public class CreateNotifyActivity extends ActionBarActivity implements OnClickLi
 			UIUtils.showErrToast(this, "请输入通知标题");
 			return;
 		}
-		
+
 		if (TextUtils.isEmpty(content.getText().toString())) {
 			UIUtils.showErrToast(this, "请输入通知内容");
 			return;
@@ -107,14 +112,34 @@ public class CreateNotifyActivity extends ActionBarActivity implements OnClickLi
 			public void onSuccess(JSONObject response) {
 				super.onSuccess(response);
 				LogUtils.I(LogUtils.CREATE_NOTIFY, response.toString());
-				UIUtils.showToast(CreateNotifyActivity.this, "发通知成功");
-				setResult(RESULT_OK);
-				finish();
+				// UIUtils.showToast(CreateNotifyActivity.this, "发通知成功");
+				// setResult(RESULT_OK);
+				// finish();
+				sure();
 			}
 		};
 		User user = AppConfig.getAppConfig(this).getUser();
 		APIService.SendClassAnnouncement(user.gardenID, user.classID,
-				user.memberid,title.getText().toString() ,content.getText().toString(), handler);
+				user.memberid, title.getText().toString(), content.getText()
+						.toString(), handler);
+	}
+
+	private void sure() {
+		Builder builder = new Builder(this);
+		builder.setTitle("发通知成功");
+		builder.setCancelable(false);
+		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// finish();
+				// System.exit(1);
+				setResult(RESULT_OK);
+				finish();
+
+			}
+		});
+		// builder.setNegativeButton("取消", null);
+		builder.show();
 	}
 
 }

@@ -1,7 +1,6 @@
 package com.edu.lib.api;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 
 import android.content.Context;
 
@@ -96,11 +95,11 @@ public class APIService {
 	// 获取老师列表
 	private final static String GetTeacherList = URL_API_HOST
 			+ "GetTeacherList";
-	
+
 	// 修改实体
 	// MobileItemTeacher
 	private final static String MobileItemTeacher = URL_API_HOST
-	+ "MobileItemTeacher";
+			+ "MobileItemTeacher";
 
 	/*****************************************
 	 * 暂时用不到接口
@@ -193,27 +192,28 @@ public class APIService {
 		if (resume_file != null) {
 			File file = new File(resume_file);
 			if (file.isFile()) {
-				try {
-					params.put("resume_file", file);
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				}
+				params.put("resume_file", resume_file);
 			}
 		}
 		post(UploadAlbumPhotos, params, handler);
 	}
-	
+
 	/**
 	 * 发送消息
-	 * @param sender 发送人id
-	 * @param sname 发送人名称
-	 * @param receivers 接收人id集合（,隔开
-	 * @param title 标题
-	 * @param content 内容
+	 * 
+	 * @param sender
+	 *            发送人id
+	 * @param sname
+	 *            发送人名称
+	 * @param receivers
+	 *            接收人id集合（,隔开
+	 * @param title
+	 *            标题
+	 * @param content
+	 *            内容
 	 */
-	public static void SendMsg(String sender, String sname,
-			String receivers, String title, String content,
-			AsyncHttpResponseHandler handler) {
+	public static void SendMsg(String sender, String sname, String receivers,
+			String title, String content, AsyncHttpResponseHandler handler) {
 		RequestParams params = new RequestParams();
 		params.put("sender", sender);
 		params.put("sname", sname);
@@ -222,11 +222,14 @@ public class APIService {
 		params.put("content", content);
 		get(SendMsg, params, handler);
 	}
-	
+
 	/**
 	 * 获取消息列表
-	 * @param userid 用户id
-	 * @param pageindex 页数
+	 * 
+	 * @param userid
+	 *            用户id
+	 * @param pageindex
+	 *            页数
 	 */
 	public static void GetPms(String userid, String pageindex,
 			AsyncHttpResponseHandler handler) {
@@ -235,18 +238,18 @@ public class APIService {
 		params.put("pageindex", pageindex);
 		get(GetPms, params, handler);
 	}
-	
+
 	/**
 	 * 删除消息
-	 * @param pid 消息id
+	 * 
+	 * @param pid
+	 *            消息id
 	 */
-	public static void DelPms(String pid,
-			AsyncHttpResponseHandler handler) {
+	public static void DelPms(String pid, AsyncHttpResponseHandler handler) {
 		RequestParams params = new RequestParams();
 		params.put("pid", pid);
 		get(DelPms, params, handler);
 	}
-	
 
 	/*****************************************
 	 * 家务通（家长用的） TODO

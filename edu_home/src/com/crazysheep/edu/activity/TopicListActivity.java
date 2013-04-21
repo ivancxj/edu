@@ -1,9 +1,19 @@
 package com.crazysheep.edu.activity;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.Toast;
+
 import com.crazysheep.edu.R;
 import com.crazysheep.edu.adapter.PhotoAdapter;
 import com.edu.lib.api.APIService;
@@ -21,14 +32,11 @@ import com.edu.lib.bean.Album;
 import com.edu.lib.bean.Photo;
 import com.edu.lib.bean.User;
 import com.edu.lib.util.AppConfig;
+import com.edu.lib.util.CommonUtils;
 import com.edu.lib.util.LogUtils;
 import com.edu.lib.util.TakePhotoUtils;
 import com.edu.lib.util.UIUtils;
 import com.markupartist.android.widget.ActionBar.IntentAction;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 /**
  * 主题列表 相册照片列表
@@ -36,8 +44,8 @@ import java.util.ArrayList;
  * @author ivan
  * 
  */
-public class TopicListActivity extends ActionBarActivity implements OnItemClickListener,
-		OnClickListener {
+public class TopicListActivity extends ActionBarActivity implements
+		OnItemClickListener, OnClickListener {
 
 	private ArrayList<Photo> photos = new ArrayList<Photo>();
 	private GridView gridView;
@@ -49,7 +57,7 @@ public class TopicListActivity extends ActionBarActivity implements OnItemClickL
 	private Album album;
 
 	private TakePhotoUtils takePhoto;
-	
+
 	public static void startActivity(Context context, String msg, Album album) {
 		Intent intent = new Intent(context, TopicListActivity.class);
 		intent.putExtra(EXTRA_MSG, msg);
@@ -62,18 +70,18 @@ public class TopicListActivity extends ActionBarActivity implements OnItemClickL
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_topic_list);
 		String msg = getIntent().getStringExtra(EXTRA_MSG);
-//		name.setText(msg);
-		
+		// name.setText(msg);
+
 		bindActionBar();
 		mActionBar.setTitle(msg);
-		mActionBar.addAction(new IntentAction(this,"上传",null){
-		     @Override
-	            public void performAction(View view) {
-	                super.performAction(view);
-	                findViewById(R.id.photo).setVisibility(View.VISIBLE);
-	            }
+		mActionBar.addAction(new IntentAction(this, "上传", null) {
+			@Override
+			public void performAction(View view) {
+				super.performAction(view);
+				findViewById(R.id.photo).setVisibility(View.VISIBLE);
+			}
 		});
-		
+
 		album = (Album) getIntent().getSerializableExtra(EXTRA_ALBUM);
 
 		takePhoto = new TakePhotoUtils(this);
@@ -123,6 +131,18 @@ public class TopicListActivity extends ActionBarActivity implements OnItemClickL
 	}
 
 	private void UploadAlbumPhotos(String resume_file) {
+//		File file = new File(resume_file);
+//		if (!file.isFile()) {
+//			UIUtils.showToast(this, "图片地址不对");
+//			return;
+//		} 
+//		Bitmap bitmap = CommonUtils.decodeSampledBitmapFromFile(resume_file, 600, 800);
+//		ByteArrayOutputStream bos = new ByteArrayOutputStream(); 
+//		bitmap.compress(CompressFormat.JPEG, 100, bos); 
+//		byte[] bitmapdata = bos.toByteArray();
+//		ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
+		
+		
 		final ProgressDialog progress = UIUtils.newProgressDialog(this,
 				"上传中...");
 		JsonHandler handler = new JsonHandler(this) {
@@ -143,7 +163,8 @@ public class TopicListActivity extends ActionBarActivity implements OnItemClickL
 			public void onSuccess(JSONObject response) {
 				super.onSuccess(response);
 				LogUtils.I(LogUtils.UPLOAD_PHOTO, response.toString());
-				Toast.makeText(TopicListActivity.this, "上传成功", Toast.LENGTH_SHORT).show();
+				Toast.makeText(TopicListActivity.this, "上传成功",
+						Toast.LENGTH_SHORT).show();
 				response = response.optJSONObject("photofileinfo");
 				Photo photo = new Photo(response);
 				photos.add(photo);
@@ -165,8 +186,8 @@ public class TopicListActivity extends ActionBarActivity implements OnItemClickL
 	}
 
 	private void updateAlbumPhotoLis() {
-		final ProgressDialog progress = UIUtils.newProgressDialog(this,
-				"请稍等..");
+		final ProgressDialog progress = UIUtils
+				.newProgressDialog(this, "请稍等..");
 		JsonHandler handler = new JsonHandler(this) {
 			@Override
 			public void onStart() {
@@ -185,13 +206,13 @@ public class TopicListActivity extends ActionBarActivity implements OnItemClickL
 				super.onSuccess(response);
 				LogUtils.I(LogUtils.PhotoList, response.toString());
 				JSONArray array = response.optJSONArray("photofileinfos");
-				if(array != null){
+				if (array != null) {
 					int length = array.length();
-					for(int i=0;i<length;i++){
+					for (int i = 0; i < length; i++) {
 						Photo photo = new Photo(array.optJSONObject(i));
 						photos.add(photo);
 					}
-					
+
 					adapter.notifyDataSetInvalidated();
 				}
 			}
@@ -221,7 +242,7 @@ public class TopicListActivity extends ActionBarActivity implements OnItemClickL
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		
+
 		PhotoActivity.startActivity(this, album.albumID, position, photos);
 	}
 }
