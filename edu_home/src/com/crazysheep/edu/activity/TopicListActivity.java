@@ -2,7 +2,7 @@ package com.crazysheep.edu.activity;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -10,7 +10,6 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
@@ -54,23 +53,25 @@ public class TopicListActivity extends ActionBarActivity implements
 	public final static String EXTRA_FILENAME = "extra_filename";
 	public final static String EXTRA_MSG = "extra_msg";
 	public final static String EXTRA_ALBUM = "extra_album";
+	public final static String EXTRA_STATE = "extra_state";
 	private Album album;
 
 	private TakePhotoUtils takePhoto;
-	
-	boolean refresh = true;
 
-	public static void startActivity(Activity context, String msg, Album album,int requestCode) {
+	boolean refresh = false;
+
+	public static void startActivity(Activity context, String msg, Album album,
+			int requestCode) {
 		Intent intent = new Intent(context, TopicListActivity.class);
 		intent.putExtra(EXTRA_MSG, msg);
 		intent.putExtra(EXTRA_ALBUM, album);
 		context.startActivityForResult(intent, requestCode);
-//		context.startActivity(intent);
+		// context.startActivity(intent);
 	}
-	
+
 	@Override
 	public void finish() {
-		if(refresh)
+		if (refresh)
 			setResult(RESULT_OK);
 		super.finish();
 	}
@@ -141,18 +142,27 @@ public class TopicListActivity extends ActionBarActivity implements
 	}
 
 	private void UploadAlbumPhotos(String resume_file) {
-//		File file = new File(resume_file);
-//		if (!file.isFile()) {
-//			UIUtils.showToast(this, "图片地址不对");
-//			return;
-//		} 
-//		Bitmap bitmap = CommonUtils.decodeSampledBitmapFromFile(resume_file, 600, 800);
-//		ByteArrayOutputStream bos = new ByteArrayOutputStream(); 
-//		bitmap.compress(CompressFormat.JPEG, 100, bos); 
-//		byte[] bitmapdata = bos.toByteArray();
-//		ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
-		
-		
+		// File file = new File(resume_file);
+		// if (!file.isFile()) {
+		// UIUtils.showToast(this, "图片地址不对");
+		// return;
+		// }
+		Bitmap bitmap = CommonUtils.decodeSampledBitmapFromFile(resume_file,
+				600, 800);
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		bitmap.compress(CompressFormat.JPEG, 90, bos);
+		byte[] bitmapdata = bos.toByteArray();
+		final ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
+		try {
+			bos.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		if (!bitmap.isRecycled()) {
+			bitmap.recycle();
+		}
+
 		final ProgressDialog progress = UIUtils.newProgressDialog(this,
 				"上传中...");
 		JsonHandler handler = new JsonHandler(this) {
@@ -167,6 +177,11 @@ public class TopicListActivity extends ActionBarActivity implements
 			public void onFinish() {
 				super.onFinish();
 				UIUtils.safeDismiss(progress);
+				try {
+					bs.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 
 			@Override
@@ -192,7 +207,7 @@ public class TopicListActivity extends ActionBarActivity implements
 		// e.printStackTrace();
 		// }
 		APIService.UploadAlbumPhotos(album.albumID, album.gid, user.classID,
-				user.memberid, resume_file, handler);
+				user.memberid, bs, handler);
 
 	}
 

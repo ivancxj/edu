@@ -42,6 +42,8 @@ public class AlbumFragmentViewPager extends Fragment implements ViewPager.OnPage
 
     private TextView cart_tabhost_todo_order;
     private TextView cart_tabhost_order;
+    
+    public static int state = 1;
 
     @Override
     public void onAttach(Activity activity) {
@@ -69,8 +71,7 @@ public class AlbumFragmentViewPager extends Fragment implements ViewPager.OnPage
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == 101 && resultCode == getActivity().RESULT_OK) {
-//			 getUserAlbum();
-			System.err.println("222");
+			 getUserAlbum();
 		}
 	}
 
@@ -134,7 +135,14 @@ public class AlbumFragmentViewPager extends Fragment implements ViewPager.OnPage
                 }
 
                 mAdapter.class_albums = class_albums;
-                mPager.setAdapter(mAdapter);
+                if(mPager != null && mAdapter != null){
+                	mPager.setAdapter(mAdapter);
+                	if(state  == 2){
+                		mPager.setCurrentItem(1);
+                	}
+                }else{
+                	System.err.println("mPager==== null");
+                }
             }
         };
         User user = AppConfig.getAppConfig(getActivity()).getUser();

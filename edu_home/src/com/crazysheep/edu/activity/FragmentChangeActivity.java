@@ -47,7 +47,7 @@ public class FragmentChangeActivity extends SlidingFragmentActivity implements
         setBehindContentView(R.layout.menu_frame);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.menu_frame, new MenuFragment(1, new AlbumFragmentViewPager(),
-                        new AlbumFragmentViewPager(), new AlbumFragmentViewPager(), new NotifyFragment()), "menu").commit();
+                        new NotifyFragment(), new AlbumFragmentViewPager(), new AlbumFragmentViewPager()), "menu").commit();
 
         findViewById(R.id.action).setOnClickListener(this);
 

@@ -68,15 +68,6 @@ public class AlbumFragment extends Fragment implements OnItemClickListener {
 	}
 
 	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		if (requestCode == REQUESTCODE && resultCode == getActivity().RESULT_OK) {
-//			 getUserAlbum();
-			System.err.println("111");
-		}
-	}
-
-	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		Album album = null;
@@ -90,6 +81,8 @@ public class AlbumFragment extends Fragment implements OnItemClickListener {
 			name = "[班级相册]" + album.sName;
 			state = 2;
 		}
+		
+		AlbumFragmentViewPager.state = state;
 
 		if (album.isNew) {
 			CreateTopicActivity

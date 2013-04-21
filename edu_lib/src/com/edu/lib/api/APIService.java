@@ -1,6 +1,7 @@
 package com.edu.lib.api;
 
 import java.io.File;
+import java.io.InputStream;
 
 import android.content.Context;
 
@@ -182,7 +183,7 @@ public class APIService {
 	 *            图片文件
 	 */
 	public static void UploadAlbumPhotos(String albumID, String gid,
-			String classid, String userid, String resume_file,
+			String classid, String userid, InputStream resume_file,
 			AsyncHttpResponseHandler handler) {
 		RequestParams params = new RequestParams();
 		params.put("albumID", albumID);
@@ -190,10 +191,10 @@ public class APIService {
 		params.put("classid", classid);
 		params.put("userid", userid);
 		if (resume_file != null) {
-			File file = new File(resume_file);
-			if (file.isFile()) {
-				params.put("resume_file", resume_file);
-			}
+			params.put("resume_file", resume_file,"temp.jpg");
+//			File file = new File(resume_file);
+//			if (file.isFile()) {
+//			}
 		}
 		post(UploadAlbumPhotos, params, handler);
 	}

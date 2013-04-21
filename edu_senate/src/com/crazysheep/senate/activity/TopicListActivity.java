@@ -1,5 +1,7 @@
 package com.crazysheep.senate.activity;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -11,15 +13,13 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -61,20 +61,21 @@ public class TopicListActivity extends ActionBarActivity implements
 	private Album album;
 
 	private TakePhotoUtils takePhoto;
-	
+
 	boolean refresh = false;
 
-	public static void startActivity(Activity context, String msg, Album album,int requestCode) {
+	public static void startActivity(Activity context, String msg, Album album,
+			int requestCode) {
 		Intent intent = new Intent(context, TopicListActivity.class);
 		intent.putExtra(EXTRA_MSG, msg);
 		intent.putExtra(EXTRA_ALBUM, album);
 		context.startActivityForResult(intent, requestCode);
-//		context.startActivity(intent);
+		// context.startActivity(intent);
 	}
-	
+
 	@Override
 	public void finish() {
-		if(refresh)
+		if (refresh)
 			setResult(RESULT_OK);
 		super.finish();
 	}
@@ -145,83 +146,21 @@ public class TopicListActivity extends ActionBarActivity implements
 	}
 
 	private void UploadAlbumPhotos(String resume_file) {
-//		File file = new File(resume_file);
-//		if (!file.isFile()) {
-//			UIUtils.showToast(this, "图片地址不对");
-//			return;
-//		}
-//		System.err.println("resume_file=" + resume_file);
-//		final BitmapFactory.Options options = new BitmapFactory.Options();
-//		options.inJustDecodeBounds = true;
-//		BitmapFactory.decodeFile(resume_file, options);
-////		bitmap = CommonUtils.imageZoom(bitmap, 100);
-////		
-//
-////
-//		int height = options.outHeight;
-//		int width = options.outWidth;
-//		System.err.println("height = "+height);
-//		System.err.println("width = "+width);
-////		
-//		options.inJustDecodeBounds = false;
-//		options.inSampleSize = 2;
-//		Bitmap bitmap = BitmapFactory.decodeFile(resume_file, options);
-//		height = options.outHeight;
-//		width = options.outWidth;
-//		System.err.println("height = "+height);
-//		System.err.println("width = "+width);
-//		
-//		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//		bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
-//		byte[] b = baos.toByteArray();
-//		// 将字节换成KB
-//		double mid = b.length / 1024;
-//		System.err.println("mid = "+mid);
-//		
-//		bitmap.recycle();
-//
-//		if (true)
-//			return;
-//		Bitmap bitmap = CommonUtils.decodeSampledBitmapFromFile(resume_file,
-//				600, 800);
-//		System.err.println(bitmap.getHeight());
-//		System.err.println(bitmap.getWidth());
-		
-	
-		// ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		// bitmap.compress(CompressFormat.JPEG, 100, bos);
-		// byte[] bitmapdata = bos.toByteArray();
-		// ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
+		Bitmap bitmap = CommonUtils.decodeSampledBitmapFromFile(resume_file,
+				600, 800);
 
-//		File f = new File(Environment.getExternalStorageDirectory()
-//				+ "/Android/data/" + "1.jpg");
-//		
-//		if (f.exists()) {
-//			f.delete();
-//			try {
-//				f.createNewFile();
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		System.err.println(f.getAbsolutePath());
-//		FileOutputStream fOut = null;
-//		try {
-//			fOut = new FileOutputStream(f);
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		}
-//		bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
-//		try {
-//			fOut.flush();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		try {
-//			fOut.close();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		bitmap.compress(CompressFormat.JPEG, 90, bos);
+		byte[] bitmapdata = bos.toByteArray();
+		final ByteArrayInputStream bs = new ByteArrayInputStream(bitmapdata);
+		try {
+			bos.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		if(!bitmap.isRecycled()){
+			bitmap.recycle();
+		}
 
 		final ProgressDialog progress = UIUtils.newProgressDialog(this,
 				"请稍候...");
@@ -237,12 +176,18 @@ public class TopicListActivity extends ActionBarActivity implements
 			public void onFinish() {
 				super.onFinish();
 				UIUtils.safeDismiss(progress);
+				try {
+					bs.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 
 			@Override
 			public void onSuccess(JSONObject response) {
 				super.onSuccess(response);
 				LogUtils.I(LogUtils.UPLOAD_PHOTO, response.toString());
+				
 				Toast.makeText(TopicListActivity.this, "上传成功",
 						Toast.LENGTH_SHORT).show();
 				response = response.optJSONObject("photofileinfo");
@@ -254,15 +199,8 @@ public class TopicListActivity extends ActionBarActivity implements
 		};
 		User user = AppConfig.getAppConfig(this).getUser();
 
-		// ContentResolver resolver = getActivity().getContentResolver();
-		// try {
-		// InputStream
-		// inStream=resolver.openInputStream(Uri.parse(resume_file));
-		// } catch (FileNotFoundException e) {
-		// e.printStackTrace();
-		// }
-		 APIService.UploadAlbumPhotos(album.albumID, album.gid, user.classID,
-		 user.memberid, resume_file, handler);
+		APIService.UploadAlbumPhotos(album.albumID, album.gid, user.classID,
+				user.memberid, bs, handler);
 
 	}
 
