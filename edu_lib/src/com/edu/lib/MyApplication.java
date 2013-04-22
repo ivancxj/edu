@@ -52,6 +52,13 @@ public class MyApplication extends Application {
             .cacheOnDisc().cacheInMemory().bitmapConfig(Bitmap.Config.RGB_565)
             .imageScaleType(ImageScaleType.IN_SAMPLE_INT).build();
 
+    public static final DisplayImageOptions gridOptions = new DisplayImageOptions.Builder()
+            .showImageForEmptyUri(R.drawable.ic_grid_loading)
+            .showStubImage(R.drawable.ic_grid_loading)
+            .showImageOnFail(R.drawable.ic_grid_loading)
+            .cacheOnDisc().cacheInMemory().bitmapConfig(Bitmap.Config.RGB_565)
+            .imageScaleType(ImageScaleType.IN_SAMPLE_INT).build();
+
     @Override
     public void onCreate() {
         super.onCreate();

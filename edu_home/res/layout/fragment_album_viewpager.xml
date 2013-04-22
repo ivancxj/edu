@@ -50,7 +50,8 @@
                     android:shadowDy="1"
                     android:text="个人相册"
                     android:textColor="@color/yellow"
-                    android:textSize="16sp"/>
+                    android:textStyle="bold"
+                    android:textSize="18sp"/>
 
             <TextView
                     android:id="@+id/cart_tabhost_order"
@@ -66,7 +67,8 @@
                     android:shadowDy="1"
                     android:text="班级相册"
                     android:textColor="@color/dark_gray"
-                    android:textSize="16sp"/>
+                    android:textStyle="bold"
+                    android:textSize="18sp"/>
         </LinearLayout>
 
         <com.edu.lib.widget.NonSwipeableViewPager

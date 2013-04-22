@@ -57,7 +57,7 @@ public class TopicAdapter extends BaseAdapter {
 			holder.img = (ImageView) convertView.findViewById(R.id.img);
 			holder.name = (TextView) convertView.findViewById(R.id.name);
 			holder.count = (TextView) convertView.findViewById(R.id.count);
-			holder.newTopic = (TextView) convertView.findViewById(R.id.new_topic);
+			holder.newTopic = (ImageView) convertView.findViewById(R.id.new_topic);
 
 			convertView.setTag(holder);
 		} else {
@@ -73,7 +73,7 @@ public class TopicAdapter extends BaseAdapter {
 		} else {
 			if (!TextUtils.isEmpty(topic.cover)) {
 				ImageLoader.getInstance().displayImage(topic.cover,
-						holder.img, MyApplication.options);
+						holder.img, MyApplication.gridOptions);
 			}
 
 			holder.name.setText(topic.sName);
@@ -88,7 +88,7 @@ public class TopicAdapter extends BaseAdapter {
 		ImageView img;
 		TextView name;
 		TextView count;
-		TextView newTopic;
+        ImageView newTopic;
 	}
 
 }
