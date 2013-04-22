@@ -24,22 +24,25 @@
         <TextView
             	android:id="@+id/remark_num"
                 android:text="0210"
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
+                android:gravity="left"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0"
                 />
 
         <TextView
             	android:id="@+id/remark_name"
                 android:text="孙小莉"
                 android:textSize="18sp"
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
+                android:gravity="left"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="0"/>
 
         <TextView
             	android:id="@+id/remark_time"
                 android:text="08:30"
+                android:gravity="left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
@@ -50,6 +53,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_message"
                 android:layout_weight="0"
+                android:layout_gravity="center_vertical"
                 android:layout_marginRight="8dp"
                 />
     </LinearLayout>

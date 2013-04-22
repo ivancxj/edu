@@ -17,13 +17,6 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"/>
 
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:textSize="18sp"
-                android:text="加载通知中..."/>
-
     </LinearLayout>
 
 
