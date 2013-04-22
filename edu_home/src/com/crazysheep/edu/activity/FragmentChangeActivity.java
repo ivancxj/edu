@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.crazysheep.edu.R;
 import com.crazysheep.edu.fragment.AlbumFragmentViewPager;
+import com.crazysheep.edu.fragment.MessageListFragment;
 import com.crazysheep.edu.fragment.NotifyFragment;
-import com.crazysheep.edu.activity.MenuFragment;
 import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.app.SlidingFragmentActivity;
 
@@ -47,7 +47,7 @@ public class FragmentChangeActivity extends SlidingFragmentActivity implements
         setBehindContentView(R.layout.menu_frame);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.menu_frame, new MenuFragment(1, new AlbumFragmentViewPager(),
-                        new NotifyFragment(), new AlbumFragmentViewPager(), new AlbumFragmentViewPager()), "menu").commit();
+                        new NotifyFragment(), new MessageListFragment(), new AlbumFragmentViewPager()), "menu").commit();
 
         findViewById(R.id.action).setOnClickListener(this);
 

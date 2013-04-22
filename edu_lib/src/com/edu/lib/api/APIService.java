@@ -232,11 +232,11 @@ public class APIService {
 	 * @param pageindex
 	 *            页数
 	 */
-	public static void GetPms(String userid, String pageindex,
+	public static void GetPms(String userid, int pageindex,
 			AsyncHttpResponseHandler handler) {
 		RequestParams params = new RequestParams();
 		params.put("userid", userid);
-		params.put("pageindex", pageindex);
+		params.put("pageindex", pageindex+"");
 		get(GetPms, params, handler);
 	}
 

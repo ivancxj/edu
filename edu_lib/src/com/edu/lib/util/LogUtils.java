@@ -16,6 +16,10 @@ public class LogUtils {
 	public static final String CREATE_TOPIC = "create_topic";
 	public static final String UPLOAD_PHOTO = "upload_photo";
 	
+	public static final String MESSAGE = "message";
+	public static final String CREATE_MESSAGE = "create_message";
+	public static final String DELETE_MESSAGE = "delete_message";
+	
 	public static final String SERVER_RETURN = "server_return";
 	private static final String LOG_PREFIX = "edu_";
 	private static boolean isPrintLog = true;
