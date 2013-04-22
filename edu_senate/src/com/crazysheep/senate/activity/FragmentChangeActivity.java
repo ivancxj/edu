@@ -10,7 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.crazysheep.senate.R;
+import com.crazysheep.senate.fragment.AlbumFragment;
 import com.crazysheep.senate.fragment.NotifyFragment;
+import com.crazysheep.senate.fragment.PhotoFragment;
 import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.app.SlidingFragmentActivity;
 
@@ -48,11 +50,8 @@ public class FragmentChangeActivity extends SlidingFragmentActivity implements
         // set the Behind View
         setBehindContentView(R.layout.menu_frame);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.menu_frame, new MenuFragment(), "menu").commit();
-
-        findViewById(R.id.logo).setOnClickListener(this);
-
-        findViewById(R.id.arrow).setOnClickListener(this);
+                .replace(R.id.menu_frame, new MenuFragment(1, new RemarkFragment(), new NotifyFragment(), new AlbumFragment()),
+                        "menu").commit();
 
     }
 
@@ -74,13 +73,8 @@ public class FragmentChangeActivity extends SlidingFragmentActivity implements
         ((TextView) findViewById(R.id.action_title)).setText(menu.title);
         ((ImageView) findViewById(R.id.logo)).setImageResource(menu.icon);
         if (fragment != null) {
-            Fragment f = getSupportFragmentManager().findFragmentByTag(fragment.getClass().toString());
-            if (f != null) {
-                getSupportFragmentManager().beginTransaction().attach(f).commit();
-            } else {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, fragment, fragment.getClass().toString()).commit();
-            }
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_frame, fragment, fragment.getClass().toString()).commit();
         }
     }
 
