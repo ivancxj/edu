@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ public class FragmentChangeActivity extends SlidingFragmentActivity implements
         View.OnClickListener {
 
     private Fragment mContent;
+    final static int REQUEST_CREATE = 10001;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,14 +33,21 @@ public class FragmentChangeActivity extends SlidingFragmentActivity implements
 
         setContentView(R.layout.content_frame);
 
+        findViewById(R.id.action).setOnClickListener(this);
         if (mContent == null) {
             mContent = new NotifyFragment();
-            ((TextView) findViewById(R.id.action_title)).setText("园内通知");
-            ((ImageView) findViewById(R.id.logo)).setImageResource(R.drawable.ic_notif);
+            ((TextView) findViewById(R.id.action_title)).setText("通知");
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, mContent).commit();
         }
 
+        setRightAction("发通知", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FragmentChangeActivity.this, CreateNotifyActivity.class);
+                startActivityForResult(intent, REQUEST_CREATE);
+            }
+        });
 
         SlidingMenu sm = getSlidingMenu();
         sm.setShadowWidthRes(R.dimen.shadow_width);
@@ -72,17 +81,34 @@ public class FragmentChangeActivity extends SlidingFragmentActivity implements
         mContent = fragment;
         getSlidingMenu().showContent();
         ((TextView) findViewById(R.id.action_title)).setText(menu.title);
-        ((ImageView) findViewById(R.id.logo)).setImageResource(menu.icon);
         if (fragment != null) {
+            Fragment f = getSupportFragmentManager().findFragmentByTag(fragment.getClass().toString());
+            if (f instanceof NotifyFragment) {
+                setRightAction("发通知", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(FragmentChangeActivity.this, CreateNotifyActivity.class);
+                        startActivityForResult(intent, REQUEST_CREATE);
+                    }
+                });
+            } else {
+                findViewById(com.edu.lib.R.id.action_right).setVisibility(View.GONE);
+            }
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, fragment, fragment.getClass().toString()).commit();
         }
     }
 
+    public void setRightAction(String title, View.OnClickListener listener) {
+        ((Button) findViewById(com.edu.lib.R.id.action_right)).setText(title);
+        findViewById(com.edu.lib.R.id.action_right).setOnClickListener(listener);
+        findViewById(com.edu.lib.R.id.action_right).setVisibility(View.VISIBLE);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.logo:
+            case R.id.action:
                 getSlidingMenu().showMenu();
                 break;
         }

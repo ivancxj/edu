@@ -2,15 +2,17 @@
 <resources>
 
     <string-array name="menu_names">
+        <item>出勤</item>
+        <item>通知</item>
+        <item>消息</item>
         <item>相册</item>
-        <item>园所通知</item>
-        <item>出勤点名</item>
     </string-array>
 
     <string-array name="menu_imgs">
-        <item>@drawable/ic_album</item>
-        <item>@drawable/ic_notif</item>
-        <item>@drawable/ic_album</item>
+        <item>@drawable/cq_selector</item>
+        <item>@drawable/notify_selector</item>
+        <item>@drawable/message_selector</item>
+        <item>@drawable/album_selector</item>
     </string-array>
 
 </resources>
