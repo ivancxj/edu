@@ -13,6 +13,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.crazysheep.senate.R;
+import com.edu.lib.MyApplication;
 import com.edu.lib.api.APIService;
 import com.edu.lib.api.JsonHandler;
 import com.edu.lib.bean.User;
@@ -36,7 +37,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 		loginPassword = (EditText) findViewById(R.id.login_password);
 		loginRember = (CheckBox) findViewById(R.id.login_rember);
 		loginAutologin = (CheckBox) findViewById(R.id.login_autologin);
-        loginPassword.setText("sRYVHy>m6Tgx");
+		loginPassword.setText("sRYVHy>m6Tgx");
 
 		// 记住密码
 		if (AppConfig.getAppConfig(this).isRemberPass()) {
@@ -54,6 +55,13 @@ public class LoginActivity extends Activity implements OnClickListener {
 	public void onClick(final View v) {
 		switch (v.getId()) {
 		case R.id.login_btn:
+			// check network
+			MyApplication appContext = (MyApplication) getApplication();
+			if (!appContext.isNetworkConnected()) {
+				UIUtils.showErrToast(this, "请先检查网络");
+				return;
+			}
+
 			// check data
 			if (TextUtils.isEmpty(loginName.getText().toString())) {
 				UIUtils.showErrToast(this, "请输入用户名");
@@ -92,25 +100,29 @@ public class LoginActivity extends Activity implements OnClickListener {
 						loginRember.setChecked(true);
 					}
 					if (loginRember.isChecked()) {
-						AppConfig.getAppConfig(LoginActivity.this).setLoginName(loginName.getText().toString());
-						AppConfig.getAppConfig(LoginActivity.this).setLoginPass(loginPassword.getText().toString());
+						AppConfig.getAppConfig(LoginActivity.this)
+								.setLoginName(loginName.getText().toString());
+						AppConfig.getAppConfig(LoginActivity.this)
+								.setLoginPass(
+										loginPassword.getText().toString());
 					}
 					AppConfig.getAppConfig(LoginActivity.this).setRemberPass(
 							loginRember.isChecked());
 					AppConfig.getAppConfig(LoginActivity.this).setAutoLogin(
 							loginAutologin.isChecked());
 
-				    // go next activity
-//					Intent intent = new Intent(LoginActivity.this,
-//							FragmentChangeActivity.class);
-					Intent intent = new Intent(LoginActivity.this,FragmentChangeActivity.class);
+					// go next activity
+					// Intent intent = new Intent(LoginActivity.this,
+					// FragmentChangeActivity.class);
+					Intent intent = new Intent(LoginActivity.this,
+							FragmentChangeActivity.class);
 					startActivity(intent);
 					finish();
 				}
 			};
 			String md5 = loginPassword.getText().toString().trim();
-			APIService.CheckLogin(loginName.getText().toString().trim(),
-					md5, handler);
+			APIService.CheckLogin(loginName.getText().toString().trim(), md5,
+					handler);
 			break;
 
 		default:

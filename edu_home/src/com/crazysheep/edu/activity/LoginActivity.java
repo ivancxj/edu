@@ -13,6 +13,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.crazysheep.edu.R;
+import com.edu.lib.MyApplication;
 import com.edu.lib.api.APIService;
 import com.edu.lib.api.JsonHandler;
 import com.edu.lib.bean.User;
@@ -54,6 +55,13 @@ public class LoginActivity extends Activity implements OnClickListener {
 	public void onClick(final View v) {
 		switch (v.getId()) {
 		case R.id.login_btn:
+			// check network
+			MyApplication appContext = (MyApplication)getApplication();
+			if(!appContext.isNetworkConnected()){
+				UIUtils.showErrToast(this, "请先检查网络");
+				return;
+			}
+			
 			// check data
 			if (TextUtils.isEmpty(loginName.getText().toString())) {
 				UIUtils.showErrToast(this, "请输入用户名");
