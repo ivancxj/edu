@@ -37,9 +37,13 @@ public class CreateNotifyActivity extends ActionBarActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_notify);
-        bindActionBar();
-        mActionBar.setTitle("发通知");
-        showBackAction();
+        setTitle("发通知");
+        setHomeActionListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         title = (TextView) findViewById(R.id.create_notify_title);
         content = (TextView) findViewById(R.id.create_notify_content);

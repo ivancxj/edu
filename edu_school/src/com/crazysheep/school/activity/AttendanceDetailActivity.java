@@ -30,9 +30,13 @@ public class AttendanceDetailActivity extends ActionBarActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attendance_detail);
-        bindActionBar();
-        mActionBar.setTitle("园所出勤");
-        showBackAction();
+        setTitle("园所出勤");
+        setHomeActionListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         // 获取未考勤学生列表
         getStudentNoRecords();
         inflater = LayoutInflater.from(this);

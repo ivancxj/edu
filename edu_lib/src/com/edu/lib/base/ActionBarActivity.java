@@ -1,37 +1,24 @@
 package com.edu.lib.base;
 
-import android.content.Context;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
-
+import android.widget.Button;
+import android.widget.TextView;
 import com.edu.lib.R;
-import com.markupartist.android.widget.ActionBar;
-import com.markupartist.android.widget.ActionBar.IntentAction;
 
-public class ActionBarActivity extends FragmentActivity{
-	protected ActionBar mActionBar;
-	
-	public void bindActionBar() {
-		mActionBar = (ActionBar)findViewById(R.id.actionbar);
-		showBackAction();
-	}
+public class ActionBarActivity extends FragmentActivity {
 
-	protected void showBackAction() {
-		BackAction backAction = new BackAction(this,
-				R.drawable.ic_menu_back_default);
-		mActionBar.setHomeAction(backAction);
-	}
-	
-	private class BackAction extends IntentAction {
+    public void setTitle(String title) {
+        ((TextView) findViewById(R.id.action_title)).setText(title);
+    }
 
-		public BackAction(Context context, Integer drawable) {
-			super(context, drawable, null);
-		}
+    public void setHomeActionListener(View.OnClickListener listener) {
+        findViewById(R.id.action).setOnClickListener(listener);
+    }
 
-		@Override
-		public void performAction(View view) {
-			finish();
-		}
+    public void setRightAction(String title, View.OnClickListener listener) {
+        ((Button) findViewById(R.id.action_right)).setText(title);
+        findViewById(R.id.action_right).setOnClickListener(listener);
+    }
 
-	}
 }

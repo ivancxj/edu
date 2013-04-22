@@ -69,13 +69,13 @@ public class FragmentChangeActivity extends SlidingFragmentActivity implements
         mContent = fragment;
         ((TextView) findViewById(R.id.action_title)).setText(menu.title);
         if (fragment != null) {
-            Fragment f = getSupportFragmentManager().findFragmentByTag(fragment.getClass().toString());
-            if (f != null) {
-                getSupportFragmentManager().beginTransaction().attach(f).commit();
-            } else {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, fragment, fragment.getClass().toString()).commit();
-            }
+//            Fragment f = getSupportFragmentManager().findFragmentByTag(fragment.getClass().toString());
+//            if (f != null) {
+//                getSupportFragmentManager().beginTransaction().attach(f).commit();
+//            } else {
+//            }
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_frame, fragment, fragment.getClass().toString()).commit();
         }
         getSlidingMenu().showContent();
     }
