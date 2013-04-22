@@ -1,32 +1,32 @@
 package com.crazysheep.school.activity;
 
-import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.crazysheep.school.R;
 import com.crazysheep.school.fragment.AttendanceFragment;
 import com.crazysheep.school.fragment.InfoFragment;
 import com.crazysheep.school.fragment.NotifyFragment;
 
-public class MenuFragment extends ListFragment {
+import java.lang.reflect.Field;
 
-    private ItemListBaseAdapter mAdapter;
+public class MenuFragment extends Fragment implements View.OnClickListener {
+
     private Menu[] menus;
+    private int defaultIndex;
+
+    public MenuFragment(int defaultIndex) {
+        this.defaultIndex = defaultIndex;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         String[] names = getResources().getStringArray(R.array.menu_names);
         TypedArray imgs = getResources().obtainTypedArray(R.array.menu_imgs);
         menus = new Menu[names.length];
@@ -36,6 +36,21 @@ public class MenuFragment extends ListFragment {
             menu.title = names[i];
             menu.icon = resId;
             menus[i] = menu;
+        }
+
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        try {
+            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+            childFragmentManager.setAccessible(true);
+            childFragmentManager.set(this, null);
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -47,32 +62,15 @@ public class MenuFragment extends ListFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mAdapter = new ItemListBaseAdapter(getActivity(), menus, 0);
-        setListAdapter(mAdapter);
-    }
-
-    @Override
-    public void onListItemClick(ListView lv, View v, int position, long id) {
-        for (int i = 0; i < lv.getCount(); i++) {
-            lv.getChildAt(i).setBackgroundResource(R.drawable.menu_item_normal);
-        }
-        Fragment newContent = null;
-        switch (position) {
-            case 0:// 园所出勤
-                newContent = new AttendanceFragment();
-                v.setBackgroundResource(R.drawable.menu_item_selected3);
-                break;
-            case 1:// 园所通知
-                newContent = new NotifyFragment();
-                v.setBackgroundResource(R.drawable.menu_item_selected3);
-                break;
-            case 2:// 园内信息
-                newContent = new InfoFragment();
-                v.setBackgroundResource(R.drawable.menu_item_selected3);
-                break;
-        }
-        if (newContent != null) {
-            switchFragment(newContent, (Menu) mAdapter.getItem(position));
+        for (int i = 0; i < menus.length; i++) {
+            TextView view = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.menu_item, null);
+            view.setText(menus[i].title);
+            view.setTag(i);
+            view.setOnClickListener(this);
+            view.setCompoundDrawablesWithIntrinsicBounds(menus[i].icon, 0, 0, 0);
+            ((LinearLayout) getView().findViewById(android.R.id.list)).addView(view);
+            if (i == defaultIndex)
+                view.setSelected(true);
         }
     }
 
@@ -85,67 +83,32 @@ public class MenuFragment extends ListFragment {
         }
     }
 
-    public class ItemListBaseAdapter extends BaseAdapter {
-
-        private Menu[] menus;
-        private LayoutInflater mInflater;
-        private int dft = 1;
-
-        public ItemListBaseAdapter(Context context, Menu[] menus, int dft) {
-            this.menus = menus;
-            mInflater = LayoutInflater.from(context);
-            this.dft = dft;
+    @Override
+    public void onClick(View v) {
+        for (int i = 0; i < ((LinearLayout) getView().findViewById(android.R.id.list)).getChildCount(); i++) {
+            ((LinearLayout) getView().findViewById(android.R.id.list)).getChildAt(i).setSelected(false);
         }
-
-        @Override
-        public int getCount() {
-            if (menus == null)
-                return 0;
-            return menus.length;
+        v.setSelected(true);
+        Fragment newContent = null;
+        switch ((Integer) v.getTag()) {
+            case 0:// 出勤
+                newContent = new AttendanceFragment();
+                break;
+            case 1:// 通知
+                newContent = new NotifyFragment();
+                break;
+            case 2:// 消息
+                newContent = new InfoFragment();
+                break;
         }
-
-        @Override
-        public Object getItem(int position) {
-            return menus[position];
+        if (newContent != null) {
+            switchFragment(newContent, menus[(Integer) v.getTag()]);
         }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder;
-            if (convertView == null) {
-                convertView = mInflater.inflate(R.layout.menu_item, null);
-                holder = new ViewHolder();
-                holder.title = (TextView) convertView.findViewById(R.id.title);
-                holder.icon = (ImageView) convertView.findViewById(R.id.icon);
-                convertView.setTag(holder);
-            } else {
-                holder = (ViewHolder) convertView.getTag();
-            }
-            holder.title.setText(menus[position].title);
-            holder.icon.setImageResource(menus[position].icon);
-            if (position == dft) {
-                convertView.setBackgroundResource(R.drawable.menu_item_selected3);
-            } else {
-                convertView.setBackgroundResource(R.drawable.menu_item_normal);
-            }
-            return convertView;
-        }
-
-    }
-
-    public static class ViewHolder {
-        TextView title;
-        ImageView icon;
     }
 
     public class Menu {
         public String title;
-        public Integer icon;
+        public int icon;
     }
 
 

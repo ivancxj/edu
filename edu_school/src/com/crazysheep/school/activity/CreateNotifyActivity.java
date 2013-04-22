@@ -47,6 +47,7 @@ public class CreateNotifyActivity extends ActionBarActivity implements
 
         title = (TextView) findViewById(R.id.create_notify_title);
         content = (TextView) findViewById(R.id.create_notify_content);
+        findViewById(R.id.add).setOnClickListener(this);
 
         create_notify_count = (TextView) findViewById(R.id.create_notify_count);
         create_notify_count.setText(MAX + "/" + MAX);
@@ -76,8 +77,8 @@ public class CreateNotifyActivity extends ActionBarActivity implements
             case R.id.ok:
                 create();
                 break;
-
-            default:
+            case  R.id.add:
+                ContactActivity.startActivity(this, "全体教师", "全体学生");
                 break;
         }
 

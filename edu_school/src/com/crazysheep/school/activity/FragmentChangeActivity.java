@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.crazysheep.school.R;
 import com.crazysheep.school.fragment.AttendanceFragment;
+import com.crazysheep.school.fragment.NotifyFragment;
 import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.app.SlidingFragmentActivity;
 
@@ -18,6 +20,7 @@ public class FragmentChangeActivity extends SlidingFragmentActivity implements
         View.OnClickListener {
 
     private Fragment mContent;
+    final static int REQUEST_CREATE = 10001;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,8 +34,8 @@ public class FragmentChangeActivity extends SlidingFragmentActivity implements
 
         if (mContent == null) {
             mContent = new AttendanceFragment();
-            ((TextView) findViewById(R.id.action_title)).setText("院所出勤");
-            ((ImageView) findViewById(R.id.logo)).setImageResource(R.drawable.ic_notif);
+            ((TextView) findViewById(R.id.action_title)).setText("出勤");
+            findViewById(R.id.action).setOnClickListener(this);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, mContent).commit();
         }
@@ -48,10 +51,7 @@ public class FragmentChangeActivity extends SlidingFragmentActivity implements
         // set the Behind View
         setBehindContentView(R.layout.menu_frame);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.menu_frame, new MenuFragment(), "menu").commit();
-
-        findViewById(R.id.logo).setOnClickListener(this);
-        findViewById(R.id.arrow).setOnClickListener(this);
+                .replace(R.id.menu_frame, new MenuFragment(0), "menu").commit();
 
     }
 
@@ -71,22 +71,33 @@ public class FragmentChangeActivity extends SlidingFragmentActivity implements
         mContent = fragment;
         getSlidingMenu().showContent();
         ((TextView) findViewById(R.id.action_title)).setText(menu.title);
-        ((ImageView) findViewById(R.id.logo)).setImageResource(menu.icon);
         if (fragment != null) {
-            Fragment f = getSupportFragmentManager().findFragmentByTag(fragment.getClass().toString());
-            if (f != null) {
-                getSupportFragmentManager().beginTransaction().attach(f).commit();
+            if (fragment instanceof NotifyFragment) {
+                setRightAction("发通知", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(FragmentChangeActivity.this, CreateNotifyActivity.class);
+                        startActivityForResult(intent, REQUEST_CREATE);
+                    }
+                });
             } else {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, fragment, fragment.getClass().toString()).commit();
+                findViewById(com.edu.lib.R.id.action_right).setVisibility(View.GONE);
             }
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_frame, fragment, fragment.getClass().toString()).commit();
         }
+    }
+
+    public void setRightAction(String title, View.OnClickListener listener) {
+        ((Button) findViewById(com.edu.lib.R.id.action_right)).setText(title);
+        findViewById(com.edu.lib.R.id.action_right).setOnClickListener(listener);
+        findViewById(com.edu.lib.R.id.action_right).setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.logo:
+            case R.id.action:
                 getSlidingMenu().showMenu();
                 break;
         }

@@ -14,9 +14,10 @@
         android:textSize="@dimen/title_size" /
     -->
 
-    <com.markupartist.android.widget.ActionBar
-            android:id="@id/actionbar"
-            style="@style/ActionBar"/>
+    <include
+            layout="@layout/actionbar"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"/>
 
     <!--
     RelativeLayout
@@ -52,7 +53,7 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/tc1_05"
+            android:background="@drawable/ic_cq_bg"
             android:gravity="center_horizontal"
             android:layout_margin="8dp"
             android:orientation="vertical"
@@ -64,13 +65,13 @@
                 android:layout_marginBottom="10dp"
                 android:drawableLeft="@drawable/yz_1"
                 android:drawablePadding="6dp"
-                android:textColor="@color/white_color"
+                android:textColor="@color/black"
                 android:text="幼儿缺勤名单"/>
 
-        <View
+        <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/red"/>
+                android:layout_height="2px"
+                android:background="@drawable/ic_line"/>
 
         <ScrollView
                 android:layout_width="match_parent"
