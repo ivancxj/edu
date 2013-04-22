@@ -1,16 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/common_backgroud"
-    android:orientation="vertical" >
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@drawable/common_backgroud">
+
+
+    <LinearLayout
+            android:id="@+id/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+        <ProgressBar
+                android:layout_width="25dp"
+                android:layout_height="25dp"/>
+
+    </LinearLayout>
 
     <ListView
-        android:id="@+id/message_list"
-        style="@style/messageListView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fadingEdge="none"
-        android:scrollbarAlwaysDrawVerticalTrack="true" />
+            android:id="@+id/message_list"
+            style="@style/messageListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fadingEdge="none"
+            android:scrollbarAlwaysDrawVerticalTrack="true"/>
 
-</LinearLayout>
+
+</FrameLayout>

@@ -80,18 +80,17 @@ public class AlbumFragment extends Fragment implements OnItemClickListener {
     }
 
     private void getClassAlbum() {
-        final ProgressDialog progress = UIUtils.newProgressDialog(getActivity(), "请稍候...");
         JsonHandler handler = new JsonHandler(getActivity()) {
             @Override
             public void onStart() {
                 super.onStart();
-                UIUtils.safeShow(progress);
+                getView().findViewById(com.edu.lib.R.id.loading).setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onFinish() {
                 super.onFinish();
-                UIUtils.safeDismiss(progress);
+                getView().findViewById(com.edu.lib.R.id.loading).setVisibility(View.GONE);
             }
 
             @Override

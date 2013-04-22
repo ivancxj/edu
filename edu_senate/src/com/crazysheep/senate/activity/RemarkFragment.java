@@ -71,19 +71,17 @@ public class RemarkFragment extends Fragment implements OnItemClickListener{
     }
     
     private void getRecords() {
-		final ProgressDialog progress = UIUtils
-				.newProgressDialog(getActivity(), "请稍等..");
 		JsonHandler handler = new JsonHandler(getActivity()) {
 			@Override
 			public void onStart() {
 				super.onStart();
-				UIUtils.safeShow(progress);
+                getView().findViewById(R.id.loading).setVisibility(View.VISIBLE);
 			}
 
 			@Override
 			public void onFinish() {
 				super.onFinish();
-				UIUtils.safeDismiss(progress);
+                getView().findViewById(R.id.loading).setVisibility(View.GONE);
 			}
 
 			@Override
