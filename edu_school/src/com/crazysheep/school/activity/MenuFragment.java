@@ -1,5 +1,8 @@
 package com.crazysheep.school.activity;
 
+import java.lang.reflect.Field;
+
+import android.annotation.SuppressLint;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,13 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.crazysheep.school.R;
 import com.crazysheep.school.fragment.AttendanceFragment;
-import com.crazysheep.school.fragment.InfoFragment;
 import com.crazysheep.school.fragment.NotifyFragment;
+import com.edu.lib.base.MessageListFragment;
 
-import java.lang.reflect.Field;
-
+@SuppressLint("ValidFragment")
 public class MenuFragment extends Fragment implements View.OnClickListener {
 
     private Menu[] menus;
@@ -98,7 +101,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                 newContent = new NotifyFragment();
                 break;
             case 2:// 消息
-                newContent = new InfoFragment();
+                newContent = new MessageListFragment();
                 break;
         }
         if (newContent != null) {
