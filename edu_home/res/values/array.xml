@@ -9,10 +9,10 @@
     </string-array>
 
     <string-array name="menu_imgs">
-        <item>@drawable/ic_notif</item>
-        <item>@drawable/ic_notif</item>
-        <item>@drawable/ic_notif</item>
-        <item>@drawable/ic_album</item>
+        <item>@drawable/cq_selector</item>
+        <item>@drawable/notify_selector</item>
+        <item>@drawable/message_selector</item>
+        <item>@drawable/album_selector</item>
     </string-array>
 
 </resources>

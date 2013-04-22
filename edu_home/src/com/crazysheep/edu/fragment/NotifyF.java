@@ -6,9 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.crazysheep.edu.R;
 import com.edu.lib.bean.Announcement;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class NotifyF extends Fragment {
 
@@ -37,8 +40,12 @@ public class NotifyF extends Fragment {
 		TextView name = (TextView)view.findViewById(R.id.notify_name);
 		name.setText(announcement.Sname);
 		TextView sendtime = (TextView)view.findViewById(R.id.notify_sendtime);
-		sendtime.setText(announcement.Sendtime);
-
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        try {
+            Date date = sdf.parse(announcement.Sendtime);
+            sendtime.setText(sdf.format(date));
+        } catch (ParseException e) {
+        }
 		return view;
 	}
 

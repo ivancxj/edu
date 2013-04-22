@@ -29,7 +29,7 @@
                 android:layout_width="24dp"
                 android:layout_weight="0"
                 android:layout_height="24dp"
-                android:background="@drawable/ic_notif"/>
+                android:background="@drawable/ic_list"/>
 
     </LinearLayout>
 

@@ -10,6 +10,7 @@ import com.crazysheep.edu.fragment.NotifyF;
 import com.edu.lib.bean.Announcement;
 
 public class NotifyFragmentAdapter extends FragmentPagerAdapter{
+
 	public ArrayList<Announcement> announcements = null;
 	
 	public NotifyFragmentAdapter(FragmentManager fm) {
