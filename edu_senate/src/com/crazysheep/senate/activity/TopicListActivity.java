@@ -1,5 +1,16 @@
 package com.crazysheep.senate.activity;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -14,6 +25,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
+
 import com.crazysheep.senate.R;
 import com.crazysheep.senate.adapter.PhotoAdapter;
 import com.edu.lib.api.APIService;
@@ -22,13 +34,12 @@ import com.edu.lib.base.ActionBarActivity;
 import com.edu.lib.bean.Album;
 import com.edu.lib.bean.Photo;
 import com.edu.lib.bean.User;
-import com.edu.lib.util.*;
+import com.edu.lib.util.AppConfig;
+import com.edu.lib.util.CommonUtils;
+import com.edu.lib.util.LogUtils;
+import com.edu.lib.util.TakePhotoUtils;
+import com.edu.lib.util.UIUtils;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.*;
-import java.util.ArrayList;
 
 /**
  * 主题列表 相册照片列表

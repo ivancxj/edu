@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,7 +25,6 @@ import com.edu.lib.bean.Album;
 import com.edu.lib.bean.User;
 import com.edu.lib.util.AppConfig;
 import com.edu.lib.util.LogUtils;
-import com.edu.lib.util.UIUtils;
 import com.edu.lib.widget.ScrollGridView;
 
 /**

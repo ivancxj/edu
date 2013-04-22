@@ -2,9 +2,8 @@ package com.crazysheep.senate.activity;
 
 import org.json.JSONObject;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.app.AlertDialog.Builder;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;

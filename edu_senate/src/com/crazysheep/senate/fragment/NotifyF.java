@@ -1,5 +1,9 @@
 package com.crazysheep.senate.fragment;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,10 +13,6 @@ import android.widget.TextView;
 
 import com.crazysheep.senate.R;
 import com.edu.lib.bean.Announcement;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class NotifyF extends Fragment {
 

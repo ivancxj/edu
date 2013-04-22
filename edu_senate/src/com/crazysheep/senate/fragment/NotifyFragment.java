@@ -2,11 +2,10 @@ package com.crazysheep.senate.fragment;
 
 import java.util.ArrayList;
 
-import android.app.Activity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.app.ProgressDialog;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -14,11 +13,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import com.crazysheep.senate.R;
-import com.crazysheep.senate.activity.CreateNotifyActivity;
 import com.crazysheep.senate.activity.FragmentChangeActivity;
 import com.crazysheep.senate.fragment.adapter.NotifyFragmentAdapter;
 import com.edu.lib.api.APIService;
@@ -27,7 +24,6 @@ import com.edu.lib.bean.Announcement;
 import com.edu.lib.bean.User;
 import com.edu.lib.util.AppConfig;
 import com.edu.lib.util.LogUtils;
-import com.edu.lib.util.UIUtils;
 import com.slidingmenu.lib.SlidingMenu;
 import com.viewpagerindicator.CirclePageIndicator;
 
