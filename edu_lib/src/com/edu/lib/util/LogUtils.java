@@ -20,6 +20,9 @@ public class LogUtils {
 	public static final String CREATE_MESSAGE = "create_message";
 	public static final String DELETE_MESSAGE = "delete_message";
 	
+	public static final String REMARK = "remark";
+	public static final String GetSysTime = "GetSysTime";
+	
 	public static final String SERVER_RETURN = "server_return";
 	private static final String LOG_PREFIX = "edu_";
 	private static boolean isPrintLog = true;

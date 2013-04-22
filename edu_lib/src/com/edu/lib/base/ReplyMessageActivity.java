@@ -22,6 +22,7 @@ import com.edu.lib.api.JsonHandler;
 import com.edu.lib.bean.Message;
 import com.edu.lib.bean.User;
 import com.edu.lib.util.AppConfig;
+import com.edu.lib.util.CommonUtils;
 import com.edu.lib.util.UIUtils;
 
 public class ReplyMessageActivity extends ActionBarActivity implements
@@ -81,6 +82,8 @@ public class ReplyMessageActivity extends ActionBarActivity implements
 
 		// data
 		message = (Message) getIntent().getSerializableExtra(EXTRA_MESSAGE);
+		// 设置消息为已读
+		donemsg();
 		time.setText(message.SendTime);
 		content.setText(message.Content);
 		setTitle(message.SendName);
@@ -111,6 +114,18 @@ public class ReplyMessageActivity extends ActionBarActivity implements
 			}
 		});
 
+	}
+	
+	void donemsg(){
+		JsonHandler handler = new JsonHandler(this) {
+			@Override
+			public void onSuccess(JSONObject response) {
+				super.onSuccess(response);
+				refersh = true;
+			}
+		};
+
+		APIService.DonePms(message.PID, handler);
 	}
 
 	void delmsg() {
@@ -169,8 +184,9 @@ public class ReplyMessageActivity extends ActionBarActivity implements
 				public void onSuccess(JSONObject response) {
 					super.onSuccess(response);
 					refersh = true;
-					finish();
-					// TODO
+					message_edit_content.setText("");
+					CommonUtils.hideInputKeyboard(ReplyMessageActivity.this, message_edit_content.getWindowToken());
+					UIUtils.showToast(ReplyMessageActivity.this, "回复成功");
 				}
 			};
 
