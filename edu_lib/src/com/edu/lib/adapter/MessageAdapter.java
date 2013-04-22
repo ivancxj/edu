@@ -31,6 +31,11 @@ public class MessageAdapter extends BaseAdapter {
 		notifyDataSetInvalidated();
 	}
 	
+	public void clear(){
+		if(this.messages == null)  return ;
+		this.messages.clear();
+	}
+	
 	public void add(Message message){
 		if(this.messages == null)
 			this.messages = new ArrayList<Message>();
