@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.crazysheep.senate.R;
 
+import java.lang.reflect.Field;
+
 /**
  * User: robin
  * Email: ${EMAIL}
@@ -21,4 +23,19 @@ public class RemarkFragment extends Fragment {
         View view = inflater.inflate(R.layout.activity_remark, null);
         return view;
     }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        try {
+            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+            childFragmentManager.setAccessible(true);
+            childFragmentManager.set(this, null);
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

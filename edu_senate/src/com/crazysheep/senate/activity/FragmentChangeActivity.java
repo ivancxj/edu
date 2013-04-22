@@ -59,8 +59,7 @@ public class FragmentChangeActivity extends SlidingFragmentActivity implements
         // set the Behind View
         setBehindContentView(R.layout.menu_frame);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.menu_frame, new MenuFragment(1, new RemarkFragment(),
-                        new NotifyFragment(), new NotifyFragment(), new AlbumFragment()),
+                .replace(R.id.menu_frame, new MenuFragment(1),
                         "menu").commit();
 
     }
@@ -82,8 +81,7 @@ public class FragmentChangeActivity extends SlidingFragmentActivity implements
         getSlidingMenu().showContent();
         ((TextView) findViewById(R.id.action_title)).setText(menu.title);
         if (fragment != null) {
-            Fragment f = getSupportFragmentManager().findFragmentByTag(fragment.getClass().toString());
-            if (f instanceof NotifyFragment) {
+            if (fragment instanceof NotifyFragment) {
                 setRightAction("发通知", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

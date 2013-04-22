@@ -7,11 +7,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.TextView;
-
 import com.crazysheep.edu.R;
-import com.crazysheep.edu.fragment.AlbumFragmentViewPager;
 import com.crazysheep.edu.fragment.NotifyFragment;
-import com.edu.lib.base.MessageListFragment;
 import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.app.SlidingFragmentActivity;
 
@@ -46,8 +43,7 @@ public class FragmentChangeActivity extends SlidingFragmentActivity implements
         // set the Behind View
         setBehindContentView(R.layout.menu_frame);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.menu_frame, new MenuFragment(1, new RemarkFragment(),
-                        new NotifyFragment(), new MessageListFragment(), new AlbumFragmentViewPager()), "menu").commit();
+                .replace(R.id.menu_frame, new MenuFragment(1), "menu").commit();
 
         findViewById(R.id.action).setOnClickListener(this);
 
@@ -69,17 +65,11 @@ public class FragmentChangeActivity extends SlidingFragmentActivity implements
         mContent = fragment;
         ((TextView) findViewById(R.id.action_title)).setText(menu.title);
         if (fragment != null) {
-//            Fragment f = getSupportFragmentManager().findFragmentByTag(fragment.getClass().toString());
-//            if (f != null) {
-//                getSupportFragmentManager().beginTransaction().attach(f).commit();
-//            } else {
-//            }
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, fragment, fragment.getClass().toString()).commit();
         }
         getSlidingMenu().showContent();
     }
-
 
 
     @Override
