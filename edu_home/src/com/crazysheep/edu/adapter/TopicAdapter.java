@@ -57,7 +57,7 @@ public class TopicAdapter extends BaseAdapter {
 			holder.img = (ImageView) convertView.findViewById(R.id.img);
 			holder.name = (TextView) convertView.findViewById(R.id.name);
 			holder.count = (TextView) convertView.findViewById(R.id.count);
-			holder.newTopic = (TextView) convertView.findViewById(R.id.new_topic);
+			holder.newTopic = (ImageView) convertView.findViewById(R.id.new_topic);
 
 			convertView.setTag(holder);
 		} else {
@@ -88,7 +88,7 @@ public class TopicAdapter extends BaseAdapter {
 		ImageView img;
 		TextView name;
 		TextView count;
-		TextView newTopic;
+        ImageView newTopic;
 	}
 
 }
