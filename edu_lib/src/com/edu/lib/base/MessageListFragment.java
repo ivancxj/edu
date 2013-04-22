@@ -33,7 +33,7 @@ public class MessageListFragment extends Fragment implements OnItemClickListener
 	ListView listview;
 	MessageAdapter adapter;
 	public final static int REQUEST_CODE = 100;
-	int pageindex = 2;
+	int pageindex = 1;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,20 +63,6 @@ public class MessageListFragment extends Fragment implements OnItemClickListener
 		adapter = new MessageAdapter(getActivity());
 		listview.setAdapter(adapter);
 		listview.setOnItemClickListener(this);
-		listview.setOnScrollListener(new OnScrollListener() {
-			
-			@Override
-			public void onScrollStateChanged(AbsListView view, int scrollState) {
-				// TODO Auto-generated method stub
-			}
-			
-			@Override
-			public void onScroll(AbsListView view, int firstVisibleItem,
-					int visibleItemCount, int totalItemCount) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
 		
 		refresh(true);
 	}
