@@ -1,8 +1,11 @@
 package com.edu.lib.bean;
 
+import java.io.Serializable;
+
 import org.json.JSONObject;
 
-public class Message {
+public class Message implements Serializable{
+	private static final long serialVersionUID = 4719470393825138685L;
 	public String PID;// 消息id
 	public String SendID;// 发送人id
 	public String SendName;// 发送人名称
