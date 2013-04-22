@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.crazysheep.senate.R;
 import com.crazysheep.senate.fragment.NotifyFragment;
+import com.edu.lib.base.MessageListFragment;
 import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.app.SlidingFragmentActivity;
 

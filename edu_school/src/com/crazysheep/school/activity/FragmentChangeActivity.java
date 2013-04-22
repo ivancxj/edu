@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.crazysheep.school.R;
 import com.crazysheep.school.fragment.AttendanceFragment;
 import com.crazysheep.school.fragment.NotifyFragment;
+import com.edu.lib.base.MessageListFragment;
 import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.app.SlidingFragmentActivity;
 

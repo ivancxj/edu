@@ -77,7 +77,7 @@ public class PhotoFragment extends Fragment implements OnClickListener {
         getComment();
     }
 
-    private void getComment() {
+    public void getComment() {
         JsonHandler handler = new JsonHandler(getActivity()) {
             @Override
             public void onStart() {

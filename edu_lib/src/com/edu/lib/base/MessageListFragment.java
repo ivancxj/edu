@@ -1,4 +1,4 @@
-package com.crazysheep.senate.activity;
+package com.edu.lib.base;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -6,12 +6,15 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -24,6 +27,7 @@ import com.edu.lib.bean.Message;
 import com.edu.lib.bean.User;
 import com.edu.lib.util.AppConfig;
 import com.edu.lib.util.LogUtils;
+import com.edu.lib.util.UIUtils;
 
 public class MessageListFragment extends Fragment implements OnItemClickListener{
 	ListView listview;
@@ -110,6 +114,12 @@ public class MessageListFragment extends Fragment implements OnItemClickListener
 			pageindex++;
 		
 		APIService.GetPms(user.userid, pageindex, handler);
+	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		APIService.cancelAllRequest(getActivity());
 	}
 
 	@Override

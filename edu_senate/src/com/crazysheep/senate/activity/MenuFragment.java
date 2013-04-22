@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.crazysheep.senate.R;
 import com.crazysheep.senate.fragment.AlbumFragment;
 import com.crazysheep.senate.fragment.NotifyFragment;
+import com.edu.lib.base.MessageListFragment;
 
 @SuppressLint("ValidFragment")
 public class MenuFragment extends Fragment implements View.OnClickListener {
