@@ -36,7 +36,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 		loginPassword = (EditText) findViewById(R.id.login_password);
 		loginRember = (CheckBox) findViewById(R.id.login_rember);
 		loginAutologin = (CheckBox) findViewById(R.id.login_autologin);
-        loginPassword.setText("sRYVHy>m6Tgx");
 
 		// 记住密码
 		if (AppConfig.getAppConfig(this).isRemberPass()) {
