@@ -28,6 +28,7 @@
                     android:background="@drawable/ic_calender"/>
 
             <TextView
+                	android:id="@+id/remark_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -59,7 +60,7 @@
                     android:text="签到:"/>
 
             <TextView
-                    android:id="@+id/date"
+                    android:id="@+id/remark_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
@@ -82,7 +83,7 @@
                     android:text="备注:"/>
 
             <EditText
-                    android:id="@+id/remark"
+                    android:id="@+id/remark_content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:lines="5"

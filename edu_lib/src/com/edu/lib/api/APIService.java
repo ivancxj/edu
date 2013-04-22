@@ -31,10 +31,15 @@ public class APIService {
 	private final static String UploadAlbumPhotos = URL_API_HOST
 			+ "UploadAlbumPhotos";
 
+	// 获取系统时间
+	private final static String GetSysTime = URL_API_HOST
+			+ "GetSysTime";
 	// 发送消息
 	private final static String SendMsg = URL_API_HOST + "SendMsg";
-	// 获取消息列表
+	// 获取未读消息列表
 	private final static String GetPms = URL_API_HOST + "GetPms";
+	// 设置消息为已读
+	private final static String DonePms = URL_API_HOST + "DonePms";
 	// 删除消息
 	private final static String DelPms = URL_API_HOST + "DelPms";
 
@@ -198,6 +203,11 @@ public class APIService {
 		}
 		post(UploadAlbumPhotos, params, handler);
 	}
+	
+	public static void GetSysTime(AsyncHttpResponseHandler handler) {
+		RequestParams params = new RequestParams();
+		get(GetSysTime, params, handler);
+	}
 
 	/**
 	 * 发送消息
@@ -225,7 +235,7 @@ public class APIService {
 	}
 
 	/**
-	 * 获取消息列表
+	 * 获取未读消息列表
 	 * 
 	 * @param userid
 	 *            用户id
@@ -238,6 +248,17 @@ public class APIService {
 		params.put("userid", userid);
 		params.put("pageindex", pageindex+"");
 		get(GetPms, params, handler);
+	}
+	
+	/**
+	 * 消息id集合（,隔开）
+	 * @param midlsit
+	 */
+	public static void DonePms(String midlsit,
+			AsyncHttpResponseHandler handler) {
+		RequestParams params = new RequestParams();
+		params.put("midlsit", midlsit);
+		get(DonePms, params, handler);
 	}
 
 	/**
