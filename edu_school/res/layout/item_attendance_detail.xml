@@ -4,24 +4,24 @@
               android:layout_height="wrap_content"
               android:layout_marginBottom="10dp"
               android:layout_marginTop="10dp"
-              android:gravity="center">
+              android:orientation="horizontal">
 
     <TextView
             android:id="@+id/attendance_detail_grade"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:gravity="left"
-            android:layout_weight="1"
-            android:textColor="@color/white_color"
+            android:layout_weight="0"
+            android:singleLine="true"
+            android:textColor="@color/black"
             android:text="大一班"/>
 
     <TextView
             android:id="@+id/attendance_detail_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
             android:gravity="left"
-            android:textColor="@color/white_color"
+            android:textColor="@color/black"
             android:layout_weight="1"
             android:text="王小帅"/>
 

@@ -1,5 +1,6 @@
 package com.crazysheep.edu.activity;
 
+import android.annotation.SuppressLint;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,7 @@ import com.edu.lib.base.MessageListFragment;
 
 import java.lang.reflect.Field;
 
+@SuppressLint("ValidFragment")
 public class MenuFragment extends Fragment implements View.OnClickListener {
 
     private Menu[] menus;

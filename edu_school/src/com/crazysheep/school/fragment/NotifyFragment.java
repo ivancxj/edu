@@ -36,7 +36,7 @@ import com.viewpagerindicator.CirclePageIndicator;
  *
  * @author ivan
  */
-public class NotifyFragment extends Fragment implements OnClickListener, ViewPager.OnPageChangeListener {
+public class NotifyFragment extends Fragment implements ViewPager.OnPageChangeListener {
 
 	final static int REQUEST_CREATE = 10001;
 	
@@ -66,8 +66,6 @@ public class NotifyFragment extends Fragment implements OnClickListener, ViewPag
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getView().findViewById(R.id.notify_create).setOnClickListener(this);
-
         mPager = (ViewPager) getView().findViewById(R.id.pager);
         mPager.setAdapter(mAdapter);
         mPager.setOnPageChangeListener(this);
@@ -127,20 +125,6 @@ public class NotifyFragment extends Fragment implements OnClickListener, ViewPag
     	if(requestCode == REQUEST_CREATE && resultCode == getActivity().RESULT_OK){
     		getData();
     	}
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.notify_create:
-                Intent intent = new Intent(getActivity(), CreateNotifyActivity.class);
-                startActivityForResult(intent, REQUEST_CREATE);
-                break;
-
-            default:
-                break;
-        }
-
     }
 
     @Override
