@@ -1,143 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-     Copyright (C) 2010 Johan Nilsson <http://markupartist.com>
 
-     Licensed under the Apache License, Version 2.0 (the "License");
-     you may not use this file except in compliance with the License.
-     You may obtain a copy of the License at
-  
-          http://www.apache.org/licenses/LICENSE-2.0
-  
-     Unless required by applicable law or agreed to in writing, software
-     distributed under the License is distributed on an "AS IS" BASIS,
-     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     See the License for the specific language governing permissions and
-     limitations under the License.
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/top_bg">
 
-
--->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/screen"
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/actionbar_height">
-
-    <RelativeLayout
-            android:id="@+id/actionbar_home"
+    <LinearLayout
+            android:id="@+id/action"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/actionbar_height"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_gravity="left|center_vertical"
             android:orientation="horizontal"
-            android:visibility="visible">
+            android:clickable="true"
+            android:paddingRight="8dp"
+            android:background="@drawable/action_item_selector">
 
         <ImageView
-                android:id="@+id/actionbar_home_logo"
-                style="@style/ActionBarHomeLogo"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/actionbar_height"
-                android:background="@drawable/actionbar_btn_selector"
-                android:visibility="gone"/>
-
-        <LinearLayout
-                android:id="@+id/actionbar_home_bg"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/actionbar_height"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-            <!-- TODO: Make configurable. -->
-            <ImageButton
-                    android:id="@+id/actionbar_home_btn"
-                    style="@style/ActionBarHomeItem"
-                    android:singleLine="true"/>
-
-            <View
-                    android:layout_width="2px"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@drawable/actionbar_inficator_border"/>
-
-        </LinearLayout>
+                android:background="@drawable/ic_menu_back_default"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_weight="0"/>
 
         <ImageView
-                android:id="@+id/actionbar_home_is_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toLeftOf="@+id/actionbar_home_btn"
-                android:background="@drawable/actionbar_back_indicator"
-                android:padding="0dip"
-                android:visibility="gone"/>
+                android:layout_width="24dp"
+                android:layout_weight="0"
+                android:layout_height="24dp"
+                android:background="@drawable/ic_notif"/>
 
-        <LinearLayout
-                android:id="@+id/actionbar_actions"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/actionbar_height"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"/>
+    </LinearLayout>
 
-        <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:layout_alignWithParentIfMissing="true"
-                android:layout_centerVertical="true">
+    <TextView
+            android:id="@+id/action_title"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:textColor="@color/white_color"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
-            <ProgressBar
-                    android:id="@+id/actionbar_progress"
-                    style="@style/ActionBarProgressBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:indeterminateOnly="true"
-                    android:paddingRight="16dp"
-                    android:visibility="gone"/>
+    <Button
+            android:id="@+id/action_right"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:textColor="@color/white_color"
+            android:singleLine="true"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:visibility="gone"
+            android:layout_gravity="right|center_vertical"
+            android:background="@drawable/btn_bottom"
+            android:layout_margin="4dp"/>
 
-            <com.markupartist.android.widget.ScrollingTextView
-                    android:id="@+id/actionbar_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:ellipsize="marquee"
-                    android:lines="1"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:paddingLeft="10dip"
-                    android:paddingRight="10dip"
-                    android:scrollHorizontally="true"
-                    android:textColor="@color/actionbar_title"
-                    android:textSize="20dip"
-                    android:textStyle="bold"/>
-
-            <LinearLayout
-                    android:id="@+id/actionbar_menus_warpper"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/actionbar_item_width"
-                    android:layout_marginRight="@dimen/actionbar_item_width"
-                    android:layout_centerInParent="true"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                <LinearLayout
-                        android:id="@+id/actionbar_menus"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_weight="1"/>
-
-                <ImageView
-                        android:id="@+id/menu_mark"
-                        android:layout_width="@dimen/actionbar_menu_width"
-                        android:layout_height="3dp"
-                        android:layout_weight="0"
-                        android:background="@drawable/actionbar_menu_mark"/>
-            </LinearLayout>
-
-
-        </RelativeLayout>
-    </RelativeLayout>
-
-</RelativeLayout>
+</FrameLayout>

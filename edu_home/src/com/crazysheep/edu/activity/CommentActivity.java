@@ -28,97 +28,102 @@ import com.edu.lib.util.LogUtils;
 import com.edu.lib.util.UIUtils;
 
 public class CommentActivity extends ActionBarActivity implements
-		OnClickListener {
+        OnClickListener {
 
-	ListView listview;
-	CommentAdapter adapter;
-	ArrayList<Comment> comments = new ArrayList<Comment>();
-	String albumID;
-	Photo photo;
-	private final static String EXTRA_COMMENTS = "extra_comments";
-	private final static String EXTRA_ALBUM_ID = "extra_album_id";
-	private static final String EXTRA_PHOTO_DATA = "extra_photo_data";
+    ListView listview;
+    CommentAdapter adapter;
+    ArrayList<Comment> comments = new ArrayList<Comment>();
+    String albumID;
+    Photo photo;
+    private final static String EXTRA_COMMENTS = "extra_comments";
+    private final static String EXTRA_ALBUM_ID = "extra_album_id";
+    private static final String EXTRA_PHOTO_DATA = "extra_photo_data";
 
-	public static void startActivity(Context context,
-			ArrayList<Comment> comments, String albumID, Photo photo) {
-		Intent intent = new Intent(context, CommentActivity.class);
-		intent.putExtra(EXTRA_COMMENTS, comments);
-		intent.putExtra(EXTRA_ALBUM_ID, albumID);
-		intent.putExtra(EXTRA_PHOTO_DATA, photo);
-		context.startActivity(intent);
-	}
+    public static void startActivity(Context context,
+                                     ArrayList<Comment> comments, String albumID, Photo photo) {
+        Intent intent = new Intent(context, CommentActivity.class);
+        intent.putExtra(EXTRA_COMMENTS, comments);
+        intent.putExtra(EXTRA_ALBUM_ID, albumID);
+        intent.putExtra(EXTRA_PHOTO_DATA, photo);
+        context.startActivity(intent);
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_comment);
-		comments = (ArrayList<Comment>) getIntent().getSerializableExtra(
-				EXTRA_COMMENTS);
-		albumID = getIntent().getStringExtra(EXTRA_ALBUM_ID);
-		photo = (Photo)getIntent().getSerializableExtra(EXTRA_PHOTO_DATA);
-		bindActionBar();
-		mActionBar.setTitle("评论");
-		showBackAction();
+    @SuppressWarnings("unchecked")
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_comment);
+        comments = (ArrayList<Comment>) getIntent().getSerializableExtra(
+                EXTRA_COMMENTS);
+        albumID = getIntent().getStringExtra(EXTRA_ALBUM_ID);
+        photo = (Photo) getIntent().getSerializableExtra(EXTRA_PHOTO_DATA);
 
-		listview = (ListView) findViewById(R.id.listview);
-		adapter = new CommentAdapter(this, comments);
-		listview.setAdapter(adapter);
-	}
+        setTitle("评论");
+        setHomeActionListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.comment_publisher_submit:
-			sendComment();
-			break;
-		default:
-			break;
-		}
+        listview = (ListView) findViewById(R.id.listview);
+        adapter = new CommentAdapter(this, comments);
+        listview.setAdapter(adapter);
+    }
 
-	}
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.comment_publisher_submit:
+                sendComment();
+                break;
+            default:
+                break;
+        }
 
-	// 发表评论
-	private void sendComment() {
-		final EditText edit = (EditText) findViewById(R.id.comment_publisher_edit);
-		if (TextUtils.isEmpty(edit.getText().toString())) {
-			UIUtils.showToast(this, "请输入评论");
-			return;
-		}
+    }
 
-		final ProgressDialog progress = UIUtils
-				.newProgressDialog(this, "请稍等..");
-		JsonHandler handler = new JsonHandler(this) {
-			@Override
-			public void onStart() {
-				super.onStart();
-				UIUtils.safeShow(progress);
-			}
+    // 发表评论
+    private void sendComment() {
+        final EditText edit = (EditText) findViewById(R.id.comment_publisher_edit);
+        if (TextUtils.isEmpty(edit.getText().toString())) {
+            UIUtils.showToast(this, "请输入评论");
+            return;
+        }
 
-			@Override
-			public void onFinish() {
-				super.onFinish();
-				UIUtils.safeDismiss(progress);
-			}
+        final ProgressDialog progress = UIUtils
+                .newProgressDialog(this, "请稍等..");
+        JsonHandler handler = new JsonHandler(this) {
+            @Override
+            public void onStart() {
+                super.onStart();
+                UIUtils.safeShow(progress);
+            }
 
-			@Override
-			public void onSuccess(JSONObject response) {
-				super.onSuccess(response);
-				LogUtils.I(LogUtils.COMMENT, response.toString());
-				response = response.optJSONObject("photoforuminfo");
-				if(response != null){
-					Comment comment = new Comment(response);
-					comments.add(0, comment);
-					adapter.notifyDataSetInvalidated();
-				}
-				
-				edit.setText("");
-				CommonUtils.hideInputKeyboard(CommentActivity.this, edit.getWindowToken());
-				UIUtils.showToast(CommentActivity.this, "评论成功");
-			}
-		};
-		User user = AppConfig.getAppConfig(this).getUser();
-		APIService.SendPhotoAlbumForum(albumID, photo.Name, user.memberid, edit
-				.getText().toString(), handler);
-	}
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                UIUtils.safeDismiss(progress);
+            }
+
+            @Override
+            public void onSuccess(JSONObject response) {
+                super.onSuccess(response);
+                LogUtils.I(LogUtils.COMMENT, response.toString());
+                response = response.optJSONObject("photoforuminfo");
+                if (response != null) {
+                    Comment comment = new Comment(response);
+                    comments.add(0, comment);
+                    adapter.notifyDataSetInvalidated();
+                }
+
+                edit.setText("");
+                CommonUtils.hideInputKeyboard(CommentActivity.this, edit.getWindowToken());
+                UIUtils.showToast(CommentActivity.this, "评论成功");
+            }
+        };
+        User user = AppConfig.getAppConfig(this).getUser();
+        APIService.SendPhotoAlbumForum(albumID, photo.Name, user.memberid, edit
+                .getText().toString(), handler);
+    }
 }

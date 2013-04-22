@@ -61,9 +61,13 @@ public class PhotoActivity extends ActionBarActivity implements OnClickListener 
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
 		setContentView(R.layout.activity_photo);
-		bindActionBar();
-		mActionBar.setTitle("详情");
-		showBackAction();
+		setTitle("详情");
+        setHomeActionListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 		albumID = getIntent().getStringExtra(EXTRA_ALBUM_ID);
 		photos = (ArrayList<Photo>) getIntent().getSerializableExtra(

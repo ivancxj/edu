@@ -34,4 +34,5 @@ public class AlbumFragmentAdapter extends FragmentStatePagerAdapter{
 	public int getCount() {
 		return 2;
 	}
+
 }

@@ -20,7 +20,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:textSize="18sp"
-                android:text="加载中..."/>
+                android:textColor="@color/black"
+                android:text="请稍等..."/>
 
     </LinearLayout>
 
