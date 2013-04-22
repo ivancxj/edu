@@ -1,4 +1,4 @@
-package com.edu.lib.base;
+package com.crazysheep.school.activity;
 
 import org.json.JSONObject;
 
@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.edu.lib.R;
 import com.edu.lib.api.APIService;
 import com.edu.lib.api.JsonHandler;
+import com.edu.lib.base.ActionBarActivity;
 import com.edu.lib.bean.Message;
 import com.edu.lib.bean.User;
 import com.edu.lib.util.AppConfig;

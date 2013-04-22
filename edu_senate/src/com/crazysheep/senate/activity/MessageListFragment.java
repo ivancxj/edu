@@ -1,4 +1,4 @@
-package com.edu.lib.base;
+package com.crazysheep.senate.activity;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

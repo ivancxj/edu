@@ -1,5 +1,7 @@
 package com.crazysheep.edu.activity;
 
+import java.lang.reflect.Field;
+
 import android.annotation.SuppressLint;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -9,12 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.crazysheep.edu.R;
 import com.crazysheep.edu.fragment.AlbumFragmentViewPager;
 import com.crazysheep.edu.fragment.NotifyFragment;
-import com.edu.lib.base.MessageListFragment;
-
-import java.lang.reflect.Field;
 
 @SuppressLint("ValidFragment")
 public class MenuFragment extends Fragment implements View.OnClickListener {
