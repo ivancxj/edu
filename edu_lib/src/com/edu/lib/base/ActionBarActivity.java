@@ -19,6 +19,7 @@ public class ActionBarActivity extends FragmentActivity {
     public void setRightAction(String title, View.OnClickListener listener) {
         ((Button) findViewById(R.id.action_right)).setText(title);
         findViewById(R.id.action_right).setOnClickListener(listener);
+        findViewById(R.id.action_right).setVisibility(View.VISIBLE);
     }
 
 }

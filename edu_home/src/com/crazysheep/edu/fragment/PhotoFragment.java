@@ -70,7 +70,7 @@ public class PhotoFragment extends Fragment implements OnClickListener {
         }
         if (!TextUtils.isEmpty(photo.FullName)) {
             ImageLoader.getInstance().displayImage(photo.FullName, (ImageView) getView().findViewById(R.id.imageView),
-            		MyApplication.options);
+                    MyApplication.options);
         }
         count = (TextView) getView().findViewById(R.id.comment_count);
         count.setOnClickListener(this);
@@ -105,7 +105,7 @@ public class PhotoFragment extends Fragment implements OnClickListener {
                     Comment comment = new Comment(array.optJSONObject(i));
                     comments.add(comment);
                 }
-                count.setText(length + "条评论");
+                count.setText("查看评论(" + length + "条)");
 
             }
         };

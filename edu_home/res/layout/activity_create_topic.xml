@@ -78,7 +78,7 @@
                 <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="62dp"
+                        android:layout_marginRight="64dp"
                         android:padding="8dp">
 
                     <TextView
@@ -96,7 +96,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/input_bg"
-                            android:layout_weight="8"/>
+                            android:layout_weight="8">
+
+                    </EditText>
 
                 </LinearLayout>
 
@@ -122,7 +124,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/input_bg"
-                            android:minHeight="120dp"
+                            android:minHeight="60dp"
                             android:maxLength="70"
                             android:gravity="top"
                             android:layout_weight="1"
