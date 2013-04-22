@@ -1,4 +1,4 @@
-package com.crazysheep.senate.activity;
+package com.crazysheep.school.activity;
 
 import java.util.ArrayList;
 
@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
-import com.crazysheep.senate.R;
+import com.crazysheep.school.R;
 import com.edu.lib.api.APIService;
 import com.edu.lib.api.JsonHandler;
 import com.edu.lib.base.ActionBarActivity;

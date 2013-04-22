@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.crazysheep.school.R;
@@ -80,7 +79,17 @@ public class FragmentChangeActivity extends SlidingFragmentActivity implements
                         startActivityForResult(intent, REQUEST_CREATE);
                     }
                 });
-            } else {
+            }
+            else if (fragment instanceof MessageListFragment) {
+                setRightAction("发消息", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(FragmentChangeActivity.this, CreateMessageActivity.class);
+                        startActivityForResult(intent, REQUEST_CREATE);
+                    }
+                });
+            }
+            else {
                 findViewById(com.edu.lib.R.id.action_right).setVisibility(View.GONE);
             }
             getSupportFragmentManager().beginTransaction()

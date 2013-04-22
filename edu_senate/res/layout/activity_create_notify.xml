@@ -41,14 +41,6 @@
                     android:text="收件人: 全班同学"
                     android:textColor="@color/black"/>
 
-            <Button
-                    android:id="@+id/add"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:onClick="onClick"
-                    android:background="@drawable/ic_add"
-                    />
         </FrameLayout>
 
         <LinearLayout

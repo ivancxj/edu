@@ -193,7 +193,7 @@ public class ReplyMessageActivity extends ActionBarActivity implements
 
 			User user = AppConfig.getAppConfig(this).getUser();
 			APIService.SendMsg(user.userid, user.cname, message.SendID, "",
-					message_edit_content.getText().toString(), handler);
+					message_edit_content.getText().toString(),message.ParentID, handler);
 		}else{
 			
 		}

@@ -1,8 +1,13 @@
 package com.crazysheep.school.activity;
 
-import android.app.ProgressDialog;
+import java.util.ArrayList;
+
+import org.json.JSONObject;
+
 import android.app.AlertDialog.Builder;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -10,15 +15,16 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
+
 import com.crazysheep.school.R;
 import com.edu.lib.api.APIService;
 import com.edu.lib.api.JsonHandler;
 import com.edu.lib.base.ActionBarActivity;
+import com.edu.lib.bean.Person;
 import com.edu.lib.bean.User;
 import com.edu.lib.util.AppConfig;
 import com.edu.lib.util.LogUtils;
 import com.edu.lib.util.UIUtils;
-import org.json.JSONObject;
 
 /**
  * 创建通知
@@ -27,11 +33,18 @@ import org.json.JSONObject;
  */
 public class CreateNotifyActivity extends ActionBarActivity implements
         OnClickListener {
+	
+	final static int REQUESTCODE = 100;
 
     TextView title;
     TextView content;
     TextView create_notify_count;
+    TextView create_notify_name;
     private final static int MAX = 70;
+    
+    ArrayList<Person> persons = new ArrayList<Person>();
+    
+    Person person;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +60,7 @@ public class CreateNotifyActivity extends ActionBarActivity implements
 
         title = (TextView) findViewById(R.id.create_notify_title);
         content = (TextView) findViewById(R.id.create_notify_content);
+        create_notify_name = (TextView) findViewById(R.id.create_notify_name);
         findViewById(R.id.add).setOnClickListener(this);
 
         create_notify_count = (TextView) findViewById(R.id.create_notify_count);
@@ -69,6 +83,16 @@ public class CreateNotifyActivity extends ActionBarActivity implements
         };
 
         content.addTextChangedListener(watcher);
+        
+        // init date
+    	Person person = new Person();
+    	person.id = "1";
+    	person.name = "全体教师";
+    	persons.add(person);
+    	person = new Person();
+    	person.id = "2";
+    	person.name = "全体学生";
+    	persons.add(person);
     }
 
     @Override
@@ -78,10 +102,21 @@ public class CreateNotifyActivity extends ActionBarActivity implements
                 create();
                 break;
             case  R.id.add:
-                ContactActivity.startActivity(this, "全体教师", "全体学生");
+                ContactActivity.startActivity(this, persons,REQUESTCODE);
                 break;
         }
 
+    }
+    
+    @Override
+    protected void onActivityResult(int arg0, int arg1, Intent arg2) {
+    	super.onActivityResult(arg0, arg1, arg2);
+    	if(arg0 == REQUESTCODE && arg1 == RESULT_OK){
+    		person = (Person)arg2.getSerializableExtra("data");
+    		if(person != null){
+    			create_notify_name.setText("收件人: "+person.name);
+    		}
+    	}
     }
 
     // 创建园区通知
@@ -125,6 +160,23 @@ public class CreateNotifyActivity extends ActionBarActivity implements
         // TODO 园务通发送公告可选发给老师或者学生。选择了发送老师isteacher为true，家长isstu为true
         boolean isteacher = true;
         boolean isstu = true;
+        //  默认是发给全体学生
+        if(person == null){
+        	isteacher = false;
+        	isstu = true;
+        }else{
+//        	person.id = "1";
+//        	person.name = "全体教师";
+//        	person.id = "2";
+//        	person.name = "全体学生";
+        	if("1".equals(person.id)){
+        		isteacher = true;
+            	isstu = false;
+        	}else{
+        		isteacher = false;
+            	isstu = true;
+        	}
+        }
         APIService.SendGardenAnnouncement(user.gardenID, user.classID,
                 user.memberid, title.getText().toString(), content.getText()
                 .toString(),isteacher,isstu, handler);

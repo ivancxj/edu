@@ -1,6 +1,5 @@
 package com.edu.lib.api;
 
-import java.io.File;
 import java.io.InputStream;
 
 import android.content.Context;
@@ -32,8 +31,7 @@ public class APIService {
 			+ "UploadAlbumPhotos";
 
 	// 获取系统时间
-	private final static String GetSysTime = URL_API_HOST
-			+ "GetSysTime";
+	private final static String GetSysTime = URL_API_HOST + "GetSysTime";
 	// 发送消息
 	private final static String SendMsg = URL_API_HOST + "SendMsg";
 	// 获取未读消息列表
@@ -196,14 +194,14 @@ public class APIService {
 		params.put("classid", classid);
 		params.put("userid", userid);
 		if (resume_file != null) {
-			params.put("resume_file", resume_file,"temp.jpg");
-//			File file = new File(resume_file);
-//			if (file.isFile()) {
-//			}
+			params.put("resume_file", resume_file, "temp.jpg");
+			// File file = new File(resume_file);
+			// if (file.isFile()) {
+			// }
 		}
 		post(UploadAlbumPhotos, params, handler);
 	}
-	
+
 	public static void GetSysTime(AsyncHttpResponseHandler handler) {
 		RequestParams params = new RequestParams();
 		get(GetSysTime, params, handler);
@@ -224,13 +222,15 @@ public class APIService {
 	 *            内容
 	 */
 	public static void SendMsg(String sender, String sname, String receivers,
-			String title, String content, AsyncHttpResponseHandler handler) {
+			String title, String content, String pid,
+			AsyncHttpResponseHandler handler) {
 		RequestParams params = new RequestParams();
 		params.put("sender", sender);
 		params.put("sname", sname);
 		params.put("receivers", receivers);
 		params.put("title", title);
 		params.put("content", content);
+		params.put("pid", pid);
 		get(SendMsg, params, handler);
 	}
 
@@ -246,16 +246,16 @@ public class APIService {
 			AsyncHttpResponseHandler handler) {
 		RequestParams params = new RequestParams();
 		params.put("userid", userid);
-		params.put("pageindex", pageindex+"");
+		params.put("pageindex", pageindex + "");
 		get(GetPms, params, handler);
 	}
-	
+
 	/**
 	 * 消息id集合（,隔开）
+	 * 
 	 * @param midlsit
 	 */
-	public static void DonePms(String midlsit,
-			AsyncHttpResponseHandler handler) {
+	public static void DonePms(String midlsit, AsyncHttpResponseHandler handler) {
 		RequestParams params = new RequestParams();
 		params.put("midlsit", midlsit);
 		get(DonePms, params, handler);

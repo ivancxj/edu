@@ -144,5 +144,4 @@ public class CreateNotifyActivity extends ActionBarActivity implements
 		// builder.setNegativeButton("取消", null);
 		builder.show();
 	}
-
 }

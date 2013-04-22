@@ -1,5 +1,7 @@
 package com.crazysheep.school.activity;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -9,8 +11,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
 import com.crazysheep.school.R;
 import com.edu.lib.base.ActionBarActivity;
+import com.edu.lib.bean.Person;
 
 /**
  * User: robin
@@ -24,13 +28,16 @@ public class ContactActivity extends ActionBarActivity {
     private ListView mListView;
     private MyAdapter myAdapter;
     private int lastIndex;
+    
+    ArrayList<Person> persons;
 
-    public static void startActivity(Activity context, String... datas) {
+    public static void startActivity(Activity context, ArrayList<Person> persons,int requestCode) {
         Intent data = new Intent(context, ContactActivity.class);
-        if (datas != null) {
-            data.putExtra("datas", datas);
+        if (persons != null) {
+            data.putExtra("datas", persons);
         }
-        context.startActivity(data);
+        context.startActivityForResult(data, requestCode);
+//        context.startActivity(data);
     }
 
     @Override
@@ -48,7 +55,9 @@ public class ContactActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent();
-                it.putExtra("data", lastIndex);
+                if(persons != null && lastIndex != -1){
+                	it.putExtra("data", persons.get(lastIndex));
+                }
                 setResult(RESULT_OK, it);
                 finish();
             }
@@ -59,10 +68,11 @@ public class ContactActivity extends ActionBarActivity {
         if (data != null) {
             Bundle bundle = data.getExtras();
             if (bundle != null) {
-                String[] array = bundle.getStringArray("datas");
-                for (int i = 0; i < array.length; i++) {
-                    myAdapter.add(array[i]);
-                }
+//                String[] array = bundle.getStringArray("datas");
+            	 persons = (ArrayList<Person>)bundle.getSerializable("datas");
+                 for (int i = 0; i < persons.size(); i++) {
+                     myAdapter.add(persons.get(i).name);
+                 }
 
             }
         }
