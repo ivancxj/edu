@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">edu_lib</string>
+    
+    <item type="drawable" name="common_backgroud"/>
 
     <item type="id" name="actionbar" ></item>
 

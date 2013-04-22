@@ -1,4 +1,4 @@
-package com.crazysheep.edu.activity;
+package com.edu.lib.base;
 
 import org.json.JSONObject;
 
@@ -16,10 +16,9 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.crazysheep.edu.R;
+import com.edu.lib.R;
 import com.edu.lib.api.APIService;
 import com.edu.lib.api.JsonHandler;
-import com.edu.lib.base.ActionBarActivity;
 import com.edu.lib.bean.Message;
 import com.edu.lib.bean.User;
 import com.edu.lib.util.AppConfig;
@@ -144,8 +143,8 @@ public class ReplyMessageActivity extends ActionBarActivity implements
 
 	@Override
 	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.message_send:
+		int id = v.getId();
+		if(id == R.id.message_send){
 			if (TextUtils.isEmpty(message_edit_content.getText().toString())) {
 				UIUtils.showErrToast(this, "请输入回复内容");
 				return;
@@ -178,10 +177,8 @@ public class ReplyMessageActivity extends ActionBarActivity implements
 			User user = AppConfig.getAppConfig(this).getUser();
 			APIService.SendMsg(user.userid, user.cname, message.SendID, "",
 					message_edit_content.getText().toString(), handler);
-			break;
-
-		default:
-			break;
+		}else{
+			
 		}
 
 	}

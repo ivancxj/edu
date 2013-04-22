@@ -39,7 +39,7 @@
         android:layout_weight="0"
         android:layout_height="wrap_content"
         android:layout_marginRight="3dp"
-        android:src="@drawable/btn_radio_holo_light"
+        android:src="@drawable/ic_arraw"
         android:layout_gravity="center_vertical"
          />
 

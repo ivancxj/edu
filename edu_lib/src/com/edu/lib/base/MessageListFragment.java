@@ -1,4 +1,4 @@
-package com.crazysheep.edu.fragment;
+package com.edu.lib.base;
 
 import java.util.ArrayList;
 
@@ -18,8 +18,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-import com.crazysheep.edu.R;
-import com.crazysheep.edu.activity.ReplyMessageActivity;
+import com.edu.lib.R;
 import com.edu.lib.adapter.MessageAdapter;
 import com.edu.lib.api.APIService;
 import com.edu.lib.api.JsonHandler;

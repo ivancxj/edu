@@ -42,4 +42,16 @@
         <item name="android:lineSpacingExtra">2.0dip</item>
     </style>
 
+    <style name="btn">
+
+        <!-- <item name="android:background">@color/window_background</item> -->
+        <item name="android:background">@drawable/mm_text_bg_trans</item>
+        <item name="android:paddingTop">3dp</item>
+        <item name="android:paddingBottom">3dp</item>
+        <item name="android:paddingLeft">6dp</item>
+        <item name="android:paddingRight">6dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
 </resources>

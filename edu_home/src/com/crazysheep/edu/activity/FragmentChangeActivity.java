@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.crazysheep.edu.R;
 import com.crazysheep.edu.fragment.AlbumFragmentViewPager;
-import com.crazysheep.edu.fragment.MessageListFragment;
 import com.crazysheep.edu.fragment.NotifyFragment;
+import com.edu.lib.base.MessageListFragment;
 import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.app.SlidingFragmentActivity;
 
