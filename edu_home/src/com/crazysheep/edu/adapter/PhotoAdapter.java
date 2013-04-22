@@ -67,7 +67,7 @@ public class PhotoAdapter extends BaseAdapter {
 
 		if (!TextUtils.isEmpty(topic.FullName)) {
 			ImageLoader.getInstance().displayImage(topic.FullName, holder.img,
-					MyApplication.options);
+					MyApplication.gridOptions);
 		}
 
 		return convertView;

@@ -73,7 +73,7 @@ public class TopicAdapter extends BaseAdapter {
 		} else {
 			if (!TextUtils.isEmpty(topic.cover)) {
 				ImageLoader.getInstance().displayImage(topic.cover,
-						holder.img, MyApplication.options);
+						holder.img, MyApplication.gridOptions);
 			}
 
 			holder.name.setText(topic.sName);

@@ -43,7 +43,11 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:layout_marginLeft="48dp"
+            android:layout_marginRight="48dp"/>
 
     <Button
             android:id="@+id/action_right"
