@@ -14,6 +14,7 @@ import com.crazysheep.senate.R;
 import com.crazysheep.senate.fragment.AlbumFragment;
 import com.crazysheep.senate.fragment.NotifyFragment;
 import com.crazysheep.senate.fragment.PhotoFragment;
+import com.edu.lib.base.MessageListFragment;
 import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.app.SlidingFragmentActivity;
 
@@ -60,7 +61,7 @@ public class FragmentChangeActivity extends SlidingFragmentActivity implements
         setBehindContentView(R.layout.menu_frame);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.menu_frame, new MenuFragment(1, new RemarkFragment(),
-                        new NotifyFragment(), new NotifyFragment(), new AlbumFragment()),
+                        new NotifyFragment(), new MessageListFragment(), new AlbumFragment()),
                         "menu").commit();
 
     }
