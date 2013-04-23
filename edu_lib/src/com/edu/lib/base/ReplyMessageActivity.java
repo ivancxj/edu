@@ -102,8 +102,7 @@ public class ReplyMessageActivity extends ActionBarActivity implements
 		listview.setSelection(adapter.getCount() -1);
 
 		// 设置消息为已读
-	   // TODO
-//		donemsg();
+		donemsg();
 		setTitle(message.SendName);
 		setHomeActionListener(new OnClickListener() {
 			@Override
