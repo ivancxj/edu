@@ -88,7 +88,10 @@ public class AlbumFragment extends Fragment implements OnItemClickListener {
             @Override
             public void onFinish() {
                 super.onFinish();
-                getView().findViewById(com.edu.lib.R.id.loading).setVisibility(View.GONE);
+                try {
+                	getView().findViewById(com.edu.lib.R.id.loading).setVisibility(View.GONE);
+				} catch (Exception e) {
+				}
             }
 
             @Override

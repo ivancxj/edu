@@ -95,7 +95,10 @@ public class NotifyFragment extends Fragment implements ViewPager.OnPageChangeLi
             @Override
             public void onFinish() {
                 super.onFinish();
-                getView().findViewById(R.id.loading).setVisibility(View.GONE);
+                try {
+                	getView().findViewById(R.id.loading).setVisibility(View.GONE);
+				} catch (Exception e) {
+				}
             }
 
             @Override

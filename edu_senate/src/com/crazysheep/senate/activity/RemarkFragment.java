@@ -22,6 +22,7 @@ import com.crazysheep.senate.R;
 import com.crazysheep.senate.adapter.RemarkAdapter;
 import com.edu.lib.api.APIService;
 import com.edu.lib.api.JsonHandler;
+import com.edu.lib.base.CancelFragment;
 import com.edu.lib.bean.Named;
 import com.edu.lib.bean.User;
 import com.edu.lib.util.AppConfig;
@@ -35,7 +36,7 @@ import com.edu.lib.util.UIUtils;
  * Time: AM11:19
  * Package: com.crazysheep.edu.activity
  */
-public class RemarkFragment extends Fragment implements OnItemClickListener{
+public class RemarkFragment extends CancelFragment implements OnItemClickListener{
 	
 	ListView listview;
 	RemarkAdapter adapter;
@@ -81,7 +82,10 @@ public class RemarkFragment extends Fragment implements OnItemClickListener{
 			@Override
 			public void onFinish() {
 				super.onFinish();
-                getView().findViewById(R.id.loading).setVisibility(View.GONE);
+				 try {
+	                	getView().findViewById(R.id.loading).setVisibility(View.GONE);
+					} catch (Exception e) {
+					}
 			}
 
 			@Override
@@ -126,12 +130,15 @@ public class RemarkFragment extends Fragment implements OnItemClickListener{
 				LogUtils.I(LogUtils.StudentRecord, response.toString());
 				UIUtils.showToast(getActivity(), "更新成功");
 				Named named = (Named)adapter.getItem(position);
-				named = new Named(response.optJSONObject("cardrecord"));
-//				response = response.optJSONObject("cardrecord");
-//				named.IsRecord = response.optBoolean("IsRecord");
+				response = response.optJSONObject("cardrecord");
+				
+				named.InTime = response.optString("InTime");
+				named.IsRecord = response.optBoolean("IsRecord");
+				// 其余的数据不返回 不要复制
+//				named.SNum = response.optString("SNum");
 //				named.SName = response.optString("SName");
-//				named.InTime = response.optString("InTime");
-//				named.InTime = response.optString("InTime");
+//				named.Memberid = response.optString("Memberid");
+//				named.Remark = response.optString("Remark");
 				adapter.notifyDataSetChanged();
 			}
 		};
