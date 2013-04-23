@@ -6,6 +6,9 @@ import org.json.JSONObject;
 
 public class Message implements Serializable{
 	private static final long serialVersionUID = 4719470393825138685L;
+	
+	public int type = 1;// 类型 1是接收到的，2是发出的
+	
 	public String PID;// 消息id
 	public String SendID;// 发送人id
 	public String SendName;// 发送人名称
@@ -13,6 +16,8 @@ public class Message implements Serializable{
 	public String Content;// 内容
 	public String SendTime;// 发送时间
 	public String ParentID;// 上级消息id(新建的为0)
+	
+	public Message(){}
 	
 	// pmss
 	public Message(JSONObject response){

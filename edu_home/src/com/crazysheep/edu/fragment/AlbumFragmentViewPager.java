@@ -22,6 +22,7 @@ import com.crazysheep.edu.activity.FragmentChangeActivity;
 import com.crazysheep.edu.fragment.adapter.AlbumFragmentAdapter;
 import com.edu.lib.api.APIService;
 import com.edu.lib.api.JsonHandler;
+import com.edu.lib.base.CancelFragment;
 import com.edu.lib.bean.Album;
 import com.edu.lib.bean.User;
 import com.edu.lib.util.AppConfig;
@@ -104,7 +105,10 @@ public class AlbumFragmentViewPager extends Fragment implements ViewPager.OnPage
             @Override
             public void onFinish() {
                 super.onFinish();
-                getView().findViewById(R.id.loading).setVisibility(View.GONE);
+                try {
+                	getView().findViewById(R.id.loading).setVisibility(View.GONE);
+				} catch (Exception e) {
+				}
             }
 
             @Override

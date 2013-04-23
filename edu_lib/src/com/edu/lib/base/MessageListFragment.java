@@ -6,15 +6,12 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -27,9 +24,8 @@ import com.edu.lib.bean.Message;
 import com.edu.lib.bean.User;
 import com.edu.lib.util.AppConfig;
 import com.edu.lib.util.LogUtils;
-import com.edu.lib.util.UIUtils;
 
-public class MessageListFragment extends Fragment implements OnItemClickListener{
+public class MessageListFragment extends CancelFragment implements OnItemClickListener{
 	ListView listview;
 	MessageAdapter adapter;
 	public final static int REQUEST_CODE = 100;
@@ -85,7 +81,10 @@ public class MessageListFragment extends Fragment implements OnItemClickListener
 			@Override
 			public void onFinish() {
 				super.onFinish();
-                getView().findViewById(R.id.loading).setVisibility(View.GONE);
+				 try {
+	                	getView().findViewById(R.id.loading).setVisibility(View.GONE);
+					} catch (Exception e) {
+					}
 			}
 			
 			@Override
@@ -114,12 +113,6 @@ public class MessageListFragment extends Fragment implements OnItemClickListener
 			pageindex++;
 		
 		APIService.GetPms(user.userid, pageindex, handler);
-	}
-	
-	@Override
-	public void onPause() {
-		super.onPause();
-		APIService.cancelAllRequest(getActivity());
 	}
 
 	@Override

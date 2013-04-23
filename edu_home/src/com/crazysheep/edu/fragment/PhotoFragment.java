@@ -86,9 +86,12 @@ public class PhotoFragment extends Fragment implements OnClickListener {
             @Override
             public void onFinish() {
                 super.onFinish();
-                if (isVisible()) {
-                    getView().findViewById(R.id.loading).setVisibility(View.GONE);
-                }
+                try {
+                	if (isVisible()) {
+                		getView().findViewById(R.id.loading).setVisibility(View.GONE);
+                	}
+				} catch (Exception e) {
+				}
             }
 
             @Override

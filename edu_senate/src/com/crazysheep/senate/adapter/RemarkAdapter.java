@@ -3,6 +3,7 @@ package com.crazysheep.senate.adapter;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -83,25 +84,31 @@ public class RemarkAdapter extends BaseAdapter {
 		}
 		
 		Named named = nameds.get(position);
-		if(named.IsRecord){
+		if(!TextUtils.isEmpty(named.Remark)){
+			holder.remark_show.setVisibility(View.VISIBLE);
+			holder.remark_message.setText(named.Remark);
+			holder.remark_show.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					View view = ((View)(v.getParent().getParent())).findViewById(R.id.remark_message);
+					if(view.getVisibility() == View.VISIBLE){
+						view.setVisibility(View.GONE);
+					}else{
+						view.setVisibility(View.VISIBLE);
+					}
+				}
+			});
+		}else{
 			holder.remark_show.setVisibility(View.GONE);
+			holder.remark_message.setVisibility(View.GONE);
+		}
+		
+		if(named.IsRecord){
 			holder.remark_status.setVisibility(View.VISIBLE);
 			holder.remark_num.setTextColor(context.getResources().getColor(R.color.black));
 			holder.remark_name.setTextColor(context.getResources().getColor(R.color.black));
 			holder.remark_time.setTextColor(context.getResources().getColor(R.color.black));
 		}else{
-			holder.remark_show.setVisibility(View.VISIBLE);
-			holder.remark_show.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					if(v.getTag() == null){
-						
-					}else{
-						
-					}
-					
-				}
-			});
 			holder.remark_status.setVisibility(View.INVISIBLE);
 			holder.remark_num.setTextColor(context.getResources().getColor(R.color.red));
 			holder.remark_name.setTextColor(context.getResources().getColor(R.color.red));
@@ -112,6 +119,16 @@ public class RemarkAdapter extends BaseAdapter {
 		holder.remark_time.setText(named.InTime);
 		
 		return convertView;
+	}
+	
+	class MyOnclick implements OnClickListener{
+		
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			
+		}
+		
 	}
 	
 	public final class ViewHolder {

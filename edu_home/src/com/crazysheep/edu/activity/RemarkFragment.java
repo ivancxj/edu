@@ -116,7 +116,10 @@ public class RemarkFragment extends Fragment implements OnClickListener{
 				@Override
 				public void onFinish() {
 					super.onFinish();
-                    getView().findViewById(R.id.loading).setVisibility(View.GONE);
+					try {
+						getView().findViewById(R.id.loading).setVisibility(View.GONE);
+					} catch (Exception e) {
+					}
 				}
 				
 				@Override
