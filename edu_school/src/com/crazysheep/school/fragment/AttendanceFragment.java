@@ -1,5 +1,7 @@
 package com.crazysheep.school.fragment;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 import com.crazysheep.school.R;
 import com.crazysheep.school.activity.AttendanceDetailActivity;
@@ -17,6 +21,8 @@ import com.edu.lib.util.AppConfig;
 import com.edu.lib.util.LogUtils;
 import org.json.JSONObject;
 
+import java.util.Calendar;
+
 /**
  * 园所出勤
  *
@@ -26,12 +32,14 @@ public class AttendanceFragment extends Fragment implements OnClickListener {
 
     private TextView record;//出勤人数
     private TextView notrecord;//缺勤人数
+    DatePickerDialog dialog;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_attendance, container, false);
+        view.findViewById(R.id.cq).setOnClickListener(this);
         record = (TextView) view.findViewById(R.id.attendance_record);
         notrecord = (TextView) view.findViewById(R.id.attendance_notrecord);
         view.findViewById(R.id.attendance_detail).setOnClickListener(this);
@@ -44,6 +52,26 @@ public class AttendanceFragment extends Fragment implements OnClickListener {
         getGardenRecord();
     }
 
+    protected Dialog onCreateDialog() {
+        //用来获取日期和时间的
+        Calendar calendar = Calendar.getInstance();
+
+        DatePickerDialog.OnDateSetListener dateListener =
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker,
+                                          int year, int month, int dayOfMonth) {
+
+                    }
+                };
+        Dialog dialog = new DatePickerDialog(getActivity(),
+                dateListener,
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH));
+        return dialog;
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -51,7 +79,9 @@ public class AttendanceFragment extends Fragment implements OnClickListener {
                 Intent intent = new Intent(getActivity(), AttendanceDetailActivity.class);
                 startActivity(intent);
                 break;
-
+            case R.id.cq:
+                onCreateDialog().show();
+                break;
             default:
                 break;
         }
