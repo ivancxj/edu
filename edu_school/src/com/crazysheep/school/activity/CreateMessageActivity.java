@@ -20,8 +20,7 @@ import com.edu.lib.api.APIService;
 import com.edu.lib.api.JsonHandler;
 import com.edu.lib.base.ActionBarActivity;
 import com.edu.lib.bean.Message;
-import com.edu.lib.bean.Person;
-import com.edu.lib.bean.TeacherInfo;
+import com.edu.lib.bean.Student;
 import com.edu.lib.bean.User;
 import com.edu.lib.db.MessageHelper;
 import com.edu.lib.util.AppConfig;
@@ -45,8 +44,7 @@ public class CreateMessageActivity extends ActionBarActivity implements
 	TextView create_message_content;
 	TextView create_message_name;
 
-	ArrayList<Person> pesons = new ArrayList<Person>();
-	Person person;
+	ArrayList<Student> students;
 	MessageHelper helper;
 
 	@Override
@@ -54,7 +52,7 @@ public class CreateMessageActivity extends ActionBarActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_message);
 		setTitle("发消息");
-		getTeacherList();
+		// getTeacherList();
 		setHomeActionListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -91,8 +89,17 @@ public class CreateMessageActivity extends ActionBarActivity implements
 	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
 		super.onActivityResult(arg0, arg1, arg2);
 		if (arg0 == REQEST_CODE && arg1 == RESULT_OK) {
-			person = (Person) arg2.getSerializableExtra("data");
-			create_message_name.setText("收件人: " + person.name);
+			students = (ArrayList<Student>) arg2.getSerializableExtra("data");
+			if (students == null)
+				return;
+			String txt = "";
+			for (Student stu : students) {
+				txt = txt + stu.SName + ",";
+			}
+			if (txt.endsWith(",")) {
+				txt = txt.substring(0, txt.length() - 1);
+			}
+			create_message_name.setText("收件人: " + txt);
 		}
 	}
 
@@ -103,7 +110,7 @@ public class CreateMessageActivity extends ActionBarActivity implements
 			sendmsg();
 			break;
 		case R.id.create_message_add:
-			ContactActivity.startActivity(this, pesons, REQEST_CODE);
+			ContactActivity.startActivity(this, REQEST_CODE,false);
 
 			break;
 
@@ -114,7 +121,7 @@ public class CreateMessageActivity extends ActionBarActivity implements
 	}
 
 	void sendmsg() {
-		if (person == null) {
+		if (students == null || students.size() == 0) {
 			UIUtils.showToast(this, "请先选择");
 			return;
 		}
@@ -162,45 +169,19 @@ public class CreateMessageActivity extends ActionBarActivity implements
 				if (helper == null)
 					helper = new MessageHelper();
 				helper.insert(CreateMessageActivity.this, messages);
+
 			}
 		};
 		User user = AppConfig.getAppConfig(this).getUser();
-		APIService.SendMsg(user.userid, user.cname, person.id, "",
+		String ids = "";
+		for (Student stu : students) {
+			ids = ids + stu.SName + ",";
+		}
+		if (ids.endsWith(",")) {
+			ids = ids.substring(0, ids.length() - 1);
+		}
+		APIService.SendMsg(user.userid, user.cname, ids, "",
 				create_message_content.getEditableText().toString(), "0",
 				handler);
-	}
-
-	private void getTeacherList() {
-		JsonHandler handler = new JsonHandler(this) {
-			@Override
-			public void onStart() {
-				super.onStart();
-			}
-
-			@Override
-			public void onFinish() {
-				super.onFinish();
-			}
-
-			@Override
-			public void onSuccess(JSONObject response) {
-				super.onSuccess(response);
-				LogUtils.I(LogUtils.StudentRecord, response.toString());
-				JSONArray array = response.optJSONArray("mobileitemteachers");
-				if (array == null)
-					return;
-				int length = array.length();
-				// datas = new String[length];
-				for (int i = 0; i < length; i++) {
-					TeacherInfo info = new TeacherInfo(array.optJSONObject(i));
-					Person person = new Person();
-					person.id = info.TID;
-					person.name = info.TName;
-					pesons.add(person);
-				}
-			}
-		};
-		User user = AppConfig.getAppConfig(this).getUser();
-		APIService.GetTeacherList(user.gardenID, handler);
 	}
 }

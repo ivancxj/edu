@@ -13,6 +13,8 @@ public class Student implements Serializable{
 	
 	public boolean isSelect;
 	
+	public Student(){}
+	
 	public Student(JSONObject response){
 		this.Memberid = response.optString("Memberid");
 		this.SName = response.optString("SName");
