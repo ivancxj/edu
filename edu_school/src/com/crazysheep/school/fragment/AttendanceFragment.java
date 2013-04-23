@@ -62,6 +62,9 @@ public class AttendanceFragment extends Fragment implements OnClickListener {
                     public void onDateSet(DatePicker datePicker,
                                           int year, int month, int dayOfMonth) {
 
+                    	System.err.println("year = "+year);
+                    	System.err.println("month = "+month);
+                    	System.err.println("dayOfMonth = "+dayOfMonth);
                     }
                 };
         Dialog dialog = new DatePickerDialog(getActivity(),
