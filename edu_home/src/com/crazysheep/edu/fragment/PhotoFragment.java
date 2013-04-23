@@ -1,7 +1,5 @@
 package com.crazysheep.edu.fragment;
 
-import java.util.ArrayList;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -20,7 +18,6 @@ import com.crazysheep.edu.activity.CommentActivity;
 import com.edu.lib.MyApplication;
 import com.edu.lib.api.APIService;
 import com.edu.lib.api.JsonHandler;
-import com.edu.lib.bean.Comment;
 import com.edu.lib.bean.Photo;
 import com.edu.lib.util.LogUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -33,8 +30,9 @@ public class PhotoFragment extends Fragment implements OnClickListener {
     private String albumID;
     private Photo photo;
     private TextView count;
+    int length;
 
-    private ArrayList<Comment> comments = new ArrayList<Comment>();
+//    private ArrayList<Comment> comments = new ArrayList<Comment>();
 
 //    private DisplayImageOptions options;
 
@@ -100,11 +98,11 @@ public class PhotoFragment extends Fragment implements OnClickListener {
                 JSONArray array = response.optJSONArray("photoalbumoforums");
                 if (array == null)
                     return;
-                int length = array.length();
-                for (int i = 0; i < length; i++) {
-                    Comment comment = new Comment(array.optJSONObject(i));
-                    comments.add(comment);
-                }
+                length = array.length();
+//                for (int i = 0; i < length; i++) {
+//                    Comment comment = new Comment(array.optJSONObject(i));
+//                    comments.add(comment);
+//                }
                 count.setText("查看评论(" + length + "条)");
 
             }
@@ -112,18 +110,23 @@ public class PhotoFragment extends Fragment implements OnClickListener {
 
         APIService.GetPhotoAlbumForum(albumID, photo.Name, handler);
     }
+    
+    public void addCount(){
+    	length ++;
+    	count.setText("查看评论(" + length + "条)");
+    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        comments = null;
+//        comments = null;
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.comment_count:// 查看评论
-                CommentActivity.startActivity(getActivity(), comments, albumID,
+                CommentActivity.startActivity(getActivity(), albumID,
                         photo);
                 break;
             // 发表评论
