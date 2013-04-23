@@ -37,13 +37,17 @@ public class LoginActivity extends Activity implements OnClickListener {
 		loginPassword = (EditText) findViewById(R.id.login_password);
 		loginRember = (CheckBox) findViewById(R.id.login_rember);
 		loginAutologin = (CheckBox) findViewById(R.id.login_autologin);
+		// mileslyc
+//		loginPassword.setText("1>)@K%yu&MP/");
 
 		// 记住密码
 		if (AppConfig.getAppConfig(this).isRemberPass()) {
 			loginRember.setChecked(true);
 			loginName.setText(AppConfig.getAppConfig(this).getLoginName());
-			// sRYVHy>m6Tgx
 			loginPassword.setText(AppConfig.getAppConfig(this).getLoginPass());
+		} else {
+			AppConfig.getAppConfig(LoginActivity.this).setLoginName("");
+			AppConfig.getAppConfig(LoginActivity.this).setLoginPass("");
 		}
 		// 自动登陆
 		if (AppConfig.getAppConfig(this).isAutoLogin()) {
@@ -52,16 +56,23 @@ public class LoginActivity extends Activity implements OnClickListener {
 	}
 
 	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		AppConfig.getAppConfig(LoginActivity.this).setRemberPass(
+				loginRember.isChecked());
+	}
+
+	@Override
 	public void onClick(final View v) {
 		switch (v.getId()) {
 		case R.id.login_btn:
 			// check network
-			MyApplication appContext = (MyApplication)getApplication();
-			if(!appContext.isNetworkConnected()){
+			MyApplication appContext = (MyApplication) getApplication();
+			if (!appContext.isNetworkConnected()) {
 				UIUtils.showErrToast(this, "请先检查网络");
 				return;
 			}
-			
+
 			// check data
 			if (TextUtils.isEmpty(loginName.getText().toString())) {
 				UIUtils.showErrToast(this, "请输入用户名");
@@ -94,26 +105,29 @@ public class LoginActivity extends Activity implements OnClickListener {
 					super.onSuccess(response);
 					LogUtils.I(LogUtils.LOGIN, response.toString());
 					User user = new User(response);
-					if(!user.isParents()){
-						UIUtils.showToast(LoginActivity.this, "错误的用户名或密码！");
+					if (!user.isParents()) {
+						UIUtils.showToast(LoginActivity.this, "用户名或密码错误");
 						return;
 					}
-					
+
 					AppConfig.getAppConfig(LoginActivity.this).saveUser(user);
 					//  自动登陆－》记住密码
 					if (loginAutologin.isChecked()) {
 						loginRember.setChecked(true);
 					}
 					if (loginRember.isChecked()) {
-						AppConfig.getAppConfig(LoginActivity.this).setLoginName(loginName.getText().toString());
-						AppConfig.getAppConfig(LoginActivity.this).setLoginPass(loginPassword.getText().toString());
+						AppConfig.getAppConfig(LoginActivity.this)
+								.setLoginName(loginName.getText().toString());
+						AppConfig.getAppConfig(LoginActivity.this)
+								.setLoginPass(
+										loginPassword.getText().toString());
 					}
 					AppConfig.getAppConfig(LoginActivity.this).setRemberPass(
 							loginRember.isChecked());
 					AppConfig.getAppConfig(LoginActivity.this).setAutoLogin(
 							loginAutologin.isChecked());
 
-				    // go next activity
+					// go next activity
 					Intent intent = new Intent(LoginActivity.this,
 							FragmentChangeActivity.class);
 					startActivity(intent);
@@ -121,8 +135,8 @@ public class LoginActivity extends Activity implements OnClickListener {
 				}
 			};
 			String md5 = loginPassword.getText().toString().trim();
-			APIService.CheckLogin(loginName.getText().toString().trim(),
-					md5, handler);
+			APIService.CheckLogin(loginName.getText().toString().trim(), md5,
+					handler);
 			break;
 
 		default:

@@ -37,18 +37,28 @@ public class LoginActivity extends Activity implements OnClickListener {
 		loginPassword = (EditText) findViewById(R.id.login_password);
 		loginRember = (CheckBox) findViewById(R.id.login_rember);
 		loginAutologin = (CheckBox) findViewById(R.id.login_autologin);
-		loginPassword.setText("sRYVHy>m6Tgx");
-
+		// zrb
+//		loginPassword.setText("123456");
 		// 记住密码
 		if (AppConfig.getAppConfig(this).isRemberPass()) {
 			loginRember.setChecked(true);
 			loginName.setText(AppConfig.getAppConfig(this).getLoginName());
 			loginPassword.setText(AppConfig.getAppConfig(this).getLoginPass());
+		} else {
+			AppConfig.getAppConfig(LoginActivity.this).setLoginName("");
+			AppConfig.getAppConfig(LoginActivity.this).setLoginPass("");
 		}
 		// 自动登陆
 		if (AppConfig.getAppConfig(this).isAutoLogin()) {
 			loginAutologin.setChecked(true);
 		}
+	}
+
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		AppConfig.getAppConfig(LoginActivity.this).setRemberPass(
+				loginRember.isChecked());
 	}
 
 	@Override
@@ -94,8 +104,8 @@ public class LoginActivity extends Activity implements OnClickListener {
 					super.onSuccess(response);
 					LogUtils.I(LogUtils.LOGIN, response.toString());
 					User user = new User(response);
-					if(!user.isTeacher()){
-						UIUtils.showToast(LoginActivity.this, "错误的用户名或密码！");
+					if (!user.isTeacher()) {
+						UIUtils.showToast(LoginActivity.this, "用户名或密码错误");
 						return;
 					}
 					AppConfig.getAppConfig(LoginActivity.this).saveUser(user);

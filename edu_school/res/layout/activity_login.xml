@@ -38,7 +38,7 @@
 
             <EditText
                     android:id="@+id/login_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:singleLine="true"
                     android:background="@null"
