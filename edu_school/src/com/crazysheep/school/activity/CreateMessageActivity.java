@@ -19,9 +19,11 @@ import com.crazysheep.school.R;
 import com.edu.lib.api.APIService;
 import com.edu.lib.api.JsonHandler;
 import com.edu.lib.base.ActionBarActivity;
+import com.edu.lib.bean.Message;
 import com.edu.lib.bean.Person;
 import com.edu.lib.bean.TeacherInfo;
 import com.edu.lib.bean.User;
+import com.edu.lib.db.MessageHelper;
 import com.edu.lib.util.AppConfig;
 import com.edu.lib.util.CommonUtils;
 import com.edu.lib.util.LogUtils;
@@ -45,6 +47,7 @@ public class CreateMessageActivity extends ActionBarActivity implements
 
 	ArrayList<Person> pesons = new ArrayList<Person>();
 	Person person;
+	MessageHelper helper;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -144,11 +147,27 @@ public class CreateMessageActivity extends ActionBarActivity implements
 				create_message_content.setText("");
 				CommonUtils.hideInputKeyboard(CreateMessageActivity.this,
 						create_message_content.getWindowToken());
+
+				// 插入本地
+				JSONArray array = response.optJSONArray("pmss");
+				if (array == null)
+					return;
+				ArrayList<Message> messages = new ArrayList<Message>();
+				int length = array.length();
+				for (int i = 0; i < length; i++) {
+					Message message = new Message(array.optJSONObject(i));
+					message.type = 2;
+					messages.add(message);
+				}
+				if (helper == null)
+					helper = new MessageHelper();
+				helper.insert(CreateMessageActivity.this, messages);
 			}
 		};
 		User user = AppConfig.getAppConfig(this).getUser();
 		APIService.SendMsg(user.userid, user.cname, person.id, "",
-				create_message_content.getEditableText().toString(),"0", handler);
+				create_message_content.getEditableText().toString(), "0",
+				handler);
 	}
 
 	private void getTeacherList() {

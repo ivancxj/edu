@@ -13,6 +13,12 @@ public class User {
 	public String className;//  
 	public String classID;//  班级id
 	
+	// kindergarten  园长
+	// teacherleader和member 是老师
+	// parents是家长
+	
+	public String job;
+	
 	public User(){}
 	public User(JSONObject response){
 		if(response.has("LoginInfo")){
@@ -26,7 +32,27 @@ public class User {
 			this.cname = response.optString("cname");
 			this.className = response.optString("className");
 			this.classID = response.optString("classID");
+			this.job = response.optString("job");
 		}
+	}
 	
+	// kindergarten 园长
+	public boolean isKindergarten(){
+		if(job == null) return false;
+		if(job.equals("kindergarten")) return true;
+		return false;
+	}
+	// teacherleader和member 是老师
+	public boolean isTeacher(){
+		if(job == null) return false;
+		if(job.equals("teacherleader")) return true;
+		if(job.equals("member")) return true;
+		return false;
+	}
+	// parents是家长
+	public boolean isParents(){
+		if(job == null) return false;
+		if(job.equals("parents")) return true;
+		return false;
 	}
 }

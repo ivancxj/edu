@@ -61,7 +61,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 				UIUtils.showErrToast(this, "请先检查网络");
 				return;
 			}
-			
+
 			// check data
 			if (TextUtils.isEmpty(loginName.getText().toString())) {
 				UIUtils.showErrToast(this, "请输入用户名");
@@ -94,6 +94,10 @@ public class LoginActivity extends Activity implements OnClickListener {
 					super.onSuccess(response);
 					LogUtils.I(LogUtils.LOGIN, response.toString());
 					User user = new User(response);
+					if (!user.isKindergarten()) {
+						UIUtils.showToast(LoginActivity.this, "错误的用户名或密码！");
+						return;
+					}
 					AppConfig.getAppConfig(LoginActivity.this).saveUser(user);
 					//  自动登陆－》记住密码
 					if (loginAutologin.isChecked()) {
