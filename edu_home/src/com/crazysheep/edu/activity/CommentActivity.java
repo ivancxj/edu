@@ -2,6 +2,7 @@ package com.crazysheep.edu.activity;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.ProgressDialog;
@@ -35,29 +36,28 @@ public class CommentActivity extends ActionBarActivity implements
     ArrayList<Comment> comments = new ArrayList<Comment>();
     String albumID;
     Photo photo;
-    private final static String EXTRA_COMMENTS = "extra_comments";
+//    private final static String EXTRA_COMMENTS = "extra_comments";
     private final static String EXTRA_ALBUM_ID = "extra_album_id";
     private static final String EXTRA_PHOTO_DATA = "extra_photo_data";
 
-    public static void startActivity(Context context,
-                                     ArrayList<Comment> comments, String albumID, Photo photo) {
+    public static void startActivity(Context context, String albumID, Photo photo) {
         Intent intent = new Intent(context, CommentActivity.class);
-        intent.putExtra(EXTRA_COMMENTS, comments);
+//        intent.putExtra(EXTRA_COMMENTS, comments);
         intent.putExtra(EXTRA_ALBUM_ID, albumID);
         intent.putExtra(EXTRA_PHOTO_DATA, photo);
         context.startActivity(intent);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment);
-        comments = (ArrayList<Comment>) getIntent().getSerializableExtra(
-                EXTRA_COMMENTS);
+        
+//        comments = (ArrayList<Comment>) getIntent().getSerializableExtra(
+//                EXTRA_COMMENTS);
         albumID = getIntent().getStringExtra(EXTRA_ALBUM_ID);
         photo = (Photo) getIntent().getSerializableExtra(EXTRA_PHOTO_DATA);
-
+        getComment();
         setTitle("评论");
         setHomeActionListener(new OnClickListener() {
             @Override
@@ -67,8 +67,7 @@ public class CommentActivity extends ActionBarActivity implements
         });
 
         listview = (ListView) findViewById(R.id.listview);
-        adapter = new CommentAdapter(this, comments);
-        listview.setAdapter(adapter);
+    
     }
 
     @Override
@@ -81,6 +80,43 @@ public class CommentActivity extends ActionBarActivity implements
                 break;
         }
 
+    }
+    
+    public void getComment() {
+    	final ProgressDialog pd = UIUtils.newProgressDialog(this, "请稍候...");
+        JsonHandler handler = new JsonHandler(this) {
+            @Override
+            public void onStart() {
+                super.onStart();
+                UIUtils.safeShow(pd);
+            }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                UIUtils.safeDismiss(pd);
+            }
+
+            @Override
+            public void onSuccess(JSONObject response) {
+                super.onSuccess(response);
+                LogUtils.I(LogUtils.COMMENT, response.toString());
+                JSONArray array = response.optJSONArray("photoalbumoforums");
+                if (array == null)
+                    return;
+                int length = array.length();
+                for (int i = 0; i < length; i++) {
+                    Comment comment = new Comment(array.optJSONObject(i));
+                    comments.add(comment);
+                }
+                
+                adapter = new CommentAdapter(CommentActivity.this, comments);
+                listview.setAdapter(adapter);
+
+            }
+        };
+
+        APIService.GetPhotoAlbumForum(albumID, photo.Name, handler);
     }
 
     // 发表评论
