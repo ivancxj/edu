@@ -41,9 +41,11 @@
             android:layout_width="match_parent"
             android:layout_height="125dp"
             android:gravity="center"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
+            android:padding="4dp"
             android:background="@drawable/follow_brand_item_bg_pre"
             android:layout_marginTop="5dp"
             android:paddingBottom="10dp"
             android:visibility="gone"/>
+
 </RelativeLayout>
