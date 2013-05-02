@@ -38,7 +38,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 		loginRember = (CheckBox) findViewById(R.id.login_rember);
 		loginAutologin = (CheckBox) findViewById(R.id.login_autologin);
 		// hzc
-		loginPassword.setText("!@#$%^&*");
+//		loginPassword.setText("!@#$%^&*");
 		// 记住密码
 		if (AppConfig.getAppConfig(this).isRemberPass()) {
 			loginRember.setChecked(true);

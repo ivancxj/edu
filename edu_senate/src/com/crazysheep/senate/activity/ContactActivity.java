@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -37,6 +39,7 @@ public class ContactActivity extends ActionBarActivity {
 
 	private ListView mListView;
 	private StudentAdapter adapter;
+	private AutoCompleteTextView search;
 
 	public static void startActivity(Activity context, int requestCode) {
 		Intent data = new Intent(context, ContactActivity.class);
@@ -68,10 +71,15 @@ public class ContactActivity extends ActionBarActivity {
 					return;
 				int length = array.length();
 				ArrayList<Student> students = new ArrayList<Student>();
+				String[] items = new String[length];
 				for (int i = 0; i < length; i++) {
 					Student student = new Student(array.optJSONObject(i));
 					students.add(student);
+					items[i] = student.SName;
 				}
+				search.setAdapter(new ArrayAdapter<String>(
+						ContactActivity.this,
+						android.R.layout.simple_dropdown_item_1line, items));
 
 				adapter.add(students);
 			}
@@ -100,6 +108,7 @@ public class ContactActivity extends ActionBarActivity {
 				finish();
 			}
 		});
+		search = (AutoCompleteTextView) findViewById(R.id.contact_serch);
 		GetStudentList();
 		mListView = (ListView) findViewById(R.id.list);
 		adapter = new StudentAdapter(this);

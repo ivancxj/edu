@@ -169,6 +169,7 @@ public class CreateMessageActivity extends ActionBarActivity implements
 				if (helper == null)
 					helper = new MessageHelper();
 				helper.insert(CreateMessageActivity.this, messages);
+				finish();
 
 			}
 		};

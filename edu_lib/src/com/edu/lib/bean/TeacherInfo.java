@@ -8,12 +8,14 @@ public class TeacherInfo {
 	public String TPos;// 职务
 	public String TName;
 	public String TID;// 老师的 id
+	public String ClassName;// 班级
 	// mobileitemteachers
 	public TeacherInfo(JSONObject response){
 		this.TMobile = response.optString("TMobile");
 		this.TPos = response.optString("TPos");
 		this.TName = response.optString("TName");
 		this.TID = response.optString("TID");
+		this.ClassName = response.optString("ClassName");
 	}
 
 }

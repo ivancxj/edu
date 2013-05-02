@@ -1,11 +1,13 @@
 package com.crazysheep.school.fragment;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import org.json.JSONObject;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,6 +25,7 @@ import com.edu.lib.api.JsonHandler;
 import com.edu.lib.bean.User;
 import com.edu.lib.util.AppConfig;
 import com.edu.lib.util.LogUtils;
+import com.edu.lib.util.UIUtils;
 
 /**
  * 园所出勤
@@ -52,6 +55,8 @@ public class AttendanceFragment extends Fragment implements OnClickListener {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd");     
+		date = sDateFormat.format(new java.util.Date());
 		getGardenRecord();
 	}
 
@@ -64,10 +69,11 @@ public class AttendanceFragment extends Fragment implements OnClickListener {
 			public void onDateSet(DatePicker datePicker, int year, int month,
 					int dayOfMonth) {
 
-				System.err.println("year = " + year);
-				System.err.println("month = " + (month + 1));
-				System.err.println("dayOfMonth = " + dayOfMonth);
+//				System.err.println("year = " + year);
+//				System.err.println("month = " + (month + 1));
+//				System.err.println("dayOfMonth = " + dayOfMonth);
 				date = year+"-"+(month+1)+"-"+dayOfMonth;
+				getGardenRecord();
 			}
 		};
 		Dialog dialog = new DatePickerDialog(getActivity(), dateListener,
@@ -80,9 +86,7 @@ public class AttendanceFragment extends Fragment implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.attendance_detail:
-			Intent intent = new Intent(getActivity(),
-					AttendanceDetailActivity.class);
-			startActivity(intent);
+			AttendanceDetailActivity.startActivity(getActivity(), date);
 			break;
 		case R.id.cq:
 			onCreateDialog().show();
@@ -94,15 +98,18 @@ public class AttendanceFragment extends Fragment implements OnClickListener {
 	}
 
 	private void getGardenRecord() {
+		final ProgressDialog progress = UIUtils.newProgressDialog(getActivity(), "请稍候...");
 		JsonHandler handler = new JsonHandler(getActivity()) {
 			@Override
 			public void onStart() {
 				super.onStart();
+				UIUtils.safeShow(progress);
 			}
 
 			@Override
 			public void onFinish() {
 				super.onFinish();
+				UIUtils.safeDismiss(progress);
 			}
 
 			@Override
@@ -115,6 +122,6 @@ public class AttendanceFragment extends Fragment implements OnClickListener {
 		};
 		User user = AppConfig.getAppConfig(getActivity()).getUser();
 		// date TODO
-		APIService.GetGardenRecord(user.gardenID, handler);
+		APIService.GetGardenRecord(user.gardenID, date,handler);
 	}
 }

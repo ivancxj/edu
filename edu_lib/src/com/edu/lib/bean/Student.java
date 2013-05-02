@@ -10,6 +10,7 @@ public class Student implements Serializable{
 	public String SName;// 学生名称
 	public String SNum;// 学生学号
 	public String SID;// 学生id
+	public String ClassName;
 	
 	public boolean isSelect;
 	

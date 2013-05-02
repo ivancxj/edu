@@ -4,6 +4,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,12 +27,21 @@ public class AttendanceDetailActivity extends ActionBarActivity implements
 
     LayoutInflater inflater;
     LinearLayout detail_ll;
-
+    private String date;
+    
+    private final static String EXTRA_DATE = "extra_date";
+    public static void startActivity(Context context,String date){
+    	Intent intent = new Intent(context,AttendanceDetailActivity.class);
+    	intent.putExtra(EXTRA_DATE, date);
+    	context.startActivity(intent);
+    }
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attendance_detail);
         setTitle("园所出勤");
+        date = getIntent().getStringExtra(EXTRA_DATE);
         setHomeActionListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,7 +98,7 @@ public class AttendanceDetailActivity extends ActionBarActivity implements
             }
         };
         User user = AppConfig.getAppConfig(this).getUser();
-        APIService.GetStudentNoRecords(user.gardenID, handler);
+        APIService.GetStudentNoRecords(user.gardenID, date,handler);
     }
 
     private void createLinearLayout(String classname, String studentname) {

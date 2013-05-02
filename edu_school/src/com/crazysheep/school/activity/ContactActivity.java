@@ -10,10 +10,13 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -38,11 +41,13 @@ public class ContactActivity extends ActionBarActivity {
 
 	private ListView mListView;
 	private StudentAdapter adapter;
+	private AutoCompleteTextView search;
 	boolean isNotify;
-	
+
 	final static String EXTRA_ISNOTIFY = "extra_isnotify";
 
-	public static void startActivity(Activity context, int requestCode,boolean isNotify) {
+	public static void startActivity(Activity context, int requestCode,
+			boolean isNotify) {
 		Intent data = new Intent(context, ContactActivity.class);
 		data.putExtra(EXTRA_ISNOTIFY, isNotify);
 		context.startActivityForResult(data, requestCode);
@@ -72,14 +77,19 @@ public class ContactActivity extends ActionBarActivity {
 				if (array == null)
 					return;
 				int length = array.length();
+				String[] items = new String[length];
 				ArrayList<Student> students = new ArrayList<Student>();
 				for (int i = 0; i < length; i++) {
 					TeacherInfo info = new TeacherInfo(array.optJSONObject(i));
 					Student student = new Student();
 					student.SName = info.TName;
+					items[i] = info.TName;
 					student.SID = info.TID;
+					student.ClassName = info.ClassName;
 					students.add(student);
 				}
+				search.setAdapter(new ArrayAdapter<String>(ContactActivity.this,
+					android.R.layout.simple_dropdown_item_1line, items));
 
 				adapter.add(students);
 			}
@@ -92,7 +102,7 @@ public class ContactActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.contact_list);
-		
+
 		setHomeActionListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -108,11 +118,12 @@ public class ContactActivity extends ActionBarActivity {
 				finish();
 			}
 		});
-	
+
+		search = (AutoCompleteTextView) findViewById(R.id.contact_serch);
 		mListView = (ListView) findViewById(R.id.list);
 		adapter = new StudentAdapter(this);
 		isNotify = getIntent().getBooleanExtra(EXTRA_ISNOTIFY, false);
-		if(isNotify){
+		if (isNotify) {
 			ArrayList<Student> students = new ArrayList<Student>();
 			Student student = new Student();
 			student.SID = "1";
@@ -124,8 +135,11 @@ public class ContactActivity extends ActionBarActivity {
 			students.add(student);
 			adapter.add(students);
 			setTitle("请选择");
-			
-		}else{
+			String[] items = { "全体学生", "全体教师" };
+			search.setAdapter(new ArrayAdapter<String>(this,
+					android.R.layout.simple_dropdown_item_1line, items));
+
+		} else {
 			GetTeacherList();
 			setTitle("联系人");
 		}
@@ -230,6 +244,9 @@ public class ContactActivity extends ActionBarActivity {
 
 			Student student = students.get(position);
 			holder.title.setText(student.SName);
+			if (!TextUtils.isEmpty(student.ClassName)) {
+				holder.title.append("(" + student.ClassName + ")");
+			}
 			if (student.isSelect) {
 				holder.img.setBackgroundResource(R.drawable.ic_selected);
 			} else {

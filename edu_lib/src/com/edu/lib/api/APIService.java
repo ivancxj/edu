@@ -485,10 +485,11 @@ public class APIService {
 	 * @param gid
 	 *            园区ID
 	 */
-	public static void GetGardenRecord(String gid,
+	public static void GetGardenRecord(String gid,String begintime,
 			AsyncHttpResponseHandler handler) {
 		RequestParams params = new RequestParams();
 		params.put("gid", gid);
+		params.put("begintime", begintime);
 
 		get(GetGardenRecord, params, handler);
 	}
@@ -501,10 +502,11 @@ public class APIService {
 	 * @param gid
 	 *            园区ID
 	 */
-	public static void GetStudentNoRecords(String gid,
+	public static void GetStudentNoRecords(String gid,String begintime,
 			AsyncHttpResponseHandler handler) {
 		RequestParams params = new RequestParams();
 		params.put("gid", gid);
+		params.put("begintime", begintime);
 
 		get(GetStudentNoRecords, params, handler);
 	}
