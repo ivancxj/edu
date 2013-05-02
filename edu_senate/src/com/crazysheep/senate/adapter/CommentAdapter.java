@@ -53,6 +53,11 @@ public class CommentAdapter extends BaseAdapter {
 			holder = (ViewHolder)convertView.getTag();
 		}
 		
+		Comment comment = comments.get(position);
+		holder.name.setText(comment.UserName);
+		holder.time.setText(comment.intime);
+		holder.content.setText(comment.cont);
+		
 		
 		return convertView;
 	}

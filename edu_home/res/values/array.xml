@@ -4,7 +4,7 @@
     <string-array name="menu_names">
         <item>出勤</item>
         <item>通知</item>
-        <item>消息</item>
+        <item>园内消息</item>
         <item>相册</item>
     </string-array>
 
