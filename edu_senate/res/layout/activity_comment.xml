@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:background="@drawable/common_backgroud">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/common_backgroud"
+    android:orientation="vertical" >
 
     <include
-            layout="@layout/actionbar"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"/>
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        layout="@layout/actionbar" />
 
     <!--
           TextView
@@ -51,17 +51,17 @@
     -->
 
     <ListView
-            android:id="@+id/listview"
-            style="@style/MyListView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:cacheColorHint="@null"
-            android:background="#90000000">
+        android:id="@+id/listview"
+        style="@style/MyListView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#90000000"
+        android:cacheColorHint="@null" >
     </ListView>
 
-    <!--  include
-            android:layout_weight="0"
-            layout="@layout/comment_publisher"/-->
+    <include
+        android:layout_weight="0"
+        layout="@layout/comment_publisher" />
 
 </LinearLayout>

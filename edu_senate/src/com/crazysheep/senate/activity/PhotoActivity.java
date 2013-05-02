@@ -151,6 +151,8 @@ public class PhotoActivity extends ActionBarActivity implements OnClickListener 
 				LogUtils.I(LogUtils.COMMENT, response.toString());
 				
 				edit.setText("");
+				PhotoFragment fragment = (PhotoFragment) mAdapter.instantiateItem(mPager, mPager.getCurrentItem());
+				fragment.addCount();
 				CommonUtils.hideInputKeyboard(PhotoActivity.this, edit.getWindowToken());
 				
 				UIUtils.showToast(PhotoActivity.this, "评论成功");

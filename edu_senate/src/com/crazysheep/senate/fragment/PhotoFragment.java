@@ -34,6 +34,7 @@ public class PhotoFragment extends Fragment implements OnClickListener {
 	private Photo photo;
 	private ImageView mImageView;
 	private TextView count;
+	int length;
 
 	private ArrayList<Comment> comments = new ArrayList<Comment>();
 
@@ -90,7 +91,7 @@ public class PhotoFragment extends Fragment implements OnClickListener {
 				JSONArray array = response.optJSONArray("photoalbumoforums");
 				if (array == null)
 					return;
-				int length = array.length();
+				length = array.length();
 				for (int i = 0; i < length; i++) {
 					Comment comment = new Comment(array.optJSONObject(i));
 					comments.add(comment);
@@ -110,6 +111,11 @@ public class PhotoFragment extends Fragment implements OnClickListener {
 		mImageView = (ImageView) view.findViewById(R.id.imageView);
 		return view;
 	}
+	
+    public void addCount(){
+    	length ++;
+    	count.setText("查看评论(" + length + "条)");
+    }
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -137,7 +143,7 @@ public class PhotoFragment extends Fragment implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.comment_count:// 查看评论
-			CommentActivity.startActivity(getActivity(), comments, albumID,
+			CommentActivity.startActivity(getActivity(), albumID,
 					photo);
 			break;
 		// 发表评论
