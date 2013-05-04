@@ -120,8 +120,8 @@ public class NotifyFragment extends Fragment implements ViewPager.OnPageChangeLi
             }
         };
         User user = AppConfig.getAppConfig(getActivity()).getUser();
-        APIService.GetClassAnnouncement(user.gardenID, user.classID,
-                user.memberid, handler);
+        APIService.GetAnnouncementByTeacher(user.gardenID, user.classID,
+                handler);
     }
     
     @Override

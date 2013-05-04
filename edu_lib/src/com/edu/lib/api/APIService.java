@@ -61,8 +61,12 @@ public class APIService {
 	private final static String GetClassAlbum = URL_API_HOST + "GetClassAlbum";
 
 	// 获取班级公告信息
-	private final static String GetClassAnnouncement = URL_API_HOST
-			+ "GetClassAnnouncement";
+//	private final static String GetClassAnnouncement = URL_API_HOST
+//			+ "GetClassAnnouncement";
+	private final static String GetAnnouncementByStudent = URL_API_HOST
+			+ "GetAnnouncementByStudent";
+	private final static String GetAnnouncementByTeacher = URL_API_HOST
+			+ "GetAnnouncementByTeacher";
 	// 添加班级公告信息
 	private final static String SendClassAnnouncement = URL_API_HOST
 			+ "SendClassAnnouncement";
@@ -90,8 +94,8 @@ public class APIService {
 			+ "GetStudentNoRecords";
 
 	// 获取园区公告信息
-	private final static String GetGardenAnnouncement = URL_API_HOST
-			+ "GetGardenAnnouncement";
+	private final static String GetAnnouncementByGarden = URL_API_HOST
+			+ "GetAnnouncementByGarden";
 	// 添加园区公告信息
 	private final static String SendGardenAnnouncement = URL_API_HOST
 			+ "SendGardenAnnouncement";
@@ -359,13 +363,20 @@ public class APIService {
 	 * @param classid
 	 * @param userid
 	 */
-	public static void GetClassAnnouncement(String gid, String classid,
-			String userid, AsyncHttpResponseHandler handler) {
+	public static void GetAnnouncementByStudent(String gid, String classid,
+			AsyncHttpResponseHandler handler) {
 		RequestParams params = new RequestParams();
 		params.put("gid", gid);
 		params.put("classid", classid);
-		params.put("uid", userid);
-		get(GetClassAnnouncement, params, handler);
+//		params.put("uid", userid);
+		get(GetAnnouncementByStudent, params, handler);
+	}
+	
+	public static void GetAnnouncementByTeacher(String gid, String classid,AsyncHttpResponseHandler handler) {
+		RequestParams params = new RequestParams();
+		params.put("gid", gid);
+		params.put("classid", classid);
+		get(GetAnnouncementByTeacher, params, handler);
 	}
 
 	/**
@@ -517,12 +528,12 @@ public class APIService {
 	 * @param gid
 	 *            园区ID
 	 */
-	public static void GetGardenAnnouncement(String gid,
+	public static void GetAnnouncementByGarden(String gid,
 			AsyncHttpResponseHandler handler) {
 		RequestParams params = new RequestParams();
 		params.put("gid", gid);
 
-		get(GetGardenAnnouncement, params, handler);
+		get(GetAnnouncementByGarden, params, handler);
 	}
 
 	/**
