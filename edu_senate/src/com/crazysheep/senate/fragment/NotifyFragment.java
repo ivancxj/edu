@@ -34,8 +34,8 @@ import com.viewpagerindicator.CirclePageIndicator;
  */
 public class NotifyFragment extends Fragment implements ViewPager.OnPageChangeListener {
 
-	final static int REQUEST_CREATE = 10001;
-	
+    final static int REQUEST_CREATE = 10001;
+
     ArrayList<Announcement> announcements = new ArrayList<Announcement>();
 
     NotifyFragmentAdapter mAdapter;
@@ -93,11 +93,9 @@ public class NotifyFragment extends Fragment implements ViewPager.OnPageChangeLi
             public void onFinish() {
                 super.onFinish();
                 try {
-                	if (isVisible()) {
-                		getView().findViewById(R.id.loading).setVisibility(View.GONE);
-                	}
-				} catch (Exception e) {
-				}
+                    getView().findViewById(R.id.loading).setVisibility(View.GONE);
+                } catch (Exception e) {
+                }
             }
 
             @Override
@@ -123,13 +121,13 @@ public class NotifyFragment extends Fragment implements ViewPager.OnPageChangeLi
         APIService.GetAnnouncementByTeacher(user.gardenID, user.classID,
                 handler);
     }
-    
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    	super.onActivityResult(requestCode, resultCode, data);
-    	if(requestCode == REQUEST_CREATE && resultCode == getActivity().RESULT_OK){
-    		getData();
-    	}
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CREATE && resultCode == getActivity().RESULT_OK) {
+            getData();
+        }
     }
 
     @Override

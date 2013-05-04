@@ -11,6 +11,7 @@
             android:layout_gravity="center_horizontal"
             android:gravity="center"
             android:singleLine="true"
+            android:visibility="gone"
             android:text="通知标题"
             android:textSize="18sp">
     </TextView>
@@ -20,6 +21,7 @@
             android:layout_height="2px"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:visibility="gone"
             android:background="@drawable/ic_line"/>
 
     <TextView
@@ -29,6 +31,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_weight="1"
         android:padding="10dp"
+        android:layout_marginTop="8dp"
         android:text="通知内容"
         android:textSize="15sp" >
     </TextView>

@@ -87,11 +87,9 @@ public class PhotoFragment extends Fragment implements OnClickListener {
             public void onFinish() {
                 super.onFinish();
                 try {
-                	if (isVisible()) {
-                		getView().findViewById(R.id.loading).setVisibility(View.GONE);
-                	}
-				} catch (Exception e) {
-				}
+                    getView().findViewById(R.id.loading).setVisibility(View.GONE);
+                } catch (Exception e) {
+                }
             }
 
             @Override
@@ -113,10 +111,10 @@ public class PhotoFragment extends Fragment implements OnClickListener {
 
         APIService.GetPhotoAlbumForum(albumID, photo.Name, handler);
     }
-    
-    public void addCount(){
-    	length ++;
-    	count.setText("查看评论(" + length + "条)");
+
+    public void addCount() {
+        length++;
+        count.setText("查看评论(" + length + "条)");
     }
 
     @Override
