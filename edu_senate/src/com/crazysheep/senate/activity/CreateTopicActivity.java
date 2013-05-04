@@ -60,6 +60,12 @@ public class CreateTopicActivity extends ActionBarActivity implements
                 finish();
             }
         });
+        setRightAction("取消", new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         state = getIntent().getIntExtra(EXTRA_CLASS, 0);
         create_topic_count = (TextView) findViewById(R.id.create_topic_count);
