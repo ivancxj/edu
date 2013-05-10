@@ -240,9 +240,10 @@ public class TopicListActivity extends ActionBarActivity implements
                 }
             }
         };
-        User user = AppConfig.getAppConfig(this).getUser();
-        APIService.GetAlbumPhotoList(album.albumID, album.gid, user.classID,
-                user.memberid, handler);
+//        User user = AppConfig.getAppConfig(this).getUser();
+        APIService.GetAlbumPhotoList(album.albumID, handler);
+//        APIService.GetAlbumPhotoList(album.albumID, album.gid, user.classID,
+//                user.memberid, handler);
     }
 
     @Override

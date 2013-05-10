@@ -12,6 +12,7 @@ public class Photo implements Serializable{
 	public String ExtName;//图片类型后缀
 	public String FileUrl;
 	public String FullName;//图片地址
+	public String ThumbnailWebUrl;//缩略图
 	public String CreateTime;//图片上传时间
 	
 	public Photo(JSONObject response){
@@ -20,6 +21,7 @@ public class Photo implements Serializable{
 		this.ExtName = response.optString("ExtName");
 		this.FileUrl = response.optString("FileUrl");
 		this.FullName = response.optString("FullName");
+		this.ThumbnailWebUrl = response.optString("ThumbnailWebUrl");
 		this.CreateTime = response.optString("CreateTime");
 	}
 

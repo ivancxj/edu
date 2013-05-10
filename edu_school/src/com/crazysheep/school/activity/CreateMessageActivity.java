@@ -176,7 +176,7 @@ public class CreateMessageActivity extends ActionBarActivity implements
 		User user = AppConfig.getAppConfig(this).getUser();
 		String ids = "";
 		for (Student stu : students) {
-			ids = ids + stu.SName + ",";
+			ids = ids + stu.SID + ",";
 		}
 		if (ids.endsWith(",")) {
 			ids = ids.substring(0, ids.length() - 1);

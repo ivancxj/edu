@@ -47,6 +47,13 @@ public class APIService {
 	// 获取个人（班级）相册信息
 	private final static String GetUserAlbum = URL_API_HOST + "GetUserAlbum";
 	private final static String AddUserAlbum = URL_API_HOST + "AddUserAlbum";
+
+	// 获取当天孩子出勤信息（家长端）
+	private final static String GetTodayUserRecord = URL_API_HOST
+			+ "GetTodayUserRecord";
+	// 此方法用于家长端，老师端修改孩子出勤的备注情况
+	private final static String UpdateStuRecordRemark = URL_API_HOST
+			+ "UpdateStuRecordRemark";
 	// 评论
 	private final static String SendPhotoAlbumForum = URL_API_HOST
 			+ "SendPhotoAlbumForum";
@@ -61,8 +68,8 @@ public class APIService {
 	private final static String GetClassAlbum = URL_API_HOST + "GetClassAlbum";
 
 	// 获取班级公告信息
-//	private final static String GetClassAnnouncement = URL_API_HOST
-//			+ "GetClassAnnouncement";
+	// private final static String GetClassAnnouncement = URL_API_HOST
+	// + "GetClassAnnouncement";
 	private final static String GetAnnouncementByStudent = URL_API_HOST
 			+ "GetAnnouncementByStudent";
 	private final static String GetAnnouncementByTeacher = URL_API_HOST
@@ -158,22 +165,24 @@ public class APIService {
 	 * 
 	 * @param albumID
 	 *            相册id
-	 * @param gid
-	 *            园区id
-	 * @param classid
-	 *            班级id
-	 * @param userid
-	 *            用户id
 	 */
-	public static void GetAlbumPhotoList(String albumID, String gid,
-			String classid, String userid, AsyncHttpResponseHandler handler) {
+
+	public static void GetAlbumPhotoList(String albumID,
+			AsyncHttpResponseHandler handler) {
 		RequestParams params = new RequestParams();
 		params.put("albumID", albumID);
-		params.put("gid", gid);
-		params.put("classid", classid);
-		params.put("userid", userid);
 		get(GetAlbumPhotoList, params, handler);
 	}
+
+	// public static void GetAlbumPhotoList(String albumID, String gid,
+	// String classid, String userid, AsyncHttpResponseHandler handler) {
+	// RequestParams params = new RequestParams();
+	// params.put("albumID", albumID);
+	// params.put("gid", gid);
+	// params.put("classid", classid);
+	// params.put("userid", userid);
+	// get(GetAlbumPhotoList, params, handler);
+	// }
 
 	/**
 	 * ok 上传相册照片
@@ -342,6 +351,42 @@ public class APIService {
 	}
 
 	/**
+	 * 获取当天孩子出勤信息（家长端）
+	 * 
+	 * @param userid
+	 *            孩子的memberid
+	 */
+	public static void GetTodayUserRecord(String userid,
+			AsyncHttpResponseHandler handler) {
+		RequestParams params = new RequestParams();
+		params.put("userid", userid);
+		post(GetTodayUserRecord, params, handler);
+	}
+
+	/**
+	 * 此方法用于家长端，老师端修改孩子出勤的备注情况
+	 * 
+	 * @param userid
+	 *            孩子的memberid
+	 * @param remark
+	 *            备注信息
+	 * @param checktime
+	 *            出勤时间
+	 * @param createuser
+	 *            修改人的memberid
+	 */
+	public static void UpdateStuRecordRemark(String userid, String remark,
+			String checktime, String createuser,
+			AsyncHttpResponseHandler handler) {
+		RequestParams params = new RequestParams();
+		params.put("userid", userid);
+		params.put("remark", remark);
+		params.put("checktime", checktime);
+		params.put("createuser", createuser);
+		post(UpdateStuRecordRemark, params, handler);
+	}
+
+	/**
 	 * 查看评论列表
 	 * 
 	 * @param albumID
@@ -368,11 +413,12 @@ public class APIService {
 		RequestParams params = new RequestParams();
 		params.put("gid", gid);
 		params.put("classid", classid);
-//		params.put("uid", userid);
+		// params.put("uid", userid);
 		get(GetAnnouncementByStudent, params, handler);
 	}
-	
-	public static void GetAnnouncementByTeacher(String gid, String classid,AsyncHttpResponseHandler handler) {
+
+	public static void GetAnnouncementByTeacher(String gid, String classid,
+			AsyncHttpResponseHandler handler) {
 		RequestParams params = new RequestParams();
 		params.put("gid", gid);
 		params.put("classid", classid);
@@ -408,19 +454,15 @@ public class APIService {
 	/**
 	 * 获取学生出勤列表
 	 * 
-	 * @param gid
-	 *            园区id
 	 * @param classid
 	 *            班级id
-	 * @param userid
-	 *            用户id
 	 */
-	public static void GetStudentCardRecords(String gid, String classid,
-			String userid, AsyncHttpResponseHandler handler) {
+	public static void GetStudentCardRecords(String classid,
+			AsyncHttpResponseHandler handler) {
 		RequestParams params = new RequestParams();
-		params.put("gid", gid);
+//		params.put("gid", gid);
 		params.put("classid", classid);
-		params.put("userid", userid);
+//		params.put("userid", userid);
 		post(GetStudentCardRecords, params, handler);
 	}
 
@@ -496,7 +538,7 @@ public class APIService {
 	 * @param gid
 	 *            园区ID
 	 */
-	public static void GetGardenRecord(String gid,String begintime,
+	public static void GetGardenRecord(String gid, String begintime,
 			AsyncHttpResponseHandler handler) {
 		RequestParams params = new RequestParams();
 		params.put("gid", gid);
@@ -513,7 +555,7 @@ public class APIService {
 	 * @param gid
 	 *            园区ID
 	 */
-	public static void GetStudentNoRecords(String gid,String begintime,
+	public static void GetStudentNoRecords(String gid, String begintime,
 			AsyncHttpResponseHandler handler) {
 		RequestParams params = new RequestParams();
 		params.put("gid", gid);
