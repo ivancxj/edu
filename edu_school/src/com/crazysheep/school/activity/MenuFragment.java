@@ -23,6 +23,9 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     private Menu[] menus;
     private int defaultIndex;
 
+    public MenuFragment() {
+    }
+
     public MenuFragment(int defaultIndex) {
         this.defaultIndex = defaultIndex;
     }
