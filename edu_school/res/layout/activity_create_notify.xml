@@ -39,7 +39,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
-                    android:text="收件人: 全体学生"
+                    android:text="收件人: 全体教师"
                     android:textColor="@color/black"/>
 
             <Button
