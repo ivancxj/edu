@@ -54,7 +54,7 @@
                     android:layout_gravity="center_vertical"
                     android:id="@+id/btn_select"
                     android:layout_marginRight="8dp"
-                    android:src="@drawable/icon_arrow"/>
+                    android:src="@drawable/ic_down"/>
 
         </LinearLayout>
 

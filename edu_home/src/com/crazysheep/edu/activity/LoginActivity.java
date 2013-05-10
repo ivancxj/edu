@@ -85,7 +85,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 			}
 			v.setEnabled(false);
 			final ProgressDialog progress = UIUtils.newProgressDialog(this,
-					"请稍等..");
+					"登陆中...");
 			JsonHandler handler = new JsonHandler(this) {
 				@Override
 				public void onStart() {

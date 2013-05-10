@@ -75,10 +75,12 @@ public class AlbumFragment extends Fragment implements OnItemClickListener {
 		int state = 0;
 		album = albums.get(position);
 		if (person) {
-			name = "[个人相册]" + album.sName;
+//			name = "[个人相册]" + album.sName;
+            name = album.sName;
 			state = 1;
 		} else {
-			name = "[班级相册]" + album.sName;
+//			name = "[班级相册]" + album.sName;
+            name = album.sName;
 			state = 2;
 		}
 		
