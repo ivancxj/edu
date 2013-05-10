@@ -30,6 +30,23 @@
                 android:baselineAligned="false">
 
             <TextView
+                    android:id="@+id/cart_tabhost_order"
+                    android:layout_width="0.0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tab_hot_btn_select"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:onClick="onClick"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="0"
+                    android:shadowDy="1"
+                    android:text="班级相册"
+                    android:textColor="@color/dark_gray"
+                    android:textStyle="bold"
+                    android:textSize="18sp"/>
+
+            <TextView
                     android:id="@+id/cart_tabhost_todo_order"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
@@ -46,22 +63,6 @@
                     android:textStyle="bold"
                     android:textSize="18sp"/>
 
-            <TextView
-                    android:id="@+id/cart_tabhost_order"
-                    android:layout_width="0.0dip"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/tab_hot_btn_select"
-                    android:clickable="true"
-                    android:gravity="center"
-                    android:onClick="onClick"
-                    android:shadowColor="@color/black"
-                    android:shadowDx="0"
-                    android:shadowDy="1"
-                    android:text="班级相册"
-                    android:textColor="@color/dark_gray"
-                    android:textStyle="bold"
-                    android:textSize="18sp"/>
         </LinearLayout>
 
         <com.edu.lib.widget.NonSwipeableViewPager

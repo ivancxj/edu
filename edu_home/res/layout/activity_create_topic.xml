@@ -91,7 +91,7 @@
                             android:textSize="16sp"
                             android:textColor="@color/black"
                             android:paddingRight="4dp"
-                            android:text="标题:"/>
+                            android:text="主题名称:"/>
 
                     <EditText
                             android:id="@+id/create_topic_name"

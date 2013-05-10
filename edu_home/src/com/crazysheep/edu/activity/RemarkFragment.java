@@ -34,7 +34,7 @@ import com.edu.lib.util.UIUtils;
 public class RemarkFragment extends Fragment implements OnClickListener{
 	TextView name;
 	TextView date;
-	EditText content;
+    TextView content;
 	
 	// bottom
 	EditText comment_publisher_edit;
@@ -43,7 +43,7 @@ public class RemarkFragment extends Fragment implements OnClickListener{
         View view = inflater.inflate(R.layout.activity_remark, null);
         name = (TextView)view.findViewById(R.id.remark_name);
         date = (TextView)view.findViewById(R.id.remark_date);
-        content = (EditText)view.findViewById(R.id.remark_content);
+        content = (TextView)view.findViewById(R.id.remark_content);
         comment_publisher_edit = (EditText)view.findViewById(R.id.comment_publisher_edit);
         comment_publisher_edit.setHint("如孩子身体状况");
         view.findViewById(R.id.comment_publisher_submit).setOnClickListener(this);
@@ -96,13 +96,9 @@ public class RemarkFragment extends Fragment implements OnClickListener{
 		switch (v.getId()) {
 		// 发送
 		case R.id.comment_publisher_submit:
-			String content = this.content.getEditableText().toString();
-			if(TextUtils.isEmpty(content)){
-				content = comment_publisher_edit.getEditableText().toString();
-			}
-			
-			if(TextUtils.isEmpty(content)){
-				UIUtils.showToast(getActivity(), "请输入内容");
+            String comment = comment_publisher_edit.getEditableText().toString();
+			if(TextUtils.isEmpty(comment)){
+				UIUtils.showToast(getActivity(), "请输入备注内容");
 				return;
 			}
 			
@@ -126,14 +122,14 @@ public class RemarkFragment extends Fragment implements OnClickListener{
 				public void onSuccess(JSONObject response) {
 					super.onSuccess(response);
 					LogUtils.I(LogUtils.REMARK, response.toString());
-					RemarkFragment.this.content.setText("");
+					RemarkFragment.this.content.setText(comment_publisher_edit.getText().toString());
 					comment_publisher_edit.setText("");
 					CommonUtils.hideInputKeyboard(getActivity(), comment_publisher_edit.getWindowToken());
 					UIUtils.showToast(getActivity(), "备注成功");
 				}
 			};
 			User user = AppConfig.getAppConfig(getActivity()).getUser();
-			APIService.UpdateStudentCardRecord(user.gardenID, user.memberid, content, handler);
+			APIService.UpdateStudentCardRecord(user.gardenID, user.memberid, comment, handler);
 			
 			break;
 

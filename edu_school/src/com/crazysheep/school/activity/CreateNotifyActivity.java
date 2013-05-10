@@ -56,6 +56,12 @@ public class CreateNotifyActivity extends ActionBarActivity implements
 				finish();
 			}
 		});
+        setRightAction("取消", new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 		title = (TextView) findViewById(R.id.create_notify_title);
 		content = (TextView) findViewById(R.id.create_notify_content);
@@ -90,8 +96,8 @@ public class CreateNotifyActivity extends ActionBarActivity implements
 	void init(){
 		students = new ArrayList<Student>();
 		Student student = new Student();
-		student.SID = "1";
-		student.SName = "全体学生";
+		student.SID = "2";
+		student.SName = "全体教师";
 		students.add(student);
 	}
 
@@ -129,10 +135,6 @@ public class CreateNotifyActivity extends ActionBarActivity implements
 
 	// 创建园区通知
 	private void create() {
-		if (TextUtils.isEmpty(title.getText().toString())) {
-			UIUtils.showErrToast(this, "请输入通知标题");
-			return;
-		}
 
 		if (TextUtils.isEmpty(content.getText().toString())) {
 			UIUtils.showErrToast(this, "请输入通知内容");

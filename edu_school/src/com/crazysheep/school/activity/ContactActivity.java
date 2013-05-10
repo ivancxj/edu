@@ -125,14 +125,14 @@ public class ContactActivity extends ActionBarActivity {
 		isNotify = getIntent().getBooleanExtra(EXTRA_ISNOTIFY, false);
 		if (isNotify) {
 			ArrayList<Student> students = new ArrayList<Student>();
-			Student student = new Student();
-			student.SID = "1";
-			student.SName = "全体学生";
-			students.add(student);
-			student = new Student();
+            Student student = new Student();
 			student.SID = "2";
 			student.SName = "全体教师";
 			students.add(student);
+            student = new Student();
+            student.SID = "1";
+            student.SName = "全体学生";
+            students.add(student);
 			adapter.add(students);
 			setTitle("请选择");
 			String[] items = { "全体学生", "全体教师" };

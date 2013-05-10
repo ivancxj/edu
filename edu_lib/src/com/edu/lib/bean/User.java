@@ -12,7 +12,9 @@ public class User {
 	public String cname;// 用户真名
 	public String className;//  
 	public String classID;//  班级id
-	
+	public String username;//  用户名
+	public String pwd;//  密码
+
 	// kindergarten  园长
 	// teacherleader和member 是老师
 	// parents是家长

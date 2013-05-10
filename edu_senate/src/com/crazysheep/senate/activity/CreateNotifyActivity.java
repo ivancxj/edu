@@ -47,6 +47,12 @@ public class CreateNotifyActivity extends ActionBarActivity implements
                 finish();
             }
         });
+        setRightAction("取消", new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 		title = (TextView) findViewById(R.id.create_notify_title);
 		content = (TextView) findViewById(R.id.create_notify_content);
 		create_topic_count = (TextView) findViewById(R.id.create_notify_count);
@@ -87,11 +93,6 @@ public class CreateNotifyActivity extends ActionBarActivity implements
 	}
 
 	private void create() {
-		if (TextUtils.isEmpty(title.getText().toString())) {
-			UIUtils.showErrToast(this, "请输入通知标题");
-			return;
-		}
-
 		if (TextUtils.isEmpty(content.getText().toString())) {
 			UIUtils.showErrToast(this, "请输入通知内容");
 			return;
