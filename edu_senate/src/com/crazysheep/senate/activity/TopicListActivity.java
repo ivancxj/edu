@@ -150,6 +150,13 @@ public class TopicListActivity extends ActionBarActivity implements
     }
 
     private void UploadAlbumPhotos(String resume_file) {
+    	File file = new File(resume_file);
+		if (!file.isFile()) {
+			LogUtils.D(""+resume_file);
+			UIUtils.showToast(this, "图片地址不对");
+			return;
+		}
+		
         Bitmap bitmap = CommonUtils.decodeSampledBitmapFromFile(resume_file,
                 600, 800);
 
