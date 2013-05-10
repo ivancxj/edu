@@ -2,6 +2,9 @@ package com.crazysheep.school.activity;
 
 import java.util.ArrayList;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -14,13 +17,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.crazysheep.school.R;
 import com.edu.lib.api.APIService;
@@ -41,8 +37,9 @@ public class ContactActivity extends ActionBarActivity {
 
 	private ListView mListView;
 	private StudentAdapter adapter;
-	private AutoCompleteTextView search;
+    private EditText search;
 	boolean isNotify;
+    private ArrayList<Student> students;
 
 	final static String EXTRA_ISNOTIFY = "extra_isnotify";
 
@@ -77,19 +74,15 @@ public class ContactActivity extends ActionBarActivity {
 				if (array == null)
 					return;
 				int length = array.length();
-				String[] items = new String[length];
-				ArrayList<Student> students = new ArrayList<Student>();
+				students = new ArrayList<Student>();
 				for (int i = 0; i < length; i++) {
 					TeacherInfo info = new TeacherInfo(array.optJSONObject(i));
 					Student student = new Student();
 					student.SName = info.TName;
-					items[i] = info.TName;
 					student.SID = info.TID;
 					student.ClassName = info.ClassName;
 					students.add(student);
 				}
-				search.setAdapter(new ArrayAdapter<String>(ContactActivity.this,
-					android.R.layout.simple_dropdown_item_1line, items));
 
 				adapter.add(students);
 			}
@@ -119,7 +112,36 @@ public class ContactActivity extends ActionBarActivity {
 			}
 		});
 
-		search = (AutoCompleteTextView) findViewById(R.id.contact_serch);
+		search = (EditText) findViewById(R.id.contact_serch);
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                ArrayList<Student> sl = new ArrayList<Student>();
+                if (students != null && students.size() > 0) {
+                    if (s.toString() == null || s.toString().length() == 0) {
+                        sl.addAll(students);
+                    } else {
+                        for (int i = 0; i < students.size(); i++) {
+                            if (students.get(i).SName.startsWith(s.toString())) {
+                                students.get(i).isSelect = false;
+                                sl.add(students.get(i));
+                            }
+                        }
+                    }
+                }
+                adapter.clear();
+                adapter.add(sl);
+                adapter.notifyDataSetChanged();
+            }
+        });
 		mListView = (ListView) findViewById(R.id.list);
 		adapter = new StudentAdapter(this);
 		isNotify = getIntent().getBooleanExtra(EXTRA_ISNOTIFY, false);
@@ -135,10 +157,6 @@ public class ContactActivity extends ActionBarActivity {
             students.add(student);
 			adapter.add(students);
 			setTitle("请选择");
-			String[] items = { "全体学生", "全体教师" };
-			search.setAdapter(new ArrayAdapter<String>(this,
-					android.R.layout.simple_dropdown_item_1line, items));
-
 		} else {
 			GetTeacherList();
 			setTitle("联系人");
