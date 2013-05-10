@@ -164,8 +164,8 @@ public class TakePhotoUtils {
 	}
 	
 	public static String getImageArgs(Context ctx, Uri imageUri) {
-		String[] proj = { MediaStore.Images.Media.DATA,
-				MediaStore.Images.Media.ORIENTATION };
+		String[] proj = { MediaStore.Images.ImageColumns.DATA,
+                MediaStore.Images.ImageColumns.ORIENTATION };
 		// 好像是android多媒体数据库的封装接口，具体的看Android文档
 		Cursor cursor = ctx.getContentResolver().query(imageUri, proj, null,
 				null, null);
@@ -174,9 +174,9 @@ public class TakePhotoUtils {
 		}
 		// 获得用户选择的图片的索引值
 		int column_index = cursor
-				.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+				.getColumnIndexOrThrow(MediaStore.Images.ImageColumns.DATA);
 		int orientation_index = cursor
-				.getColumnIndexOrThrow(MediaStore.Images.Media.ORIENTATION);
+				.getColumnIndexOrThrow(MediaStore.Images.ImageColumns.ORIENTATION);
 		// 将光标移至开头 ，这个很重要，不小心很容易引起越界
 		cursor.moveToFirst();
 		// 获取旋转的角度
@@ -186,7 +186,7 @@ public class TakePhotoUtils {
 		return filePath;
 	}
 
-	/*public static void setBitmap(ImageView iv, String[] args) {
+    /*public static void setBitmap(ImageView iv, String[] args) {
 		if (args == null)
 			return;
 		BitmapFactory.Options opt = new BitmapFactory.Options();
