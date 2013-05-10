@@ -79,7 +79,7 @@ public class ContactActivity extends ActionBarActivity {
 					TeacherInfo info = new TeacherInfo(array.optJSONObject(i));
 					Student student = new Student();
 					student.SName = info.TName;
-					student.SID = info.TID;
+					student.SID = info.Userid;
 					student.ClassName = info.ClassName;
 					students.add(student);
 				}
