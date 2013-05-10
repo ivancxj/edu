@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.edu.lib.bean.Message;
+import com.edu.lib.util.LogUtils;
 
 public class MessageHelper {
 	
@@ -35,6 +36,7 @@ public class MessageHelper {
 		int length = messages.size();
 		for(int i = 0;i<length;i++){
 			Message message = messages.get(i);
+			LogUtils.D("message.ParentID = "+message.ParentID +" message.PID="+message.PID);
 			if ("0".equals(message.ParentID)) {
 				message.ParentID = message.PID;
 			}
