@@ -95,7 +95,7 @@ public class ReplyMessageActivity extends ActionBarActivity implements
 		message = (Message) getIntent().getSerializableExtra(EXTRA_MESSAGE);
 
 		helper = new MessageHelper();
-		helper.insert(this, message);
+		helper.insert(this, Message.copy(message));
 		ArrayList<Message> messages = helper.getMessages(this, message);
 		adapter.add(messages);
 		
@@ -227,9 +227,12 @@ public class ReplyMessageActivity extends ActionBarActivity implements
 			};
 
 			User user = AppConfig.getAppConfig(this).getUser();
+			String pid = message.ParentID;
+			if(pid.endsWith("0"))
+				pid = message.PID;
 			APIService.SendMsg(user.userid, user.cname, message.SendID, "",
 					message_edit_content.getText().toString(),
-					message.ParentID, handler);
+					pid, handler);
 		} else {
 
 		}

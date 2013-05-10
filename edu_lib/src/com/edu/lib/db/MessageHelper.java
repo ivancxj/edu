@@ -36,10 +36,11 @@ public class MessageHelper {
 		int length = messages.size();
 		for(int i = 0;i<length;i++){
 			Message message = messages.get(i);
-			LogUtils.D("message.ParentID = "+message.ParentID +" message.PID="+message.PID);
-			if ("0".equals(message.ParentID)) {
+			LogUtils.D("insert message.ParentID = "+message.ParentID +" message.PID="+message.PID);
+			if ("0".equals(message.ParentID)) {// 表示是新创建的
 				message.ParentID = message.PID;
 			}
+			LogUtils.D("replace message.ParentID = "+message.ParentID +" message.PID="+message.PID);
 			cursor = write.rawQuery("select * from "
 					+ DBHelper.TABLE_MESSAGE + " where " + whereClause,
 					new String[] { message.PID});
@@ -72,7 +73,9 @@ public class MessageHelper {
 		ArrayList<Message> messages = null;
 		if (message == null)
 			return null;
-		if ("0".equals(message.PID)){
+		LogUtils.D("getMessages message.ParentID = "+message.ParentID +" message.PID="+message.PID);
+		if ("0".equals(message.ParentID)){
+			LogUtils.D("message.ParentID = 0");
 			messages = new ArrayList<Message>();
 			messages.add(message);
 			return messages;
@@ -82,7 +85,7 @@ public class MessageHelper {
 		SQLiteDatabase read = db.getReadableDatabase();
 
 		Cursor cursor = read.rawQuery("select * from " + DBHelper.TABLE_MESSAGE
-				+ " where " + DBHelper.MESSAGE_PARENT_ID + " = ? ",new String[]{message.PID});
+				+ " where " + DBHelper.MESSAGE_PARENT_ID + " = ? ",new String[]{message.ParentID});
 		if(cursor != null && cursor.getCount() > 0){
 			messages = new ArrayList<Message>();
 			while (cursor.moveToNext()) {

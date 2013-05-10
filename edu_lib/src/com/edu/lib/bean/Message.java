@@ -29,4 +29,16 @@ public class Message implements Serializable{
 		this.SendTime = response.optString("SendTime");
 		this.ParentID = response.optString("ParentID");
 	}
+	
+	public static Message copy(Message m){
+		if(m == null) return null;
+		Message message = new Message();
+		message.PID = m.PID;
+		message.SendID = m.SendID;
+		message.SendName = m.SendName;
+		message.Title = m.Title;
+		message.Content = m.Content;
+		message.ParentID = m.ParentID;
+		return message;
+	}
 }

@@ -175,12 +175,12 @@ public class CreateMessageActivity extends ActionBarActivity implements
 		User user = AppConfig.getAppConfig(this).getUser();
 		String ids = "";
 		for (Student stu : students) {
-			ids = ids + stu.SName + ",";
+			ids = ids + stu.SID + ",";
 		}
 		if (ids.endsWith(",")) {
 			ids = ids.substring(0, ids.length() - 1);
 		}
-		System.err.println(ids);
+		LogUtils.D("ids="+ids);
 		APIService.SendMsg(user.userid, user.cname, ids, "",
 				create_message_content.getEditableText().toString(), "0",
 				handler);
