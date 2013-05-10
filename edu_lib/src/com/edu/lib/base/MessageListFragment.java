@@ -76,6 +76,11 @@ public class MessageListFragment extends CancelFragment implements OnItemClickLi
 			public void onStart() {
 				super.onStart();
                 getView().findViewById(R.id.loading).setVisibility(View.VISIBLE);
+            	if(refresh){
+            		adapter.clear();
+            	}
+            	
+      
 			}
 			
 			@Override
@@ -83,6 +88,7 @@ public class MessageListFragment extends CancelFragment implements OnItemClickLi
 				super.onFinish();
 				 try {
 	                	getView().findViewById(R.id.loading).setVisibility(View.GONE);
+	                	adapter.notifyDataSetInvalidated();
 					} catch (Exception e) {
 					}
 			}
@@ -99,8 +105,6 @@ public class MessageListFragment extends CancelFragment implements OnItemClickLi
 					Message message = new Message(array.optJSONObject(i));
 					messages.add(message);
 				}
-				if(refresh)
-					adapter.clear();
 					
 				adapter.add(messages);
 			}
