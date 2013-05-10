@@ -22,6 +22,7 @@ public class LogUtils {
 	
 	public static final String REMARK = "remark";
 	public static final String GetSysTime = "GetSysTime";
+	public static final String UserRecord = "UserRecord";
 	
 	public static final String SERVER_RETURN = "server_return";
 	private static final String LOG_PREFIX = "edu_";
@@ -29,6 +30,11 @@ public class LogUtils {
 
 	public static String makeLogTag(String str) {
 		return LOG_PREFIX + str;
+	}
+	
+	public static void D(String message) {
+		if (isPrintLog && BuildConfig.DEBUG)
+			Log.i(makeLogTag("tmp"), message);
 	}
 
 	public static void I(final String tag, String message) {

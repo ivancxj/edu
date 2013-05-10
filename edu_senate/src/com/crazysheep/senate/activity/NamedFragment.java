@@ -87,8 +87,8 @@ public class NamedFragment extends Fragment implements OnItemClickListener{
 			}
 		};
 		User user = AppConfig.getAppConfig(getActivity()).getUser();
-		APIService.GetStudentCardRecords(user.gardenID, user.classID,
-				user.memberid, handler);
+		APIService.GetStudentCardRecords( user.classID,
+				handler);
 	}
 	
 	private void updateStudentCardRecord(Named name,final int position) {

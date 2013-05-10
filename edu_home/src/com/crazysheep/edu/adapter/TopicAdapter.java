@@ -90,5 +90,4 @@ public class TopicAdapter extends BaseAdapter {
 		TextView count;
         ImageView newTopic;
 	}
-
 }

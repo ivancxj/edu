@@ -27,6 +27,8 @@ import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
+import com.edu.lib.util.LogUtils;
+
 import ch.boye.httpclientandroidlib.HttpResponse;
 import ch.boye.httpclientandroidlib.client.HttpRequestRetryHandler;
 import ch.boye.httpclientandroidlib.client.methods.HttpPost;
@@ -88,8 +90,7 @@ class AsyncHttpRequest implements Runnable {
 					get = "post";
 					url = url + "?" + inputStream2String(in);
 				}
-				
-				System.err.println(get+" "+url);
+				LogUtils.D(get+" "+url);
         		
         		HttpResponse response = client.execute(request, context);
         		if(!Thread.currentThread().isInterrupted()) {
