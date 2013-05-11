@@ -1,6 +1,9 @@
 package com.crazysheep.senate.adapter;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -99,7 +102,7 @@ public class RemarkAdapter extends BaseAdapter {
 				}
 			});
 		}else{
-			holder.remark_show.setVisibility(View.GONE);
+			holder.remark_show.setVisibility(View.INVISIBLE);
 			holder.remark_message.setVisibility(View.GONE);
 		}
 		
@@ -116,8 +119,14 @@ public class RemarkAdapter extends BaseAdapter {
 		}
 		holder.remark_num.setText(named.SNum);
 		holder.remark_name.setText(named.SName);
-		holder.remark_time.setText(named.InTime);
-		
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
+        try {
+            Date date = sdf.parse(named.InTime);
+            String time = sdf.format(date);
+            holder.remark_time.setText(time);
+        } catch (ParseException e) {
+        }
+
 		return convertView;
 	}
 	

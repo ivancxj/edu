@@ -237,9 +237,9 @@ public class ContactActivity extends ActionBarActivity {
             Student student = students.get(position);
             holder.title.setText(student.SName);
             if (student.isSelect) {
-                holder.img.setBackgroundResource(R.drawable.ic_selected);
+                holder.img.setImageResource(R.drawable.ic_selected);
             } else {
-                holder.img.setBackgroundResource(R.drawable.ic_unselect);
+                holder.img.setImageResource(R.drawable.ic_unselect);
             }
 
             return convertView;

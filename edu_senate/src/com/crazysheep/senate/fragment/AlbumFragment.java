@@ -137,7 +137,8 @@ public class AlbumFragment extends Fragment implements OnItemClickListener {
         int state = 0;
 
         album = class_albums.get(position);
-        name = "[班级相册]" + album.sName;
+//        name = "[班级相册]" + album.sName;
+        name = album.sName;
         state = 2;
 
         if (album.isNew) {

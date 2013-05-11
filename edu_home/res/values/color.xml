@@ -2,7 +2,7 @@
 <resources>
     
     <color name="title_color">#FFFFFF</color>
-    <color name="dark_gray">#ff202020</color>
+    <color name="dark_gray">#c3c3c3</color>
 
 
     <color name="window_background">#ffe7e7e9</color>

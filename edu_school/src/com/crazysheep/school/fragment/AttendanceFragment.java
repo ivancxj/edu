@@ -98,7 +98,7 @@ public class AttendanceFragment extends Fragment implements OnClickListener {
 	}
 
 	private void getGardenRecord() {
-		final ProgressDialog progress = UIUtils.newProgressDialog(getActivity(), "请稍候...");
+		final ProgressDialog progress = UIUtils.newProgressDialog(getActivity(), "查询中...");
 		JsonHandler handler = new JsonHandler(getActivity()) {
 			@Override
 			public void onStart() {
