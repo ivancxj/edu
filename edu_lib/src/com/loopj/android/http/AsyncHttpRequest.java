@@ -82,15 +82,15 @@ class AsyncHttpRequest implements Runnable {
         if(!Thread.currentThread().isInterrupted()) {
         	try {
         		
-				String url = request.getURI().toString();
-				String get = "get";
-				if (request instanceof HttpPost) {
-					HttpPost post = (HttpPost) request;
-					InputStream in = post.getEntity().getContent();
-					get = "post";
-					url = url + "?" + inputStream2String(in);
-				}
-				LogUtils.D(get+" "+url);
+//				String url = request.getURI().toString();
+//				String get = "get";
+//				if (request instanceof HttpPost) {
+//					HttpPost post = (HttpPost) request;
+//					InputStream in = post.getEntity().getContent();
+//					get = "post";
+//					url = url + "?" + inputStream2String(in);
+//				}
+//				LogUtils.D(get+" "+url);
         		
         		HttpResponse response = client.execute(request, context);
         		if(!Thread.currentThread().isInterrupted()) {

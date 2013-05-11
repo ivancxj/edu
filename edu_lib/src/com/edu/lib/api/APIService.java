@@ -4,6 +4,7 @@ import java.io.InputStream;
 
 import android.content.Context;
 
+import com.edu.lib.util.LogUtils;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -630,11 +631,21 @@ public class APIService {
 
 	private static void get(String url, RequestParams params,
 			AsyncHttpResponseHandler responseHandler) {
+		if(params == null){
+			LogUtils.D("请求接口 = get "+url);
+		}else{
+			LogUtils.D("请求接口 = get "+url +"?"+params.toString());
+		}
 		client.get(url, params, responseHandler);
 	}
 
 	private static void post(String url, RequestParams params,
 			AsyncHttpResponseHandler responseHandler) {
+		if(params == null){
+			LogUtils.D("请求接口 = post "+url);
+		}else{
+			LogUtils.D("请求接口 = post "+url +"?"+params.toString());
+		}
 		client.post(url, params, responseHandler);
 	}
 }
