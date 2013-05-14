@@ -122,7 +122,7 @@ public class CreateMessageActivity extends ActionBarActivity implements
 
 	void sendmsg() {
 		if (students == null || students.size() == 0) {
-			UIUtils.showToast(this, "请先选择");
+			UIUtils.showToast(this, "请先选择收件人");
 			return;
 		}
 

@@ -37,9 +37,9 @@ public class ReplyMessageActivity extends ActionBarActivity implements
 	private final static String EXTRA_MESSAGE = "extra_message";
 	Message message;
 
-	private final static int MAX = 70;
+//	private final static int MAX = 70;
 	private EditText message_edit_content;
-	TextView message_reply_count;
+//	TextView message_reply_count;
 	boolean refersh = false;
 
 	MessageHelper helper;
@@ -68,28 +68,29 @@ public class ReplyMessageActivity extends ActionBarActivity implements
 		listview =  (ListView) findViewById(R.id.message_list);
 		adapter = new MessageHistoryAdapter(this);
 		listview.setAdapter(adapter);
-		message_edit_content = (EditText) findViewById(R.id.message_edit_content);
-		message_reply_count = (TextView) findViewById(R.id.message_reply_count);
-		TextWatcher watcher = new TextWatcher() {
-			@Override
-			public void afterTextChanged(Editable s) {
-			}
-
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
-			}
-
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {
-				message_reply_count.setText((MAX - message_edit_content
-						.getText().toString().length())
-						+ "/" + MAX);
-
-			}
-		};
-		message_edit_content.addTextChangedListener(watcher);
+		message_edit_content = (EditText) findViewById(R.id.comment_publisher_edit);
+//		message_edit_content = (EditText) findViewById(R.id.message_edit_content);
+//		message_reply_count = (TextView) findViewById(R.id.message_reply_count);
+//		TextWatcher watcher = new TextWatcher() {
+//			@Override
+//			public void afterTextChanged(Editable s) {
+//			}
+//
+//			@Override
+//			public void beforeTextChanged(CharSequence s, int start, int count,
+//					int after) {
+//			}
+//
+//			@Override
+//			public void onTextChanged(CharSequence s, int start, int before,
+//					int count) {
+//				message_reply_count.setText((MAX - message_edit_content
+//						.getText().toString().length())
+//						+ "/" + MAX);
+//
+//			}
+//		};
+//		message_edit_content.addTextChangedListener(watcher);
 
 		// data
 		message = (Message) getIntent().getSerializableExtra(EXTRA_MESSAGE);
@@ -176,7 +177,7 @@ public class ReplyMessageActivity extends ActionBarActivity implements
 	@Override
 	public void onClick(View v) {
 		int id = v.getId();
-		if (id == R.id.message_send) {
+		if (id == R.id.comment_publisher_submit) {
 			if (TextUtils.isEmpty(message_edit_content.getText().toString())) {
 				UIUtils.showErrToast(this, "请输入回复内容");
 				return;

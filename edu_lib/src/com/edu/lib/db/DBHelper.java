@@ -19,6 +19,19 @@ public class DBHelper extends SQLiteOpenHelper {
 	public static final String MESSAGE_CONTENT = "Content";// 内容
 	public static final String MESSAGE_SENDTIME = "SendTime";// 发送时间
 	public static final String MESSAGE_PARENT_ID = "ParentID";// 上级消息id(新建的为0)
+	
+	// thread 会话 消息归档 按照人 还是 是否是新创建Message？
+	public static final String TABLE_THREAD = "message";
+	public static final String THREAD_ID = "_id";// 数据库主键
+	public static final String THREAD_TYPE = "type";// 类型 1是接收到的，2是发出的
+
+	public static final String THREAD_PID = "PID";// 服务器 消息id
+	public static final String THREAD_SEND_ID = "SendID"; // 发送人id
+	public static final String THREAD_SEND_NAME = "SendName";// 发送人名称
+	public static final String THREAD_TITLE = "Title";// 标题
+	public static final String THREAD_CONTENT = "Content";// 内容
+	public static final String THREAD_SENDTIME = "SendTime";// 发送时间
+	public static final String THREAD_PARENT_ID = "ParentID";// 上级消息id(新建的为0)
 
 	// private Context context;
 	private static DBHelper mInstance;
