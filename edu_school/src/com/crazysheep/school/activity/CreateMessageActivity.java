@@ -22,7 +22,7 @@ import com.edu.lib.base.ActionBarActivity;
 import com.edu.lib.bean.Message;
 import com.edu.lib.bean.Student;
 import com.edu.lib.bean.User;
-import com.edu.lib.db.MessageHelper;
+import com.edu.lib.db.MessageHelper2;
 import com.edu.lib.util.AppConfig;
 import com.edu.lib.util.CommonUtils;
 import com.edu.lib.util.LogUtils;
@@ -45,7 +45,8 @@ public class CreateMessageActivity extends ActionBarActivity implements
 	TextView create_message_name;
 
 	ArrayList<Student> students;
-	MessageHelper helper;
+	MessageHelper2 helper;
+	boolean refersh = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -149,6 +150,7 @@ public class CreateMessageActivity extends ActionBarActivity implements
 			@Override
 			public void onSuccess(JSONObject response) {
 				super.onSuccess(response);
+				refersh = true;
 				LogUtils.I(LogUtils.CREATE_MESSAGE, response.toString());
 				UIUtils.showToast(CreateMessageActivity.this, "发送成功");
 				create_message_content.setText("");
@@ -167,7 +169,7 @@ public class CreateMessageActivity extends ActionBarActivity implements
 					messages.add(message);
 				}
 				if (helper == null)
-					helper = new MessageHelper();
+					helper = new MessageHelper2();
 				helper.insert(CreateMessageActivity.this, messages);
 				finish();
 
@@ -184,5 +186,12 @@ public class CreateMessageActivity extends ActionBarActivity implements
 		APIService.SendMsg(user.userid, user.cname, ids, "",
 				create_message_content.getEditableText().toString(), "0",
 				handler);
+	}
+	
+	@Override
+	public void finish() {
+		if (refersh)
+			setResult(RESULT_OK);
+		super.finish();
 	}
 }

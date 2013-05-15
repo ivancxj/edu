@@ -20,7 +20,7 @@ public class FragmentChangeActivity extends SlidingFragmentActivity implements
         View.OnClickListener {
 
     private Fragment mContent;
-    final static int REQUEST_CREATE = 10001;
+//    final static int REQUEST_CREATE = 100;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,7 +77,7 @@ public class FragmentChangeActivity extends SlidingFragmentActivity implements
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(FragmentChangeActivity.this, CreateNotifyActivity.class);
-                        startActivityForResult(intent, REQUEST_CREATE);
+                        startActivityForResult(intent, MessageListFragment.REQUEST_CODE);
                     }
                 });
             }
@@ -86,7 +86,7 @@ public class FragmentChangeActivity extends SlidingFragmentActivity implements
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(FragmentChangeActivity.this, CreateMessageActivity.class);
-                        startActivityForResult(intent, REQUEST_CREATE);
+                        startActivityForResult(intent, MessageListFragment.REQUEST_CODE);
                     }
                 });
             }

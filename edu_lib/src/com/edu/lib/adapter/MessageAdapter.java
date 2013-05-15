@@ -21,13 +21,14 @@ public class MessageAdapter extends BaseAdapter {
 		this.mInflater = LayoutInflater.from(context);
 	}
 	
-	public void add(ArrayList<Message> messages){
+	public void addTop(ArrayList<Message> messages){
 		if(this.messages == null)
 			this.messages = new ArrayList<Message>();
 		
 		if(messages == null) return;
 		
-		this.messages.addAll(messages);
+		this.messages.addAll(0, messages);
+//		this.messages.addAll(messages);
 		notifyDataSetInvalidated();
 	}
 	
@@ -77,6 +78,9 @@ public class MessageAdapter extends BaseAdapter {
 		Message message = messages.get(position);
 		holder.name.setText(message.SendName);
 		holder.content.setText(message.Content);
+		if(message.isNew){
+			holder.content.append("(新)");
+		}
 		return convertView;
 	}
 	

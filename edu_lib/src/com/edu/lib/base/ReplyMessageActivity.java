@@ -11,14 +11,11 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.edu.lib.R;
 import com.edu.lib.adapter.MessageHistoryAdapter;
@@ -26,7 +23,7 @@ import com.edu.lib.api.APIService;
 import com.edu.lib.api.JsonHandler;
 import com.edu.lib.bean.Message;
 import com.edu.lib.bean.User;
-import com.edu.lib.db.MessageHelper;
+import com.edu.lib.db.MessageHelper2;
 import com.edu.lib.util.AppConfig;
 import com.edu.lib.util.CommonUtils;
 import com.edu.lib.util.LogUtils;
@@ -34,7 +31,7 @@ import com.edu.lib.util.UIUtils;
 
 public class ReplyMessageActivity extends ActionBarActivity implements
 		OnClickListener {
-	private final static String EXTRA_MESSAGE = "extra_message";
+	private final static String EXTRA_THREAD = "extra_thread";
 	Message message;
 
 //	private final static int MAX = 70;
@@ -42,14 +39,15 @@ public class ReplyMessageActivity extends ActionBarActivity implements
 //	TextView message_reply_count;
 	boolean refersh = false;
 
-	MessageHelper helper;
+	long thread_id = -1;
+	MessageHelper2 helper;
 	ListView listview;
 	MessageHistoryAdapter adapter;
 
-	public static void startActivity(Activity context, Message message,
+	public static void startActivity(Activity context, Message thread,
 			int requestCode) {
 		Intent intent = new Intent(context, ReplyMessageActivity.class);
-		intent.putExtra(EXTRA_MESSAGE, message);
+		intent.putExtra(EXTRA_THREAD, thread);
 		context.startActivityForResult(intent, requestCode);
 	}
 
@@ -69,41 +67,22 @@ public class ReplyMessageActivity extends ActionBarActivity implements
 		adapter = new MessageHistoryAdapter(this);
 		listview.setAdapter(adapter);
 		message_edit_content = (EditText) findViewById(R.id.comment_publisher_edit);
-//		message_edit_content = (EditText) findViewById(R.id.message_edit_content);
-//		message_reply_count = (TextView) findViewById(R.id.message_reply_count);
-//		TextWatcher watcher = new TextWatcher() {
-//			@Override
-//			public void afterTextChanged(Editable s) {
-//			}
-//
-//			@Override
-//			public void beforeTextChanged(CharSequence s, int start, int count,
-//					int after) {
-//			}
-//
-//			@Override
-//			public void onTextChanged(CharSequence s, int start, int before,
-//					int count) {
-//				message_reply_count.setText((MAX - message_edit_content
-//						.getText().toString().length())
-//						+ "/" + MAX);
-//
-//			}
-//		};
-//		message_edit_content.addTextChangedListener(watcher);
 
 		// data
-		message = (Message) getIntent().getSerializableExtra(EXTRA_MESSAGE);
+		message = (Message) getIntent().getSerializableExtra(EXTRA_THREAD);
 
-		helper = new MessageHelper();
-		helper.insert(this, Message.copy(message));
-		ArrayList<Message> messages = helper.getMessages(this, message);
+		helper = new MessageHelper2();
+		if(message.isNew){// 是否是新增单条信息
+			// 插入当前看完的那条消息 同时返回会话id 方便查出整个会话
+			thread_id = helper.insert(this, message);
+			// 设置消息为已读
+			donemsg();
+		}else{
+			thread_id = message.thread_id;// 会话id
+		}
+		ArrayList<Message> messages = helper.getMessages(this, thread_id);
 		adapter.add(messages);
-		
 		listview.setSelection(adapter.getCount() -1);
-
-		// 设置消息为已读
-		donemsg();
 		setTitle(message.SendName);
 		setHomeActionListener(new OnClickListener() {
 			@Override
@@ -124,7 +103,7 @@ public class ReplyMessageActivity extends ActionBarActivity implements
 							@Override
 							public void onClick(DialogInterface dialog,
 									int which) {
-								delmsg();
+								delmsg();// TODO 删除本地？
 							}
 						});
 				builder.setNegativeButton("取消", null);
@@ -133,7 +112,7 @@ public class ReplyMessageActivity extends ActionBarActivity implements
 		});
 
 	}
-
+	// 标示已读
 	void donemsg() {
 		JsonHandler handler = new JsonHandler(this) {
 			@Override
@@ -145,34 +124,40 @@ public class ReplyMessageActivity extends ActionBarActivity implements
 
 		APIService.DonePms(message.PID, handler);
 	}
-
+	
 	void delmsg() {
-		final ProgressDialog progress = UIUtils.newProgressDialog(this,
-				"请稍候...");
-		JsonHandler handler = new JsonHandler(this) {
-			@Override
-			public void onStart() {
-				super.onStart();
-				UIUtils.safeShow(progress);
-			}
-
-			@Override
-			public void onFinish() {
-				super.onFinish();
-				UIUtils.safeDismiss(progress);
-			}
-
-			@Override
-			public void onSuccess(JSONObject response) {
-				super.onSuccess(response);
-				refersh = true;
-				finish();
-				// TODO
-			}
-		};
-
-		APIService.DelPms(message.PID, handler);
+		helper.deleteThreadById(this, thread_id);
+		refersh = true;
+		finish();
 	}
+
+//	void delmsg() {
+//		final ProgressDialog progress = UIUtils.newProgressDialog(this,
+//				"请稍候...");
+//		JsonHandler handler = new JsonHandler(this) {
+//			@Override
+//			public void onStart() {
+//				super.onStart();
+//				UIUtils.safeShow(progress);
+//			}
+//
+//			@Override
+//			public void onFinish() {
+//				super.onFinish();
+//				UIUtils.safeDismiss(progress);
+//			}
+//
+//			@Override
+//			public void onSuccess(JSONObject response) {
+//				super.onSuccess(response);
+//				refersh = true;
+//				finish();
+//				// TODO
+//			}
+//		};
+//
+//		APIService.DelPms(message.PID, handler);
+//	}
 
 	@Override
 	public void onClick(View v) {

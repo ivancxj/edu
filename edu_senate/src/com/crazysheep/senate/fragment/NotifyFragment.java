@@ -20,6 +20,7 @@ import com.crazysheep.senate.activity.FragmentChangeActivity;
 import com.crazysheep.senate.fragment.adapter.NotifyFragmentAdapter;
 import com.edu.lib.api.APIService;
 import com.edu.lib.api.JsonHandler;
+import com.edu.lib.base.MessageListFragment;
 import com.edu.lib.bean.Announcement;
 import com.edu.lib.bean.User;
 import com.edu.lib.util.AppConfig;
@@ -33,8 +34,6 @@ import com.viewpagerindicator.CirclePageIndicator;
  * @author ivan
  */
 public class NotifyFragment extends Fragment implements ViewPager.OnPageChangeListener {
-
-    final static int REQUEST_CREATE = 10001;
 
     ArrayList<Announcement> announcements = new ArrayList<Announcement>();
 
@@ -125,7 +124,7 @@ public class NotifyFragment extends Fragment implements ViewPager.OnPageChangeLi
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CREATE && resultCode == getActivity().RESULT_OK) {
+        if (requestCode == MessageListFragment.REQUEST_CODE && resultCode == getActivity().RESULT_OK) {
             getData();
         }
     }

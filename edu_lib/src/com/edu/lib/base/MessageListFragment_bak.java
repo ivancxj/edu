@@ -22,122 +22,106 @@ import com.edu.lib.api.APIService;
 import com.edu.lib.api.JsonHandler;
 import com.edu.lib.bean.Message;
 import com.edu.lib.bean.User;
-import com.edu.lib.db.MessageHelper2;
 import com.edu.lib.util.AppConfig;
 import com.edu.lib.util.LogUtils;
 
-public class MessageListFragment extends CancelFragment implements
-		OnItemClickListener {
+public class MessageListFragment_bak extends CancelFragment implements OnItemClickListener{
 	ListView listview;
 	MessageAdapter adapter;
 	public final static int REQUEST_CODE = 100;
 	int pageindex = 1;
-
-	MessageHelper2 helper;
-	User user;
-
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_message_list, container,
-				false);
-		listview = (ListView) view.findViewById(R.id.message_list);
+		View view = inflater.inflate(R.layout.fragment_message_list, container, false);
+		listview = (ListView)view.findViewById(R.id.message_list);
 		return view;
 	}
 
-	@Override
-	public void onDetach() {
-		super.onDetach();
-		try {
-			Field childFragmentManager = Fragment.class
-					.getDeclaredField("mChildFragmentManager");
-			childFragmentManager.setAccessible(true);
-			childFragmentManager.set(this, null);
-		} catch (NoSuchFieldException e) {
-			throw new RuntimeException(e);
-		} catch (IllegalAccessException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        try {
+            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+            childFragmentManager.setAccessible(true);
+            childFragmentManager.set(this, null);
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		user = AppConfig.getAppConfig(getActivity()).getUser();
 		adapter = new MessageAdapter(getActivity());
 		listview.setAdapter(adapter);
 		listview.setOnItemClickListener(this);
-
-		refresh();
+		
+		refresh(true);
 	}
-
+	
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if (requestCode == REQUEST_CODE
-				&& resultCode == getActivity().RESULT_OK)
-			refresh();
+		if(requestCode == REQUEST_CODE && resultCode == getActivity().RESULT_OK)
+			refresh(true);
 	}
-
-	void refresh() {
-		JsonHandler handler = new JsonHandler(getActivity()) {
+	
+	void refresh(final boolean refresh){
+		JsonHandler handler = new JsonHandler(getActivity()){
 			@Override
 			public void onStart() {
 				super.onStart();
-				getView().findViewById(R.id.loading)
-						.setVisibility(View.VISIBLE);
-				adapter.clear();
-				// 获取本地数据 会话
-				if (helper == null)
-					helper = new MessageHelper2();
-
-				ArrayList<Message> threads = helper.getThread(getActivity(),
-						user.userid);
-				adapter.addTop(threads);
+                getView().findViewById(R.id.loading).setVisibility(View.VISIBLE);
+            	if(refresh){
+            		adapter.clear();
+            	}
+            	
+      
 			}
-
+			
 			@Override
 			public void onFinish() {
 				super.onFinish();
-				try {
-					getView().findViewById(R.id.loading).setVisibility(
-							View.GONE);
-					adapter.notifyDataSetInvalidated();
-				} catch (Exception e) {
-				}
+				 try {
+	                	getView().findViewById(R.id.loading).setVisibility(View.GONE);
+	                	adapter.notifyDataSetInvalidated();
+					} catch (Exception e) {
+					}
 			}
-
+			
 			@Override
 			public void onSuccess(JSONObject response) {
 				super.onSuccess(response);
 				LogUtils.I(LogUtils.MESSAGE, response.toString());
 				JSONArray array = response.optJSONArray("pmss");
-				if (array == null)
-					return;
+				if(array == null)  return;
 				ArrayList<Message> messages = new ArrayList<Message>();
 				int length = array.length();
-				for (int i = 0; i < length; i++) {
+				for(int i = 0;i<length;i++){
 					Message message = new Message(array.optJSONObject(i));
-					message.isNew = true;// 是否是新消息
 					messages.add(message);
 				}
-
+					
 				adapter.addTop(messages);
 			}
 		};
+		User user = AppConfig.getAppConfig(getActivity()).getUser();
 		// TODO
-		// if(refresh)
-		pageindex = 1;
-		// else
-		// pageindex++;
-
+		if(refresh)
+			pageindex = 1;
+		else
+			pageindex++;
+		
 		APIService.GetPms(user.userid, pageindex, handler);
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
-			long arg3) {
-		Message thread = (Message) adapter.getItem(position);
-		ReplyMessageActivity.startActivity(getActivity(), thread, REQUEST_CODE);
+	public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+		Message message = (Message)adapter.getItem(position);
+		ReplyMessageActivity.startActivity(getActivity(), message,REQUEST_CODE);
 	}
 }
