@@ -40,6 +40,8 @@ public class RemarkFragment extends CancelFragment implements OnItemClickListene
 	
 	ListView listview;
 	RemarkAdapter adapter;
+	Named named;
+	
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -108,7 +110,7 @@ public class RemarkFragment extends CancelFragment implements OnItemClickListene
 				handler);
 	}
     
-	private void updateStudentCardRecord(Named name,final int position) {
+	private void updateStudentCardRecord() {
 		final ProgressDialog progress = UIUtils.newProgressDialog(
 				getActivity(), "请稍等..");
 		JsonHandler handler = new JsonHandler(getActivity()) {
@@ -129,7 +131,8 @@ public class RemarkFragment extends CancelFragment implements OnItemClickListene
 				super.onSuccess(response);
 				LogUtils.I(LogUtils.StudentRecord, response.toString());
 				UIUtils.showToast(getActivity(), "更新成功");
-				Named named = (Named)adapter.getItem(position);
+//				Named named = (Named)adapter.getItem(position);
+				LogUtils.D("初始named.IsRecord＝"+named.IsRecord + " named.InTime"+named.InTime);
 				response = response.optJSONObject("cardrecord");
 				
 				named.InTime = response.optString("InTime");
@@ -145,12 +148,12 @@ public class RemarkFragment extends CancelFragment implements OnItemClickListene
 		User user = AppConfig.getAppConfig(getActivity()).getUser();
 		// TODO  remark
 		String remark = "";
-		APIService.UpdateStudentCardRecord(user.gardenID,name.Memberid,remark, handler);
+		APIService.UpdateStudentCardRecord(user.gardenID,named.Memberid,remark, handler);
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, final int position, long arg3) {
-		final Named named = (Named)adapter.getItem(position);
+		named = (Named)adapter.getItem(position);
 		if(!named.IsRecord){
 			  AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		        builder.setTitle("给"+named.SName+"签到？");
@@ -159,7 +162,7 @@ public class RemarkFragment extends CancelFragment implements OnItemClickListene
 		                new DialogInterface.OnClickListener() {
 		                    @Override
 		                    public void onClick(DialogInterface dialog, int which) {
-		                    	updateStudentCardRecord(named,position);
+		                    	updateStudentCardRecord();
 		                    }
 		                });
 		        builder.setNegativeButton("取消", null);
