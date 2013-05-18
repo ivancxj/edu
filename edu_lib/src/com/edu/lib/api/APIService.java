@@ -10,7 +10,8 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 public class APIService {
-	private final static String HOST = "http://sysmanage.youjiaoyun.net/photo.asmx";
+	private final static String HOST = "http://api.youjiaoyun.net/photo.asmx";
+//	private final static String HOST = "http://sysmanage.youjiaoyun.net/photo.asmx";
 	private final static String URL_SPLITTER = "/";
 	private final static String URL_API_HOST = HOST + URL_SPLITTER;
 
