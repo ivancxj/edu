@@ -124,6 +124,11 @@ public class MessageListFragment extends CancelFragment implements
 
 				adapter.addTop(messages);
 			}
+			
+			@Override
+			protected void showFailToast(String errorMessage) {
+//				super.showFailToast(errorMessage);
+			}
 		};
 		// TODO
 		// if(refresh)
