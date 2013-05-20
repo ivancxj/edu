@@ -119,13 +119,14 @@ public class RemarkAdapter extends BaseAdapter {
 		}
 		holder.remark_num.setText(named.SNum);
 		holder.remark_name.setText(named.SName);
-        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
-        try {
-            Date date = sdf.parse(named.InTime);
-            String time = sdf.format(date);
-            holder.remark_time.setText(time);
-        } catch (ParseException e) {
-        }
+		holder.remark_time.setText(named.InTime);
+//        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
+//        try {
+//            Date date = sdf.parse(named.InTime);
+//            String time = sdf.format(date);
+//        } catch (ParseException e) {
+//        	e.printStackTrace();
+//        }
 
 		return convertView;
 	}

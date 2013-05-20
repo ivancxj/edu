@@ -132,7 +132,7 @@ public class RemarkFragment extends CancelFragment implements OnItemClickListene
 				LogUtils.I(LogUtils.StudentRecord, response.toString());
 				UIUtils.showToast(getActivity(), "更新成功");
 //				Named named = (Named)adapter.getItem(position);
-				LogUtils.D("初始named.IsRecord＝"+named.IsRecord + " named.InTime"+named.InTime);
+				LogUtils.D("初始 named.IsRecord＝"+named.IsRecord + " named.InTime＝"+named.InTime);
 				response = response.optJSONObject("cardrecord");
 				
 				named.InTime = response.optString("InTime");
