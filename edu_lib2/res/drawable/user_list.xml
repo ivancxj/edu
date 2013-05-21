@@ -10,8 +10,16 @@
             android:topLeftRadius="0dp"
             android:topRightRadius="0dp"/>
 
-    <solid android:color="#FFF"/>
+    <gradient
+            android:angle="270"
+            android:startColor="#ffffff"
+            android:endColor="#ffffff"/>
 
-    <stroke android:color="#000"/>
+    <stroke android:color="#c8b9ac" android:width="1px"/>
+
+    <padding android:bottom="px"
+             android:left="1px"
+             android:right="1px"
+             android:top="1px" />
 
 </shape>

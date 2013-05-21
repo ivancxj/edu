@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -240,7 +241,8 @@ public class LoginActivity extends Activity implements OnClickListener, Handler.
         //这一句是为了实现弹出PopupWindow后，当点击屏幕其他部分及Back键时PopupWindow会消失，
         //没有这一句则效果不能出来，但并不会影响背景
         //本人能力极其有限，不明白其原因，还望高手、知情者指点一下
-        selectPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+        selectPopupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.user_list));
+        selectPopupWindow.update();
     }
 
 
