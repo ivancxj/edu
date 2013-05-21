@@ -29,6 +29,7 @@
                 android:layout_toLeftOf="@id/delImage"
                 android:paddingLeft="5dp"
                 android:textSize="16sp"
+                android:textColor="@color/black"
                 android:layout_alignParentLeft="true"/>
     </RelativeLayout>
 </LinearLayout>
