@@ -1,6 +1,7 @@
 package com.edu.lib.adapter;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -76,7 +77,9 @@ public class MessageHistoryAdapter extends BaseAdapter {
 		}
 		
 		Message message = messages.get(position);
-		holder.message_time.setText(message.SendTime);
+		Date date = new Date(message.SendTime);
+		Message.sdf.format(date);
+		holder.message_time.setText(Message.sdf.format(date));
 		// 类型 1是接收到的，2是发出的
 		if(message.type == 1){
 			holder.message_content_left.setVisibility(View.VISIBLE);

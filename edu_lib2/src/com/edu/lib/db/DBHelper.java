@@ -68,7 +68,7 @@ public class DBHelper extends SQLiteOpenHelper {
 				+ MESSAGE_PID + " TEXT, " + MESSAGE_SEND_ID + " TEXT, "
 				+ MESSAGE_SEND_NAME + " TEXT, "+ MESSAGE_RECEIVER_ID
 				+ " TEXT, " + MESSAGE_RECEIVER_NAME + " TEXT, " + MESSAGE_TITLE + " TEXT,"
-				+ MESSAGE_CONTENT + " TEXT," + MESSAGE_SENDTIME + " TEXT,"
+				+ MESSAGE_CONTENT + " TEXT," + MESSAGE_SENDTIME + " double,"
 				+ MESSAGE_PARENT_ID + " TEXT" + ");");
 		
 		db.execSQL("CREATE TABLE " + TABLE_THREAD + " (" + THREAD_ID
@@ -77,7 +77,7 @@ public class DBHelper extends SQLiteOpenHelper {
 				+ THREAD_SEND_NAME + " TEXT, " + THREAD_RECEIVER_ID
 				+ " TEXT, " + THREAD_RECEIVER_NAME + " TEXT, "
 				+ THREAD_TITLE + " TEXT," + THREAD_CONTENT + " TEXT,"
-				+ THREAD_SENDTIME + " TEXT," + THREAD_PARENT_ID + " TEXT,"
+				+ THREAD_SENDTIME + " double," + THREAD_PARENT_ID + " TEXT,"
 				+ THREAD_MESSAGE_COUNT + " INTEGER " + ");");
 
 	}

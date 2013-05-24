@@ -14,7 +14,7 @@ public class MessageHelper2 {
 	// 本机登陆者都是 MESSAGE_RECEIVER_ID 这个字段
 	public long insert(Context context, Message message) {
 		if (message == null)
-			return -1                                                                   ;
+			return -1;
 		ArrayList<Message> messages = new ArrayList<Message>();
 		messages.add(message);
 		return insert(context, messages);
@@ -42,14 +42,14 @@ public class MessageHelper2 {
 			// }
 			LogUtils.D(" message.SendID = " + message.SendID
 					+ " message.ReceiverID=" + message.ReceiverID);
-			if(message.type == 1){// 接收者
-				cursor = write.rawQuery("select * from " + DBHelper.TABLE_THREAD
-						+ " where " + whereClause, new String[] { message.SendID,
-						message.ReceiverID });
-			}else{// 发送者
-				cursor = write.rawQuery("select * from " + DBHelper.TABLE_THREAD
-						+ " where " + whereClause, new String[] { message.ReceiverID,
-						message.SendID });
+			if (message.type == 1) {// 接收者
+				cursor = write.rawQuery("select * from "
+						+ DBHelper.TABLE_THREAD + " where " + whereClause,
+						new String[] { message.SendID, message.ReceiverID });
+			} else {// 发送者
+				cursor = write.rawQuery("select * from "
+						+ DBHelper.TABLE_THREAD + " where " + whereClause,
+						new String[] { message.ReceiverID, message.SendID });
 			}
 
 			ContentValues values = new ContentValues();
@@ -81,13 +81,11 @@ public class MessageHelper2 {
 
 				values.put(DBHelper.THREAD_MESSAGE_COUNT, message_count + 1);
 				if (message.type == 1) {
-					write.update(DBHelper.TABLE_THREAD, values,
-							whereClause, new String[] { message.SendID,
-							message.ReceiverID });
-				}else{
-					write.update(DBHelper.TABLE_THREAD, values,
-							whereClause, new String[] { message.ReceiverID,
-							message.SendID });
+					write.update(DBHelper.TABLE_THREAD, values, whereClause,
+							new String[] { message.SendID, message.ReceiverID });
+				} else {
+					write.update(DBHelper.TABLE_THREAD, values, whereClause,
+							new String[] { message.ReceiverID, message.SendID });
 				}
 				LogUtils.D("update threads count =" + (message_count + 1));
 			} else {
@@ -121,7 +119,7 @@ public class MessageHelper2 {
 
 		write.close();
 		db.close();
-		
+
 		return thread_id;
 	}
 
@@ -132,8 +130,7 @@ public class MessageHelper2 {
 		SQLiteDatabase read = db.getReadableDatabase();
 		// 时间排序
 		Cursor cursor = read.rawQuery("select * from " + DBHelper.TABLE_THREAD
-				+ " where " + DBHelper.THREAD_RECEIVER_ID + " = ? "
-				+ " order by " + DBHelper.THREAD_SENDTIME + " desc",
+				+ " where " + DBHelper.THREAD_RECEIVER_ID + " = ? ",
 				new String[] { ReceiverID });
 
 		if (cursor != null && cursor.getCount() > 0) {
@@ -141,7 +138,7 @@ public class MessageHelper2 {
 			LogUtils.D("获取本地会话");
 			while (cursor.moveToNext()) {
 				Message message = new Message();
-				
+
 				message.thread_id = cursor.getInt(cursor
 						.getColumnIndex(DBHelper.THREAD_ID));
 				message.type = cursor.getInt(cursor
@@ -160,15 +157,15 @@ public class MessageHelper2 {
 						.getColumnIndex(DBHelper.THREAD_TITLE));
 				message.Content = cursor.getString(cursor
 						.getColumnIndex(DBHelper.THREAD_CONTENT));
-				message.SendTime = cursor.getString(cursor
+				message.SendTime = cursor.getLong(cursor
 						.getColumnIndex(DBHelper.THREAD_SENDTIME));
 				message.ParentID = cursor.getString(cursor
 						.getColumnIndex(DBHelper.THREAD_PARENT_ID));
-				
+
 				messages.add(message);
 			}
 			cursor.close();
-		}else{
+		} else {
 			LogUtils.D("本地没有会话");
 		}
 
@@ -186,9 +183,11 @@ public class MessageHelper2 {
 		DBHelper db = DBHelper.getInstance(context, null);
 		SQLiteDatabase read = db.getReadableDatabase();
 
-		Cursor cursor = read.rawQuery("select * from " + DBHelper.TABLE_MESSAGE
-				+ " where " + DBHelper.MESSAGE_THREAD_ID + " = ? ",
-				new String[] { thread_id+"" });
+		String sql = "select * from " + DBHelper.TABLE_MESSAGE + " where "
+				+ DBHelper.MESSAGE_THREAD_ID + " = ? " + "order by "
+				+ DBHelper.MESSAGE_SENDTIME + " asc";
+		LogUtils.D("sql="+sql);
+		Cursor cursor = read.rawQuery(sql, new String[] { thread_id + "" });
 		if (cursor != null && cursor.getCount() > 0) {
 			messages = new ArrayList<Message>();
 			LogUtils.D("获取本地消息列表");
@@ -212,15 +211,15 @@ public class MessageHelper2 {
 						.getColumnIndex(DBHelper.MESSAGE_TITLE));
 				m.Content = cursor.getString(cursor
 						.getColumnIndex(DBHelper.MESSAGE_CONTENT));
-				m.SendTime = cursor.getString(cursor
+				m.SendTime = cursor.getLong(cursor
 						.getColumnIndex(DBHelper.MESSAGE_SENDTIME));
 				m.ParentID = cursor.getString(cursor
 						.getColumnIndex(DBHelper.MESSAGE_PARENT_ID));
 				messages.add(m);
 			}
 			cursor.close();
-		}else{
-			LogUtils.D("获取本地消息列表 thread_id = "+thread_id +" null");
+		} else {
+			LogUtils.D("获取本地消息列表 thread_id = " + thread_id + " null");
 		}
 
 		read.close();
@@ -228,9 +227,10 @@ public class MessageHelper2 {
 
 		return messages;
 	}
-	
+
 	public void deleteThreadById(Context context, long thread_id) {
-		if(thread_id < 1) return;
+		if (thread_id < 1)
+			return;
 		DBHelper db = DBHelper.getInstance(context, null);
 		SQLiteDatabase write = db.getWritableDatabase();
 		write.delete(DBHelper.TABLE_MESSAGE,
