@@ -125,6 +125,12 @@ public class RemarkFragment extends CancelFragment implements OnItemClickListene
 				super.onFinish();
 				UIUtils.safeDismiss(progress);
 			}
+			
+			@Override
+			protected void showFailToast(String errorMessage) {
+//				super.showFailToast(errorMessage);
+				// 屏蔽显示错误信息
+			}
 
 			@Override
 			public void onSuccess(JSONObject response) {
